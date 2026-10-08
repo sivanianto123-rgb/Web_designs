@@ -3,8 +3,8 @@
    --------------------------------------------------------- */
 
 :root {
-  --bg: #0b0b0c;
-  --bg-soft: #141415;
+  --bg: #0f0d13;
+  --bg-soft: #181420;
   --fg: #f3f1ec;
   --fg-dim: #8a8a86;
   --accent: #c8ff4d;   /* volt lime — primary */
@@ -280,6 +280,8 @@ blockquote { border: none; }
   justify-content: center;
   padding: 7rem clamp(1.5rem, 5vw, 3.5rem) 4rem;
   overflow: hidden;
+  background: radial-gradient(ellipse 70% 55% at 85% 90%, rgba(200, 255, 77, 0.16), transparent 70%),
+              radial-gradient(ellipse 60% 50% at 10% 10%, rgba(255, 61, 143, 0.12), transparent 70%);
 }
 .hero__marquee {
   position: absolute;
@@ -406,8 +408,8 @@ blockquote { border: none; }
   align-items: center;
   overflow: hidden;
   border-top: 1px solid var(--line);
-  background: radial-gradient(ellipse 80% 60% at 15% 100%, rgba(255, 90, 54, 0.1), transparent 70%),
-              radial-gradient(ellipse 70% 50% at 85% 0%, rgba(53, 198, 255, 0.08), transparent 70%);
+  background: radial-gradient(ellipse 90% 70% at 15% 100%, rgba(255, 90, 54, 0.28), transparent 70%),
+              radial-gradient(ellipse 80% 60% at 85% 0%, rgba(53, 198, 255, 0.24), transparent 70%);
 }
 .chapter-origin__pulse {
   position: absolute;
@@ -474,18 +476,22 @@ blockquote { border: none; }
   padding: 2rem clamp(1.5rem, 5vw, 3.5rem);
   overflow: hidden;
 }
+.chapter-drop__panel:nth-child(1) { background: linear-gradient(160deg, #3f5a1c, #141c0a); }
+.chapter-drop__panel:nth-child(2) { background: linear-gradient(160deg, #175878, #081419); }
+.chapter-drop__panel:nth-child(3) { background: linear-gradient(160deg, #7a4015, #1f1105); }
+.chapter-drop__panel:nth-child(4) { background: linear-gradient(160deg, #7a1552, #1f0515); }
 .chapter-drop__panel::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
-  opacity: 0.5;
+  opacity: 0.7;
   pointer-events: none;
 }
-.chapter-drop__panel:nth-child(1)::before { background: radial-gradient(circle at 50% 45%, #4d6b22, transparent 60%); }
-.chapter-drop__panel:nth-child(2)::before { background: radial-gradient(circle at 50% 45%, #1c5878, transparent 60%); }
-.chapter-drop__panel:nth-child(3)::before { background: radial-gradient(circle at 50% 45%, #7a3f1a, transparent 60%); }
-.chapter-drop__panel:nth-child(4)::before { background: radial-gradient(circle at 50% 45%, #7a1f52, transparent 60%); }
+.chapter-drop__panel:nth-child(1)::before { background: radial-gradient(circle at 50% 45%, #9ed63f, transparent 65%); }
+.chapter-drop__panel:nth-child(2)::before { background: radial-gradient(circle at 50% 45%, #35b4f0, transparent 65%); }
+.chapter-drop__panel:nth-child(3)::before { background: radial-gradient(circle at 50% 45%, #ff8a3d, transparent 65%); }
+.chapter-drop__panel:nth-child(4)::before { background: radial-gradient(circle at 50% 45%, #ff4fa3, transparent 65%); }
 .chapter-drop__panel .eyebrow {
   position: absolute;
   top: 7rem;
@@ -538,7 +544,8 @@ blockquote { border: none; }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(53, 198, 255, 0.06), transparent 70%);
+  background: radial-gradient(ellipse 90% 80% at 20% 30%, rgba(53, 198, 255, 0.22), transparent 70%),
+              radial-gradient(ellipse 70% 60% at 85% 80%, rgba(255, 61, 143, 0.16), transparent 70%);
 }
 .numbers-grid {
   display: grid;
@@ -574,7 +581,10 @@ blockquote { border: none; }
 }
 
 /* ---------- Products grid (Chapter 04 — The Collection) ---------- */
-.products { padding: 8rem 0; }
+.products {
+  padding: 8rem 0;
+  background: radial-gradient(ellipse 60% 50% at 90% 10%, rgba(255, 138, 61, 0.14), transparent 70%);
+}
 
 .grid {
   display: grid;
@@ -608,12 +618,12 @@ blockquote { border: none; }
   opacity: 0.9;
   transition: opacity 0.5s var(--ease);
 }
-.card__visual--01::before { background: radial-gradient(circle at 30% 20%, #4d6b22, var(--bg) 70%); }
-.card__visual--02::before { background: radial-gradient(circle at 70% 30%, #1c5878, var(--bg) 70%); }
-.card__visual--03::before { background: radial-gradient(circle at 30% 70%, #7a3f1a, var(--bg) 70%); }
-.card__visual--04::before { background: radial-gradient(circle at 70% 70%, #7a1f52, var(--bg) 70%); }
-.card__visual--05::before { background: radial-gradient(circle at 50% 20%, #5e6b1f, var(--bg) 70%); }
-.card__visual--06::before { background: radial-gradient(circle at 50% 80%, #1a6878, var(--bg) 70%); }
+.card__visual--01::before { background: radial-gradient(circle at 30% 20%, #9ed63f, #2b3a14 75%); }
+.card__visual--02::before { background: radial-gradient(circle at 70% 30%, #35b4f0, #0f2a38 75%); }
+.card__visual--03::before { background: radial-gradient(circle at 30% 70%, #ff8a3d, #3d1f0c 75%); }
+.card__visual--04::before { background: radial-gradient(circle at 70% 70%, #ff4fa3, #3d0f28 75%); }
+.card__visual--05::before { background: radial-gradient(circle at 50% 20%, #c9e04a, #333a14 75%); }
+.card__visual--06::before { background: radial-gradient(circle at 50% 80%, #3fd6c9, #0f3838 75%); }
 
 .card__icon {
   position: relative;
@@ -669,7 +679,8 @@ blockquote { border: none; }
 .chapter-city {
   padding: 8rem 0;
   border-top: 1px solid var(--line);
-  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 61, 143, 0.07), transparent 70%);
+  background: radial-gradient(ellipse 90% 60% at 50% 0%, rgba(255, 61, 143, 0.2), transparent 70%),
+              radial-gradient(ellipse 70% 50% at 10% 100%, rgba(200, 255, 77, 0.12), transparent 70%);
 }
 .chapter-city .eyebrow {
   margin: 0 clamp(1.5rem, 5vw, 3.5rem) 3rem;
