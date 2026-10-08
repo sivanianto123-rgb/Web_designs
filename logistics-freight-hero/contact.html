@@ -7,7 +7,7 @@
 <meta name="description" content="Talk to Freightline about a shipment, a quote, or a partnership.">
 <link rel="stylesheet" href="assets/site.css">
 </head>
-<body class="has-fixed-nav">
+<body>
 
 <header class="nav">
   <div class="container nav__inner">
@@ -37,7 +37,9 @@
 
 <main>
   <section class="page-hero">
-    <div class="container">
+    <video class="page-hero__video" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261005_115944_095d91d4-030f-4e82-b42b-a388c0816d24.mp4" autoplay muted loop playsinline disablepictureinpicture aria-hidden="true"></video>
+    <div class="page-hero__video-tint"></div>
+    <div class="container" data-reveal="fade">
       <p class="eyebrow-label">Get in touch</p>
       <h1 class="h-display h1">Talk to a<br>real person.</h1>
       <p class="lede" style="margin-top:18px">
@@ -50,7 +52,7 @@
   <section class="section">
     <div class="container" style="display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:start">
 
-      <form id="contactForm" novalidate>
+      <form id="contactForm" novalidate data-reveal="left">
         <div class="form-grid">
           <div class="field" data-field="name">
             <label for="cName">Full name</label>
@@ -97,7 +99,7 @@
         </div>
       </form>
 
-      <aside style="display:flex;flex-direction:column;gap:18px">
+      <aside style="display:flex;flex-direction:column;gap:18px" data-reveal="right">
         <div class="card">
           <h3 class="card__title" style="font-size:14px;letter-spacing:.1em">Head office</h3>
           <p class="card__desc">

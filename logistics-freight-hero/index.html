@@ -6,6 +6,7 @@
 <title>Logistics that works as hard as you do.</title>
 <meta name="description" content="One point of contact and full supply-chain visibility, origin to destination.">
 <link rel="preload" as="video" type="video/mp4" href="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261005_115944_095d91d4-030f-4e82-b42b-a388c0816d24.mp4">
+<link rel="stylesheet" href="assets/site.css">
 <style>
 
 @font-face{
@@ -46,11 +47,9 @@
 }
 
 *{box-sizing:border-box}
-html,body{height:100%}
 body{
   margin:0;
   background:#0a0b0c;
-  overflow:hidden;
   font-kerning:none;
   font-variant-ligatures:none;
   font-feature-settings:normal;
@@ -59,7 +58,12 @@ body{
   text-rendering:geometricPrecision;
 }
 
-.frame{position:fixed;inset:0;overflow:hidden;background:#0a0b0c}
+.frame{
+  position:relative;
+  height:100vh;height:100dvh;
+  overflow:hidden;
+  background:#0a0b0c;
+}
 
 .bg{
   position:absolute;inset:0;
@@ -229,7 +233,7 @@ body{
     display:grid;
     grid-template-columns: 1fr var(--rail) 1fr;
     grid-template-rows: auto auto 1fr auto auto minmax(0,.38fr);
-    padding: calc(46 * var(--u)) clamp(24px,5.2vw,72px) calc(24 * var(--u));
+    padding: calc(var(--nav-h, 76px) + 20 * var(--u)) clamp(24px,5.2vw,72px) calc(24 * var(--u));
   }
 
   .eyebrow,.headline,.feature,.feature h2,.feature p,.feature .icon{position:static}
@@ -314,7 +318,7 @@ body{
     display:grid;
     grid-template-columns: 100%;
     grid-template-rows: auto auto 1fr auto auto auto minmax(0,.3fr);
-    padding: calc(30 * var(--u))
+    padding: calc(var(--nav-h, 76px) + 10 * var(--u))
              max(calc(22 * var(--u)), env(safe-area-inset-right))
              max(calc(32 * var(--u)), env(safe-area-inset-bottom))
              max(calc(22 * var(--u)), env(safe-area-inset-left));
@@ -384,50 +388,26 @@ body{
   .f-right p{margin-right:auto}
 }
 
-/* ---------- site menu (overlay, independent of .stage) ---------- */
+/* ---------- hero scroll cue ---------- */
 
-.site-menu-btn{
-  position:absolute;top:22px;right:22px;z-index:10;
-  width:44px;height:44px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  background:rgba(10,11,12,.35);
-  border:1px solid rgba(255,255,255,.28);
-  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-  cursor:pointer;
+.hero-scroll-cue{
+  position:absolute;left:50%;bottom:28px;z-index:6;
+  transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:var(--cream);opacity:.85;
+  animation:heroCueFloat 2.2s ease-in-out infinite;
 }
-.site-menu-btn span{
-  display:block;width:16px;height:2px;background:var(--cream);position:relative;
-  transition:background .15s ease;
+.hero-scroll-cue span{
+  font:700 10px/1 UI,system-ui,sans-serif;letter-spacing:.3em;text-indent:.3em;text-transform:uppercase;
+  text-shadow:0 1px 3px rgba(0,0,0,.5);
 }
-.site-menu-btn span::before,.site-menu-btn span::after{
-  content:"";position:absolute;left:0;width:16px;height:2px;background:var(--cream);
-  transition:transform .2s ease,opacity .2s ease;
-}
-.site-menu-btn span::before{top:-5px}
-.site-menu-btn span::after{top:5px}
-.site-menu.is-open .site-menu-btn span{background:transparent}
-.site-menu.is-open .site-menu-btn span::before{transform:translateY(5px) rotate(45deg)}
-.site-menu.is-open .site-menu-btn span::after{transform:translateY(-5px) rotate(-45deg)}
+@keyframes heroCueFloat{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+@media (prefers-reduced-motion:reduce){.hero-scroll-cue{animation:none}}
 
-.site-menu-panel{
-  position:absolute;inset:0;z-index:9;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;
-  background:rgba(8,9,10,.92);
-  opacity:0;visibility:hidden;pointer-events:none;
-  transition:opacity .25s ease;
-}
-.site-menu.is-open .site-menu-panel{opacity:1;visibility:visible;pointer-events:auto}
-.site-menu-panel a{
-  font:700 15px/1 UI,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ink);text-decoration:none;transition:color .15s ease;
-}
-.site-menu-panel a:hover{color:var(--accent)}
-.site-menu-panel .btn{
-  display:inline-flex;align-items:center;justify-content:center;
-  margin-top:8px;padding:14px 28px;border-radius:999px;
-  background:var(--accent);color:var(--white);
-  font:700 12px/1 UI,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;
-}
+/* ---------- homepage story content below the hero ---------- */
+
+.story-statement em.accent{font-style:normal;color:var(--accent)}
+.story-statement em.teal{font-style:normal;color:var(--accent-2)}
 
 </style>
 </head>
@@ -436,17 +416,30 @@ body{
   <video class="bg" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261005_115944_095d91d4-030f-4e82-b42b-a388c0816d24.mp4" autoplay muted loop playsinline disablepictureinpicture aria-label="Aerial view of a container freight train crossing black coal terrain"></video>
   <div class="tint"></div>
 
-  <div class="site-menu" id="siteMenu">
-    <button class="site-menu-btn" id="siteMenuBtn" aria-expanded="false" aria-controls="siteMenuPanel" aria-label="Open menu">
-      <span></span>
-    </button>
-    <nav class="site-menu-panel" id="siteMenuPanel" aria-label="Site">
-      <a href="services.html">Services</a>
-      <a href="track.html">Track Shipment</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a class="btn" href="quote.html">Get a Quote</a>
-    </nav>
+  <header class="nav">
+    <div class="container nav__inner">
+      <a class="nav__brand" href="index.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="#D6523A" stroke-width="1.6"/><circle cx="12" cy="12" r="2" fill="#D6523A"/></svg>
+        Freightline
+      </a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="services.html">Services</a>
+        <a href="track.html">Track Shipment</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="nav__right">
+        <a class="btn btn--ghost btn--sm" href="quote.html">Get a Quote</a>
+        <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navMobile" aria-label="Open menu"><span></span></button>
+      </div>
+    </div>
+  </header>
+  <div class="nav__mobile" id="navMobile">
+    <a href="services.html">Services</a>
+    <a href="track.html">Track Shipment</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a class="btn btn--accent btn--block" href="quote.html">Get a Quote</a>
   </div>
 
   <main class="stage">
@@ -539,23 +532,164 @@ body{
     </section>
 
   </main>
+
+  <div class="hero-scroll-cue" aria-hidden="true">
+    <span>Scroll</span>
+    <svg width="14" height="20" viewBox="0 0 14 20" fill="none"><rect x="1" y="1" width="12" height="18" rx="6" stroke="#F7F5EF" stroke-width="1.4"/><circle cx="7" cy="6.5" r="1.6" fill="#F7F5EF"/></svg>
+  </div>
 </div>
-<script>
-(function(){
-  var menu = document.getElementById('siteMenu');
-  var btn = document.getElementById('siteMenuBtn');
-  if (!menu || !btn) return;
-  btn.addEventListener('click', function(){
-    var open = menu.classList.toggle('is-open');
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && menu.classList.contains('is-open')) {
-      menu.classList.remove('is-open');
-      btn.setAttribute('aria-expanded', 'false');
-    }
-  });
-})();
-</script>
+
+<!-- ============ THE STORY CONTINUES BELOW THE HERO ============ -->
+
+<section class="story-section story-section--dark">
+  <div class="container story-statement" data-reveal="fade">
+    <p>Freight breaks down the moment it's split across <em class="accent">too many vendors.</em> We built Freightline to be the <em class="teal">one team</em> that owns it, start to finish.</p>
+  </div>
+</section>
+
+<section class="story-section story-section--alt section">
+  <div class="container" style="display:flex;flex-direction:column;gap:clamp(56px,9vw,96px)">
+
+    <div class="split-feature" data-reveal="left">
+      <div>
+        <div class="split-feature__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5 12 4l8 5.5V19a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1Z"/><path d="m9 13 2 2 4-4" stroke="#D6523A"/></svg>
+        </div>
+        <p class="eyebrow-label">One point of contact</p>
+        <h2 class="h-display h2">A single team owns your shipment, every mode.</h2>
+        <p class="lede" style="margin-top:16px;max-width:none">No more chasing four vendors for one shipment. One Freightline team manages ocean, air, rail and trucking legs together — and answers for all of them.</p>
+      </div>
+      <div class="card" style="padding:32px">
+        <h3 class="card__title" style="font-size:14px;letter-spacing:.1em">What that replaces</h3>
+        <p class="card__desc" style="margin-top:10px">Separate ocean broker. Separate trucker. Separate customs agent. Three inboxes, three status calls, zero accountability when something slips.</p>
+      </div>
+    </div>
+
+    <div class="split-feature" data-reveal="right">
+      <div>
+        <div class="split-feature__icon split-feature--teal">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18M3 12h18"/></svg>
+        </div>
+        <p class="eyebrow-label">Full visibility</p>
+        <h2 class="h-display h2">Track your freight in real time, not after the fact.</h2>
+        <p class="lede" style="margin-top:16px;max-width:none">Proactive alerts before a delay becomes a problem, with a checkpoint history you can check any time — see it live on the <a href="track.html" style="color:var(--accent-2)">tracking page</a>.</p>
+      </div>
+      <div class="card" style="padding:32px">
+        <h3 class="card__title" style="font-size:14px;letter-spacing:.1em">What you see</h3>
+        <p class="card__desc" style="margin-top:10px">Live checkpoints from booking to delivery, the same view our ops desk uses — not a carrier portal you have to piece together yourself.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="story-section video-band">
+  <video class="video-band__media" data-parallax="0.15" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261005_115944_095d91d4-030f-4e82-b42b-a388c0816d24.mp4" autoplay muted loop playsinline disablepictureinpicture aria-hidden="true"></video>
+  <div class="video-band__tint"></div>
+  <div class="video-band__content" data-reveal="fade">
+    <p class="video-band__eyebrow">In motion, right now</p>
+    <div class="video-band__stat">28,000+</div>
+    <p class="video-band__caption">Shipments moved last year — on rail, road, sea and air, all tracked the same way.</p>
+  </div>
+</section>
+
+<section class="story-section section">
+  <div class="container">
+    <div class="kicker-row" data-reveal="fade">
+      <div>
+        <p class="eyebrow-label">What we move</p>
+        <h2 class="h-display h2" style="font-size:clamp(24px,3.2vw,36px)">Every mode. One team.</h2>
+      </div>
+      <a class="btn btn--ghost" href="services.html">See all services →</a>
+    </div>
+    <div class="cards" data-reveal-group>
+      <article class="card" data-reveal>
+        <div class="card__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v9"/><circle cx="12" cy="5" r="1.6"/><path d="M6 10h12l-1.5 5a5.2 5.2 0 0 1-9 0L6 10Z"/></svg>
+        </div>
+        <h2 class="card__title">Ocean Freight</h2>
+        <p class="card__desc">FCL and LCL across every major trade lane.</p>
+        <a class="card__link" href="quote.html?mode=ocean">Get a quote →</a>
+      </article>
+      <article class="card" data-reveal>
+        <div class="card__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 13.5 3 15.8v-2l7.5-4.3V5.3C10.5 4 11.2 3 12 3s1.5 1 1.5 2.3v4.2L21 13.8v2l-7.5-2.3-.9 4.3 2.2 1.5v1.6L12 20l-2.8 1.1v-1.6l2.2-1.5-.9-4.3Z"/></svg>
+        </div>
+        <h2 class="card__title">Air Freight</h2>
+        <p class="card__desc">Time-critical cargo, door-to-door.</p>
+        <a class="card__link" href="quote.html?mode=air">Get a quote →</a>
+      </article>
+      <article class="card" data-reveal>
+        <div class="card__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.5" width="14" height="13" rx="2"/><path d="M5 12h14M9 16l-1.5 4M15 16l1.5 4"/></svg>
+        </div>
+        <h2 class="card__title">Rail Freight</h2>
+        <p class="card__desc">Cost-efficient long-haul for heavy freight.</p>
+        <a class="card__link" href="quote.html?mode=rail">Get a quote →</a>
+      </article>
+      <article class="card" data-reveal>
+        <div class="card__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h10v8H3z"/><path d="M13 11h4l3 3v1h-7z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
+        </div>
+        <h2 class="card__title">Trucking &amp; Drayage</h2>
+        <p class="card__desc">First- and last-mile, port to door.</p>
+        <a class="card__link" href="quote.html?mode=trucking">Get a quote →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="story-section story-section--alt section--tight">
+  <div class="container">
+    <div class="stats" data-reveal-group>
+      <div class="stat" data-reveal><div class="stat__num">12</div><div class="stat__label">Years operating</div></div>
+      <div class="stat" data-reveal><div class="stat__num">46</div><div class="stat__label">Countries served</div></div>
+      <div class="stat" data-reveal><div class="stat__num">28k+</div><div class="stat__label">Shipments / year</div></div>
+      <div class="stat" data-reveal><div class="stat__num">98.4%</div><div class="stat__label">On-time delivery</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="story-section section" style="text-align:center">
+  <div class="container" data-reveal="fade">
+    <h2 class="h-display h1" style="font-size:clamp(32px,5vw,56px)">Ready to ship smarter?</h2>
+    <p class="lede" style="margin:16px auto 0">Tell us what you're moving — we'll reply with a real plan, not a form letter.</p>
+    <div style="margin-top:28px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <a class="btn btn--accent" href="quote.html">Get a Quote</a>
+      <a class="btn btn--ghost" href="track.html">Track a Shipment</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a class="nav__brand" href="index.html">Freightline</a>
+      <p>Logistics that works as hard as you do. One point of contact, full visibility, origin to destination.</p>
+    </div>
+    <div class="footer__col">
+      <h3>Company</h3>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer__col">
+      <h3>Tools</h3>
+      <a href="track.html">Track a Shipment</a>
+      <a href="quote.html">Get a Quote</a>
+    </div>
+    <div class="footer__col">
+      <h3>Contact</h3>
+      <a href="mailto:hello@freightline.example">hello@freightline.example</a>
+      <a href="tel:+18005551234">+1 (800) 555-1234</a>
+    </div>
+  </div>
+  <div class="container footer__bottom">
+    <span>© <span data-year></span> Freightline. All rights reserved.</span>
+    <span>Demo site — no data is transmitted or stored.</span>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
 </body>
 </html>

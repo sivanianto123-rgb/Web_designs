@@ -7,7 +7,7 @@
 <meta name="description" content="Why Freightline exists: one accountable team, full visibility, and freight that moves on schedule.">
 <link rel="stylesheet" href="assets/site.css">
 </head>
-<body class="has-fixed-nav">
+<body>
 
 <header class="nav">
   <div class="container nav__inner">
@@ -37,7 +37,9 @@
 
 <main>
   <section class="page-hero">
-    <div class="container">
+    <video class="page-hero__video" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261005_115944_095d91d4-030f-4e82-b42b-a388c0816d24.mp4" autoplay muted loop playsinline disablepictureinpicture aria-hidden="true"></video>
+    <div class="page-hero__video-tint"></div>
+    <div class="container" data-reveal="fade">
       <p class="eyebrow-label">Why us</p>
       <h1 class="h-display h1">Built around<br>one promise.</h1>
       <p class="lede" style="margin-top:18px">
@@ -50,7 +52,7 @@
 
   <section class="section">
     <div class="container" style="display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:start">
-      <div>
+      <div data-reveal="left">
         <p class="eyebrow-label">Our story</p>
         <h2 class="h-display h2">Started by people tired of chasing status updates.</h2>
         <p class="lede" style="margin-top:18px;max-width:none">
@@ -68,7 +70,7 @@
           your delivery date like it's their own deadline.
         </p>
       </div>
-      <div class="card" style="gap:22px">
+      <div class="card" style="gap:22px" data-reveal="right">
         <h3 class="card__title" style="font-size:14px;letter-spacing:.1em">What we believe</h3>
         <div style="display:flex;flex-direction:column;gap:18px">
           <div>
@@ -90,11 +92,11 @@
 
   <section class="section section--tight" style="border-top:1px solid var(--line)">
     <div class="container">
-      <div class="stats">
-        <div class="stat"><div class="stat__num">12</div><div class="stat__label">Years operating</div></div>
-        <div class="stat"><div class="stat__num">46</div><div class="stat__label">Countries served</div></div>
-        <div class="stat"><div class="stat__num">28k+</div><div class="stat__label">Shipments / year</div></div>
-        <div class="stat"><div class="stat__num">98.4%</div><div class="stat__label">On-time delivery</div></div>
+      <div class="stats" data-reveal-group>
+        <div class="stat" data-reveal><div class="stat__num">12</div><div class="stat__label">Years operating</div></div>
+        <div class="stat" data-reveal><div class="stat__num">46</div><div class="stat__label">Countries served</div></div>
+        <div class="stat" data-reveal><div class="stat__num">28k+</div><div class="stat__label">Shipments / year</div></div>
+        <div class="stat" data-reveal><div class="stat__num">98.4%</div><div class="stat__label">On-time delivery</div></div>
       </div>
     </div>
   </section>
@@ -107,23 +109,23 @@
           <h2 class="h-display h2" style="font-size:clamp(24px,3vw,32px)">How we got here</h2>
         </div>
       </div>
-      <div class="timeline" style="padding-left:24px">
-        <div class="timeline__item is-done">
+      <div class="timeline" style="padding-left:24px" data-reveal-group>
+        <div class="timeline__item is-done" data-reveal>
           <span class="timeline__dot"></span>
           <div class="timeline__title">2013 — Founded as a rail-first freight desk</div>
           <div class="timeline__meta">Three people, one spreadsheet, a handful of rail customers.</div>
         </div>
-        <div class="timeline__item is-done">
+        <div class="timeline__item is-done" data-reveal>
           <span class="timeline__dot"></span>
           <div class="timeline__title">2017 — Added ocean and air brokerage</div>
           <div class="timeline__meta">Grew into full multimodal coverage after customers asked for one invoice, not four.</div>
         </div>
-        <div class="timeline__item is-done">
+        <div class="timeline__item is-done" data-reveal>
           <span class="timeline__dot"></span>
           <div class="timeline__title">2021 — Launched real-time tracking for every mode</div>
           <div class="timeline__meta">Replaced "call to check" with a live shipment timeline customers could trust.</div>
         </div>
-        <div class="timeline__item is-current">
+        <div class="timeline__item is-current" data-reveal>
           <span class="timeline__dot"></span>
           <div class="timeline__title">Today — 46 countries, one point of contact</div>
           <div class="timeline__meta">Still the same promise: your freight, our accountability.</div>
