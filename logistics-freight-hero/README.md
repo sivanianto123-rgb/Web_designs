@@ -265,6 +265,53 @@ video band and on every interior page's top `.page-hero` band
 homepage. Swapping in additional footage (e.g. ocean, warehouse,
 trucking clips) only requires dropping files under `assets/video/` and
 pointing the relevant `<video src>` at them — see Customizing below.
+It's now reused a third time, inside the "Every Mode" gallery's
+featured Ocean Freight card (`.tilt--featured`, `video.gallery-card__media`)
+in place of a static icon — see "Differentiating from stride/" below
+for why.
+
+## Differentiating from stride/
+
+The sibling `stride/` project in this repo was built from the same
+`motion.ed` reference the user pointed this project at, and the two
+independently converged on the same shape: numbered chapters, a
+horizontal-scroll product/service gallery, and a 4-stat "By The
+Numbers" chapter immediately after it — down to that exact chapter
+name in both projects. Per explicit feedback that Freightline's
+layout read as too close to stride's, two of the most identical
+pieces were reworked:
+
+- **Gallery chapter (`03 Every Mode`)** — the first card (Ocean
+  Freight) is now wider than the rest and plays the site's CloudFront
+  video instead of showing a static icon (`.tilt--featured`), and the
+  remaining cards alternate a `28px` vertical offset
+  (`.hcards-track .tilt:nth-child(even/odd)`) for a staggered,
+  manifest-like rhythm instead of a flat uniform row — both reset on
+  mobile, where the gallery stops being horizontal-scroll anyway.
+- **Stats chapter, renamed `05 The Track Record`** (was `By The
+  Numbers`) — rebuilt from a grid of 4 bordered boxes (`.stats`, still
+  used as-is on `about.html`) into a single horizontal band with thin
+  vertical rule dividers between stats (`.stat-strip`). It reuses the
+  existing `.stat__num`/`.stat__label` classes and GSAP counter logic
+  unchanged — only the wrapping layout differs.
+- **Chapter order swapped**: "Every Mode" (the gallery) now comes
+  *before* "In Motion" (the video band), which was moved to `04`. In
+  stride, the gallery chapter sits immediately next to its stats
+  chapter; here the video band now sits between the gallery and the
+  stats strip, which also reads better narratively (show every mode →
+  see it in motion → here's the track record) and breaks that
+  adjacency.
+- **Chapter HUD bug this surfaced**: shrinking the stats chapter's
+  height exposed a real bug in `assets/motion.js`'s chapter-tracking
+  `IntersectionObserver` — with a single `threshold: 0.5` and a plain
+  "last intersecting entry wins" loop, a short chapter sitting next to
+  a tall one could have both cross the 50% threshold at the same
+  scroll position, and whichever happened to sort last in that
+  callback's `entries` silently won, regardless of which was actually
+  more visible. Fixed by tracking each chapter's current
+  `intersectionRatio` in a `Map` (updated across multiple thresholds)
+  and always showing whichever chapter has the highest ratio right
+  now — correct regardless of any individual chapter's height.
 
 ## Color palette
 

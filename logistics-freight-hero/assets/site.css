@@ -693,3 +693,50 @@ h1.h-display,h2.h-display,h3.h-display{
 .hcards-track .tilt:nth-child(4n+2) .example-card__frame{border-top-color:var(--accent-2);background:var(--accent-2-dim);color:var(--accent-2)}
 .hcards-track .tilt:nth-child(4n+3) .example-card__frame{border-top-color:var(--accent-3);background:var(--accent-3-dim);color:var(--accent-3)}
 .hcards-track .tilt:nth-child(4n+4) .example-card__frame{border-top-color:var(--accent-4);background:var(--accent-4-dim);color:var(--accent-4)}
+
+/* Featured gallery card: real footage instead of an icon, wider than
+   the rest. The one spot on the page that leans on the CloudFront
+   video a third time (hero, video-band, now here), rather than another
+   static icon — this and the staggered rhythm below are what keep the
+   gallery from reading as the same uniform product-grid shape the
+   sibling stride/ project also landed on from the same reference. */
+.tilt--featured{flex-basis:clamp(300px,34vw,420px) !important}
+.tilt--featured .example-card__frame{height:180px;padding:0;background:#000}
+.tilt--featured .example-card__frame video{width:100%;height:100%;object-fit:cover;display:block}
+
+/* Alternating vertical offset so the row reads as a staggered manifest
+   stack rather than a flat, evenly-aligned grid of equal cards. */
+.hcards-track .tilt:not(.tilt--featured):nth-child(even){margin-top:28px}
+.hcards-track .tilt:not(.tilt--featured):nth-child(odd){margin-bottom:28px}
+@media (max-width:860px){
+  .tilt--featured{flex-basis:auto !important}
+  .tilt--featured .example-card__frame{height:140px}
+  .hcards-track .tilt:nth-child(even),
+  .hcards-track .tilt:nth-child(odd){margin-top:0;margin-bottom:0}
+}
+
+/* ---------- stat strip (homepage "Track Record" chapter) ----------
+   A horizontal divided band rather than the boxed-card .stats grid
+   used on about.html — deliberately a different shape, since the
+   boxed-grid-of-4-stats idiom under a "By The Numbers" heading is
+   exactly what the sibling stride/ project also converged on
+   (same name, same layout) from the same motion.ed reference. Reuses
+   .stat__num/.stat__label so the existing GSAP counter JS needs no
+   changes — only the wrapping structure differs. */
+.stat-strip{
+  display:flex;flex-wrap:wrap;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.stat-strip__item{
+  flex:1 1 0;min-width:140px;
+  padding:clamp(28px,4vw,44px) clamp(16px,2.4vw,28px);
+  text-align:center;position:relative;
+}
+.stat-strip__item:not(:last-child)::after{
+  content:'';position:absolute;right:0;top:22%;bottom:22%;width:1px;
+  background:var(--line);
+}
+@media (max-width:620px){
+  .stat-strip__item{flex:1 1 50%}
+  .stat-strip__item:nth-child(odd)::after{display:none}
+}

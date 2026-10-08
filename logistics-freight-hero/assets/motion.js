@@ -260,14 +260,29 @@
     window.addEventListener('scroll', toggleVisible, { passive: true });
     window.addEventListener('resize', toggleVisible);
 
+    // Track each chapter's current visibility ratio and show whichever
+    // is most visible right now, rather than whichever's entry happened
+    // to be processed last in a given callback batch. A single-threshold
+    // "last one wins" approach breaks as soon as any chapter is short
+    // enough that its neighbor can cross the same 50% threshold at the
+    // same scroll position (e.g. a compact stat strip next to a tall
+    // closing CTA) — both fire as "intersecting" together, and whichever
+    // happens to sort last in entries silently overrides the real one.
+    var ratios = new Map();
     var chapterIo = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
-        if (entry.isIntersecting) {
-          indexEl.textContent = entry.target.getAttribute('data-chapter-index');
-          nameEl.textContent = entry.target.getAttribute('data-chapter-name');
-        }
+        ratios.set(entry.target, entry.isIntersecting ? entry.intersectionRatio : 0);
       });
-    }, { threshold: 0.5 });
+      var best = null, bestRatio = 0;
+      chapters.forEach(function(c){
+        var r = ratios.get(c) || 0;
+        if (r > bestRatio) { bestRatio = r; best = c; }
+      });
+      if (best) {
+        indexEl.textContent = best.getAttribute('data-chapter-index');
+        nameEl.textContent = best.getAttribute('data-chapter-name');
+      }
+    }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
     chapters.forEach(function(c){ chapterIo.observe(c); });
   })();
 

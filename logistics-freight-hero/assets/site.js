@@ -120,7 +120,7 @@
   // GPU/CPU cost — a direct contributor to scroll jank. autoplay still
   // starts them normally on load; this only pauses/resumes around that.
   if ('IntersectionObserver' in window) {
-    var bgVideos = document.querySelectorAll('video.bg, video.page-hero__video, video.video-band__media');
+    var bgVideos = document.querySelectorAll('video.bg, video.page-hero__video, video.video-band__media, video.gallery-card__media');
     if (bgVideos.length) {
       var videoIo = new IntersectionObserver(function(entries){
         entries.forEach(function(entry){
