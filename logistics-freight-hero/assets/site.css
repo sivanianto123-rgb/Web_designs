@@ -46,9 +46,14 @@
   --accent-4-dim:rgba(76,141,191,.16);
   --line:rgba(255,255,255,.12);
   --card:rgba(255,255,255,.04);
-  --bg-alt:#0a1414;
+  --bg-alt:#0d1b1f;
   --nav-h:76px;
   --radius:10px;
+  --mesh:
+    radial-gradient(ellipse 60% 50% at 12% -5%, rgba(214,82,58,.24), transparent 60%),
+    radial-gradient(ellipse 55% 55% at 100% 15%, rgba(76,141,191,.20), transparent 60%),
+    radial-gradient(ellipse 60% 55% at 92% 100%, rgba(43,179,163,.22), transparent 60%),
+    radial-gradient(ellipse 50% 45% at 0% 100%, rgba(227,165,59,.16), transparent 60%);
   color-scheme:dark;
 }
 
@@ -57,7 +62,8 @@ html,body{height:100%}
 html{-webkit-text-size-adjust:100%}
 body{
   margin:0;
-  background:var(--bg);
+  background:var(--mesh), var(--bg);
+  background-attachment:fixed;
   color:var(--ink);
   font:400 16px/1.5 UI,system-ui,sans-serif;
   font-kerning:none;
@@ -193,9 +199,10 @@ h1.h-display,h2.h-display,h3.h-display{
   position:relative;
   padding:clamp(72px,11vw,128px) 0 clamp(48px,7vw,80px);
   background:
-    radial-gradient(ellipse 55% 65% at 88% 0%, rgba(214,82,58,.16), transparent 60%),
-    radial-gradient(ellipse 50% 55% at 6% 100%, rgba(43,179,163,.13), transparent 60%),
-    radial-gradient(ellipse 40% 50% at 10% 10%, rgba(227,165,59,.07), transparent 60%),
+    radial-gradient(ellipse 55% 65% at 88% 0%, rgba(214,82,58,.30), transparent 62%),
+    radial-gradient(ellipse 50% 55% at 6% 100%, rgba(43,179,163,.26), transparent 62%),
+    radial-gradient(ellipse 45% 55% at 95% 95%, rgba(76,141,191,.20), transparent 60%),
+    radial-gradient(ellipse 40% 50% at 10% 10%, rgba(227,165,59,.16), transparent 60%),
     var(--bg);
   border-bottom:1px solid var(--line);
   overflow:hidden;
@@ -211,6 +218,7 @@ h1.h-display,h2.h-display,h3.h-display{
   width:100%;height:100%;
   object-fit:cover;object-position:center;
   opacity:.34;
+  background:var(--mesh), var(--bg);
 }
 .page-hero__video-tint{
   position:absolute;inset:0;z-index:1;
@@ -248,7 +256,7 @@ h1.h-display,h2.h-display,h3.h-display{
 
 /* ---------- story sections (homepage) ---------- */
 .story-section{position:relative;overflow:hidden}
-.story-section--dark{background:var(--bg)}
+.story-section--dark{background:var(--mesh), var(--bg)}
 
 .story-statement{
   padding:clamp(100px,16vw,200px) 0;
@@ -270,19 +278,21 @@ h1.h-display,h2.h-display,h3.h-display{
 .story-statement p .teal{color:var(--accent-2)}
 .story-statement p .amber{color:var(--accent-3)}
 
-.story-section--alt{background:var(--bg-alt)}
+.story-section--alt{background:var(--mesh), var(--bg-alt)}
 
 .video-band{
   position:relative;
   height:clamp(480px,78vh,860px);
   overflow:hidden;
   display:flex;align-items:center;justify-content:center;
+  background:var(--mesh), var(--bg);
 }
 .video-band__media{
   position:absolute;
   top:-10%;left:0;
   width:100%;height:120%;
   object-fit:cover;object-position:center;
+  background:var(--mesh), var(--bg);
 }
 .video-band__tint{
   position:absolute;inset:0;
@@ -505,7 +515,7 @@ h1.h-display,h2.h-display,h3.h-display{
 .alert--error{border-color:var(--accent);color:var(--cream)}
 
 /* ---------- footer ---------- */
-.footer{position:relative;padding:clamp(48px,7vw,72px) 0 28px;background:var(--bg)}
+.footer{position:relative;padding:clamp(48px,7vw,72px) 0 28px;background:var(--mesh), var(--bg)}
 .footer::before{
   content:"";position:absolute;top:0;left:0;right:0;height:1px;
   background:linear-gradient(90deg, transparent, var(--accent), var(--accent-3), var(--accent-2), transparent);

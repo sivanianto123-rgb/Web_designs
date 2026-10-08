@@ -78,8 +78,28 @@ teal (`--accent-2`), amber (`--accent-3`) and steel-blue
 (`--accent-4`) — all defined in `assets/site.css`. They cycle across
 service-card icons and stat underlines, tint the ambient gradients
 behind page-hero bands and the video band, and give "done" states
-(timeline, stepper) a distinct color from "active" states, so the site
-reads as more than a monochrome dark theme.
+(timeline, stepper) a distinct color from "active" states.
+
+Critically, the color isn't only skin-deep on top of video: a shared
+`--mesh` custom property (four corner-anchored radial gradients, one
+per accent) is layered into `body`'s background with
+`background-attachment:fixed`, and into every section that paints its
+own opaque fill (`.page-hero`, `.video-band`, `.story-section--dark`,
+`.story-section--alt`, `.footer`). So even with **no video loaded at
+all**, every page still reads as a colorful gradient wash, never flat
+black — this was verified by testing with the video network request
+blocked entirely. Each `<video>` also carries an inline SVG `poster`
+(a small data URI, no network request) built from the same four
+colors, so the video's own box never paints black before a frame
+arrives or if it fails to load.
+
+Known cascade gotcha, worth remembering when editing: `index.html`'s
+hero keeps its own inline `<style>` (loaded after `assets/site.css`
+for the shared tokens), so its `body{...}` rule must re-specify
+`background:var(--mesh), #0a0b0c; background-attachment:fixed;`
+itself — the `background` shorthand resets attachment too, so a bare
+`background:#0a0b0c` there silently wipes out the linked stylesheet's
+mesh for the whole homepage.
 
 ## Stack
 

@@ -49,7 +49,8 @@
 *{box-sizing:border-box}
 body{
   margin:0;
-  background:#0a0b0c;
+  background:var(--mesh), #0a0b0c;
+  background-attachment:fixed;
   font-kerning:none;
   font-variant-ligatures:none;
   font-feature-settings:normal;
@@ -62,14 +63,14 @@ body{
   position:relative;
   height:100vh;height:100dvh;
   overflow:hidden;
-  background:#0a0b0c;
+  background:var(--mesh), #0a0b0c;
 }
 
 .bg{
   position:absolute;inset:0;
   width:100%;height:100%;
   object-fit:cover;object-position:center;
-  background:#0a0b0c;
+  background:var(--mesh), #0a0b0c;
 }
 
 .tint{
@@ -413,7 +414,7 @@ body{
 </head>
 <body>
 <div class="frame">
-  <video class="bg" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261005_115944_095d91d4-030f-4e82-b42b-a388c0816d24.mp4" autoplay muted loop playsinline disablepictureinpicture aria-label="Aerial view of a container freight train crossing black coal terrain"></video>
+  <video class="bg" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261005_115944_095d91d4-030f-4e82-b42b-a388c0816d24.mp4" poster="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22960%22%20height%3D%22600%22%20viewBox%3D%220%200%20960%20600%22%3E%20%3Cdefs%3E%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2212%25%22%20cy%3D%220%25%22%20r%3D%2265%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23D6523A%22%20stop-opacity%3D%220.55%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23D6523A%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3CradialGradient%20id%3D%22b%22%20cx%3D%2295%25%22%20cy%3D%2215%25%22%20r%3D%2260%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%234C8DBF%22%20stop-opacity%3D%220.5%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%234C8DBF%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3CradialGradient%20id%3D%22t%22%20cx%3D%2290%25%22%20cy%3D%22100%25%22%20r%3D%2265%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%232BB3A3%22%20stop-opacity%3D%220.55%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%232BB3A3%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3CradialGradient%20id%3D%22a%22%20cx%3D%225%25%22%20cy%3D%22100%25%22%20r%3D%2255%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23E3A53B%22%20stop-opacity%3D%220.4%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E3A53B%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3C%2Fdefs%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22%230a0b0c%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23r%29%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23b%29%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23t%29%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23a%29%22%2F%3E%20%3C%2Fsvg%3E" autoplay muted loop playsinline disablepictureinpicture aria-label="Aerial view of a container freight train crossing black coal terrain"></video>
   <div class="tint"></div>
 
   <header class="nav">
@@ -584,7 +585,7 @@ body{
 </section>
 
 <section class="story-section video-band">
-  <video class="video-band__media" data-parallax="0.15" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261005_115944_095d91d4-030f-4e82-b42b-a388c0816d24.mp4" autoplay muted loop playsinline disablepictureinpicture aria-hidden="true"></video>
+  <video class="video-band__media" data-parallax="0.15" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261005_115944_095d91d4-030f-4e82-b42b-a388c0816d24.mp4" poster="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22960%22%20height%3D%22600%22%20viewBox%3D%220%200%20960%20600%22%3E%20%3Cdefs%3E%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2212%25%22%20cy%3D%220%25%22%20r%3D%2265%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23D6523A%22%20stop-opacity%3D%220.55%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23D6523A%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3CradialGradient%20id%3D%22b%22%20cx%3D%2295%25%22%20cy%3D%2215%25%22%20r%3D%2260%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%234C8DBF%22%20stop-opacity%3D%220.5%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%234C8DBF%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3CradialGradient%20id%3D%22t%22%20cx%3D%2290%25%22%20cy%3D%22100%25%22%20r%3D%2265%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%232BB3A3%22%20stop-opacity%3D%220.55%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%232BB3A3%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3CradialGradient%20id%3D%22a%22%20cx%3D%225%25%22%20cy%3D%22100%25%22%20r%3D%2255%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23E3A53B%22%20stop-opacity%3D%220.4%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E3A53B%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3C%2Fdefs%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22%230a0b0c%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23r%29%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23b%29%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23t%29%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23a%29%22%2F%3E%20%3C%2Fsvg%3E" autoplay muted loop playsinline disablepictureinpicture aria-hidden="true"></video>
   <div class="video-band__tint"></div>
   <div class="video-band__content" data-reveal="fade">
     <p class="video-band__eyebrow">In motion, right now</p>
