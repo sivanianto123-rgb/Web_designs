@@ -694,15 +694,48 @@ h1.h-display,h2.h-display,h3.h-display{
 .hcards-track .tilt:nth-child(4n+3) .example-card__frame{border-top-color:var(--accent-3);background:var(--accent-3-dim);color:var(--accent-3)}
 .hcards-track .tilt:nth-child(4n+4) .example-card__frame{border-top-color:var(--accent-4);background:var(--accent-4-dim);color:var(--accent-4)}
 
-/* Featured gallery card: real footage instead of an icon, wider than
-   the rest. The one spot on the page that leans on the CloudFront
-   video a third time (hero, video-band, now here), rather than another
-   static icon — this and the staggered rhythm below are what keep the
-   gallery from reading as the same uniform product-grid shape the
-   sibling stride/ project also landed on from the same reference. */
+/* ---------- photo cards (real photography) ----------
+   Full-bleed background photo + bottom gradient scrim + overlaid
+   text, replacing the icon-frame treatment for the 5 services with
+   real photography available (user-supplied). Customs Brokerage has
+   no matching photo and stays on .example-card__frame so it reads as
+   a deliberate different treatment, not a broken/missing image. */
+.card--photo{
+  position:relative;overflow:hidden;
+  min-height:300px;
+  padding:20px 22px;
+  justify-content:flex-end;
+  background-size:cover;background-position:center;
+  border-color:rgba(255,255,255,.14);
+}
+.card--photo::before{
+  content:'';position:absolute;inset:0;
+  /* A light darkening even near the top keeps text legible against
+     bright skies/snow in any of the source photos, not just the ones
+     that happen to be dark up there already. */
+  background:linear-gradient(180deg, rgba(10,6,12,.18) 0%, rgba(10,6,12,.12) 28%, rgba(10,6,12,.68) 68%, rgba(10,6,12,.96) 100%);
+  pointer-events:none;
+}
+.card--photo > *{position:relative;z-index:1}
+.card--photo .card__title{color:var(--white);text-shadow:0 1px 4px rgba(0,0,0,.5)}
+.card--photo .card__desc{color:rgba(255,255,255,.85);text-shadow:0 1px 3px rgba(0,0,0,.4)}
+/* .card__link normally carries margin-top:auto to push itself to the
+   bottom of a tall icon card — here it fights .card--photo's own
+   justify-content:flex-end (the auto margin eats all the free space
+   before justify-content gets any left to distribute, which pins the
+   title/desc to the top instead of anchoring the whole text block at
+   the bottom). Reset it so the title/desc/link stay grouped together
+   at the bottom, matching the reference layout. */
+.card--photo .card__link{margin-top:0}
+.card--photo:hover{border-color:rgba(255,255,255,.32)}
+
+/* Featured gallery card: wider than the rest, taller photo. The
+   asymmetric size plus full-bleed photography (vs. stride's small
+   product-shot-in-a-box cards) is what keeps this gallery from
+   reading as the same uniform product grid the sibling stride/
+   project also landed on from the same motion.ed reference. */
 .tilt--featured{flex-basis:clamp(300px,34vw,420px) !important}
-.tilt--featured .example-card__frame{height:180px;padding:0;background:#000}
-.tilt--featured .example-card__frame video{width:100%;height:100%;object-fit:cover;display:block}
+.tilt--featured .card--photo{min-height:360px}
 
 /* Alternating vertical offset so the row reads as a staggered manifest
    stack rather than a flat, evenly-aligned grid of equal cards. */
@@ -710,7 +743,7 @@ h1.h-display,h2.h-display,h3.h-display{
 .hcards-track .tilt:not(.tilt--featured):nth-child(odd){margin-bottom:28px}
 @media (max-width:860px){
   .tilt--featured{flex-basis:auto !important}
-  .tilt--featured .example-card__frame{height:140px}
+  .tilt--featured .card--photo{min-height:260px}
   .hcards-track .tilt:nth-child(even),
   .hcards-track .tilt:nth-child(odd){margin-top:0;margin-bottom:0}
 }

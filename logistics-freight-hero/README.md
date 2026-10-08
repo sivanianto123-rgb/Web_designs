@@ -160,30 +160,37 @@ to function, so nothing else changed.
   border plus tinted background identify it, and it cycles through all
   4 accent tones via `nth-child(4n+2/3/4)` across the 6-card horizontal
   gallery, same as the existing `.card__link` color-cycling it sits
-  above. Each card's icon is a standalone file under `assets/icons/`
-  (`<img src="assets/icons/ocean-freight.svg" …>`), loaded over the
-  network rather than inlined in the page's HTML, each preloaded via
-  `<link rel="preload" as="image">` in `<head>` so all 6 are ready
-  before the user scrolls into the gallery. They're richer than a bare
-  line icon — a soft radial-gradient glow behind the glyph, in the same
-  fixed accent color as that card's frame (inline SVGs can inherit
-  `currentColor` from the page's CSS for their color-cycling; a
-  separate `<img>`-loaded file can't reach back into the host page's
-  styles, so each file's color is baked in to match). This started as
-  a request for real photography sourced from a network URL; neither
-  is actually available right now — the sandbox's network policy
-  blocks the usual stock-photo CDNs (Unsplash, Pixabay, Wikimedia) the
-  same way it blocks the video sources used elsewhere on this site, and
-  neither connected image-generation provider has enough credit for
-  even one image (OpenArt's cheapest model is 10 credits against a
-  4-credit balance; Higgsfield has 1 credit). These SVGs are the
-  honest version of that ask given those constraints — genuinely
-  network-loaded, not inlined, just not photographic. Applied to both
-  places these icons appear: the homepage's horizontal gallery and
-  `services.html`'s own 3-column card grid, which previously still had
-  the old inline `.card__icon` treatment after the homepage was
-  updated — now both use the same `.example-card__frame` markup and
-  the same 6 icon files.
+  above. This was originally applied to all 6 services as standalone
+  SVG icon files under `assets/icons/`, network-loaded rather than
+  inlined, after real photography turned out to be unavailable (the
+  sandbox blocks the usual stock-photo CDNs, and neither connected
+  image-generation provider had enough credit). The user then supplied
+  5 real photos directly; `.example-card__frame` now survives only for
+  **Customs Brokerage**, the one service with no matching photo among
+  the 5 supplied — everything else moved to `.card--photo` below.
+
+- **`.card--photo`** — full-bleed background photo with a bottom
+  gradient scrim and the title/description/link overlaid on top,
+  matching a reference layout the user supplied. Used for Ocean
+  Freight, Air Freight, Rail Freight, Trucking & Drayage and
+  Warehousing & Distribution on both the homepage gallery and
+  `services.html`'s 3-column grid; `assets/photos/*.jpg` are the
+  user's own supplied images (not stock photography pulled from the
+  web — the sandbox can't reach external image hosts anyway). One
+  real bug surfaced building this: `.card__link` normally carries
+  `margin-top:auto` to push itself to the bottom of a tall icon card,
+  but that fights `.card--photo`'s own `justify-content:flex-end` —
+  the auto margin eats all the free space before `justify-content`
+  gets anything left to distribute, so the title/description end up
+  pinned to the *top* instead of the whole text block anchoring at
+  the bottom. Fixed by resetting `margin-top` to `0` specifically
+  within `.card--photo`. The gradient itself darkens slightly even
+  near the top (not just a bottom-only fade) so text stays legible
+  regardless of how bright the top of any given photo is — sky, snow,
+  etc. The gallery's featured Ocean Freight card (`.tilt--featured`,
+  wider than the rest) shows the ship photo rather than a video for
+  the same reason: the user's own supplied image took priority over
+  the CloudFront clip that was there before.
 
 Every one of these is skipped under `prefers-reduced-motion: reduce`:
 `motion.js` short-circuits into a block that sets every element to its
