@@ -237,11 +237,16 @@ h1.h-display,h2.h-display,h3.h-display{
 .page-hero > .container{position:relative;z-index:2}
 
 /* ---------- scroll reveal + parallax ---------- */
+/* No static will-change here: these reveal once and then sit still for
+   the rest of the page's life. Promoting every [data-reveal]/[reveal-word]
+   element (20+ on the homepage alone, more with each chapter added) to
+   its own compositor layer forever is pure GPU-memory/compositing
+   overhead with zero benefit after the one-shot animation finishes — a
+   real, measurable contributor to scroll jank, not a protective measure. */
 [data-reveal]{
   opacity:0;
   transform:translateY(32px);
   transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);
-  will-change:opacity, transform;
 }
 [data-reveal="fade"]{transform:none}
 [data-reveal="left"]{transform:translate(-36px,0)}
@@ -254,8 +259,6 @@ h1.h-display,h2.h-display,h3.h-display{
 [data-reveal-group] > [data-reveal]:nth-child(4){transition-delay:.24s}
 [data-reveal-group] > [data-reveal]:nth-child(5){transition-delay:.32s}
 [data-reveal-group] > [data-reveal]:nth-child(6){transition-delay:.4s}
-
-[data-parallax]{will-change:transform}
 
 @media (prefers-reduced-motion:reduce){
   [data-reveal]{opacity:1!important;transform:none!important;transition:none!important}
@@ -585,7 +588,7 @@ h1.h-display,h2.h-display,h3.h-display{
 
 /* ---------- staggered phrase reveal (story statement) ---------- */
 .reveal-word{display:inline-block;overflow:hidden;vertical-align:top;line-height:1.12}
-.reveal-word__inner{display:inline-block;will-change:transform,opacity}
+.reveal-word__inner{display:inline-block}
 
 /* ---------- horizontal-pin services gallery (desktop) ---------- */
 .hcards-pin{position:relative}

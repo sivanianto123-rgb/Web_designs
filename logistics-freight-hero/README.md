@@ -188,6 +188,30 @@ sluggish again:
   (`200px` root margin) now pauses each background video the moment it
   leaves the viewport and resumes it on return; `autoplay` still
   starts them normally on first load.
+- **No permanent `will-change`** (`assets/site.css`) — `[data-reveal]`,
+  `.reveal-word__inner` and `[data-parallax]` used to carry a static
+  `will-change:opacity,transform` rule, promoting every one of those
+  elements (20+ on the homepage, growing with each new chapter) to its
+  own compositor layer for the entire page lifetime, even though each
+  only animates once and then sits still. That's GPU-memory/compositing
+  overhead with no upside after the reveal finishes — removed. (The one
+  legitimate use, `.hcards-track`'s `will-change:transform`, stays: that
+  element really is being transformed continuously for the whole pinned
+  scroll.)
+- **Tilt cards and magnetic buttons cache their bounding rect**
+  (`assets/motion.js`) — both used to call `getBoundingClientRect()`
+  (a forced synchronous layout) on *every* `mousemove` event, which can
+  fire hundreds of times a second on a fast mouse/trackpad, right on
+  top of GSAP's own scrub/pin work in the same horizontal gallery. Now
+  the rect is read once on `mouseenter` and the resulting transform is
+  applied at most once per animation frame via `requestAnimationFrame`
+  — the same throttling pattern already used for the nav and parallax
+  handlers.
+- **Custom cursor loop skips redundant writes** — the per-frame
+  lerp (`curX += (mouseX-curX)*0.2`) used to write `cursor.style.transform`
+  every single frame for as long as the page was open, even with the
+  mouse sitting still. It now only writes once the dot is still
+  meaningfully catching up to the real cursor position.
 
 **Deliberately not used**: infinite scroll and multi-directional
 (2D) scrolling. Both are poor fits for this site by the same kind of

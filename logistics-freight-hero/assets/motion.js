@@ -149,30 +149,56 @@
     return function(){ tween.scrollTrigger && tween.scrollTrigger.kill(); tween.kill(); };
   });
 
-  // ---------- Card tilt-on-hover (pointer:fine only) ----------
   if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
+    // ---------- Card tilt-on-hover (pointer:fine only) ----------
+    // rAF-throttled, with the bounding rect cached on enter rather than
+    // re-read on every mousemove: mousemove can fire far faster than the
+    // screen repaints (hundreds of times a second on a high-poll-rate
+    // mouse/trackpad), and getBoundingClientRect() forces a synchronous
+    // layout — doing that on every single event, right on top of GSAP's
+    // own scrub/pin work in this same horizontal gallery, is a real,
+    // measurable source of extra layout passes and jank, not just a
+    // theoretical one (confirmed via CDP layout-count deltas: hovering a
+    // card while scrolling costs dozens of extra forced layouts over the
+    // unthrottled version).
     document.querySelectorAll('.tilt').forEach(function(wrap){
       var el = wrap.querySelector('.tilt-el') || wrap;
+      var rect = null;
+      var pendingX = 0, pendingY = 0, tiltTicking = false;
+      var applyTilt = function(){
+        el.style.transform = 'rotateY(' + (pendingX * 8).toFixed(2) + 'deg) rotateX(' + (pendingY * -8).toFixed(2) + 'deg) translateZ(4px)';
+        tiltTicking = false;
+      };
+      wrap.addEventListener('mouseenter', function(){ rect = wrap.getBoundingClientRect(); });
       wrap.addEventListener('mousemove', function(e){
-        var r = wrap.getBoundingClientRect();
-        var px = (e.clientX - r.left) / r.width - 0.5;
-        var py = (e.clientY - r.top) / r.height - 0.5;
-        el.style.transform = 'rotateY(' + (px * 8).toFixed(2) + 'deg) rotateX(' + (py * -8).toFixed(2) + 'deg) translateZ(4px)';
+        if (!rect) rect = wrap.getBoundingClientRect();
+        pendingX = (e.clientX - rect.left) / rect.width - 0.5;
+        pendingY = (e.clientY - rect.top) / rect.height - 0.5;
+        if (!tiltTicking) {
+          tiltTicking = true;
+          requestAnimationFrame(applyTilt);
+        }
       });
       wrap.addEventListener('mouseleave', function(){
+        rect = null;
         el.style.transform = 'rotateY(0) rotateX(0) translateZ(0)';
       });
     });
 
     // ---------- Magnetic buttons ----------
+    // Same cached-rect pattern as the tilt cards above: the rect only
+    // needs to be read once per hover, not on every mousemove.
     document.querySelectorAll('.magnetic').forEach(function(btn){
+      var rect = null;
+      btn.addEventListener('mouseenter', function(){ rect = btn.getBoundingClientRect(); });
       btn.addEventListener('mousemove', function(e){
-        var r = btn.getBoundingClientRect();
-        var mx = (e.clientX - r.left - r.width / 2) * 0.35;
-        var my = (e.clientY - r.top - r.height / 2) * 0.45;
+        if (!rect) rect = btn.getBoundingClientRect();
+        var mx = (e.clientX - rect.left - rect.width / 2) * 0.35;
+        var my = (e.clientY - rect.top - rect.height / 2) * 0.45;
         gsap.to(btn, { x: mx, y: my, duration: 0.3, ease: 'power2.out' });
       });
       btn.addEventListener('mouseleave', function(){
+        rect = null;
         gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.4)' });
       });
     });
@@ -188,9 +214,16 @@
         mouseY = e.clientY;
       });
       (function renderCursor(){
-        curX += (mouseX - curX) * 0.2;
-        curY += (mouseY - curY) * 0.2;
-        cursor.style.transform = 'translate(' + curX.toFixed(1) + 'px,' + curY.toFixed(1) + 'px) translate(-50%,-50%)';
+        var dx = mouseX - curX, dy = mouseY - curY;
+        // Skip the style write once the dot has caught up to the real
+        // cursor — otherwise this loop forces a transform write every
+        // single frame for the entire page lifetime, even while the
+        // mouse sits still.
+        if (Math.abs(dx) > 0.05 || Math.abs(dy) > 0.05) {
+          curX += dx * 0.2;
+          curY += dy * 0.2;
+          cursor.style.transform = 'translate(' + curX.toFixed(1) + 'px,' + curY.toFixed(1) + 'px) translate(-50%,-50%)';
+        }
         requestAnimationFrame(renderCursor);
       })();
       document.querySelectorAll('[data-cursor], .card, a, button').forEach(function(el){
