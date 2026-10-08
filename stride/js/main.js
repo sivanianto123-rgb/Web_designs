@@ -1,17 +1,16 @@
 // STRIDE — Never Stand Still
-// Preloader, custom cursor, and simple scroll-triggered reveals.
-// Normal native scrolling throughout — no pinning, no scroll-jacking,
-// no scroll-snap. Sections just fade/slide in once as they enter view.
-// The product grid additionally gets an asynchronous scroll parallax
-// (each card drifts at its own rate, scrubbed to scroll position but
-// never hijacking the scroll itself) and a hover overlay per card.
+// Preloader and simple scroll-triggered reveals. Normal native scrolling
+// throughout — no pinning, no scroll-jacking, no scroll-snap. Sections
+// just fade/slide in once as they enter view. The product cursor is the
+// regular system cursor; there's no custom cursor dot.
+// The Collection shows one product at a time (not a grid): each panel
+// sharpens into focus near the center of the viewport and blurs out
+// toward the edges as you scroll past it.
 
 document.addEventListener("DOMContentLoaded", () => {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const hasFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
   initPreloader(() => {
-    if (hasFinePointer && !reduceMotion) initCursor();
     initNav();
     initMarquees();
     initMagneticButton();
@@ -21,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
       gsap.registerPlugin(ScrollTrigger);
       initRevealAnimations();
       initNumbersCount();
-      if (!reduceMotion) initAsyncCardParallax();
+      if (!reduceMotion) initProductFocusBlur();
     } else {
       // Fallback: just show everything if GSAP failed to load.
       document.querySelectorAll(".reveal-up, .hero__title .word, .cta__title .word").forEach((el) => {
@@ -61,40 +60,6 @@ function initPreloader(done) {
     setTimeout(tick, 120);
   };
   tick();
-}
-
-/* ---------------- Custom cursor ---------------- */
-function initCursor() {
-  const cursor = document.getElementById("cursor");
-  const label = document.getElementById("cursorLabel");
-  if (!cursor || !label) return;
-
-  let mouseX = 0, mouseY = 0, curX = 0, curY = 0;
-  window.addEventListener("mousemove", (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
-
-  function render() {
-    curX += (mouseX - curX) * 0.18;
-    curY += (mouseY - curY) * 0.18;
-    cursor.style.transform = `translate(${curX}px, ${curY}px) translate(-50%, -50%)`;
-    requestAnimationFrame(render);
-  }
-  render();
-
-  const hoverTargets = document.querySelectorAll("[data-cursor], .card, a, button");
-  hoverTargets.forEach((el) => {
-    el.addEventListener("mouseenter", () => {
-      const text = el.getAttribute("data-cursor") || "";
-      label.textContent = text;
-      cursor.classList.add("is-hovering");
-    });
-    el.addEventListener("mouseleave", () => {
-      label.textContent = "";
-      cursor.classList.remove("is-hovering");
-    });
-  });
 }
 
 /* ---------------- Nav / mobile menu ---------------- */
@@ -158,19 +123,18 @@ function initRevealAnimations() {
     });
   });
 
-  // Product cards: staggered fade/scale in once as they enter view.
-  gsap.utils.toArray(".card").forEach((card, i) => {
-    gsap.from(card, {
+  // Product panels: fade/scale in once as each enters view.
+  gsap.utils.toArray(".product-feature").forEach((panel) => {
+    gsap.from(panel, {
       opacity: 0,
       y: 50,
       duration: 0.8,
       ease: "power3.out",
       scrollTrigger: {
-        trigger: card,
+        trigger: panel,
         start: "top 92%",
         once: true,
       },
-      delay: (i % 3) * 0.08,
     });
   });
 }
@@ -210,8 +174,8 @@ function initNumbersCount() {
 /* ---------------- Collection: filter tabs ---------------- */
 function initFilterTabs() {
   const tabs = document.querySelectorAll(".filter-tab");
-  const cards = document.querySelectorAll(".card");
-  if (!tabs.length || !cards.length) return;
+  const panels = document.querySelectorAll(".product-feature");
+  if (!tabs.length || !panels.length) return;
 
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
@@ -219,39 +183,39 @@ function initFilterTabs() {
       tab.classList.add("is-active");
 
       const filter = tab.getAttribute("data-filter");
-      cards.forEach((card) => {
-        const match = filter === "all" || card.getAttribute("data-category") === filter;
-        card.classList.toggle("is-filtered-out", !match);
+      panels.forEach((panel) => {
+        const match = filter === "all" || panel.getAttribute("data-category") === filter;
+        panel.classList.toggle("is-filtered-out", !match);
       });
 
-      // Card positions changed, so scroll-tied triggers need their
+      // Panel positions changed, so scroll-tied triggers need their
       // measurements refreshed.
       if (window.ScrollTrigger) ScrollTrigger.refresh();
     });
   });
 }
 
-/* ---------------- Collection: asynchronous scroll parallax ---------------- */
-// Each card drifts vertically at its own rate as the grid scrolls past —
-// scrubbed to scroll position (so it tracks scroll exactly, no easing lag),
-// but it's a transform on elements already in normal flow: nothing is
-// pinned and the page scrolls completely natively.
-function initAsyncCardParallax() {
-  const cards = gsap.utils.toArray(".card");
-  if (!cards.length || window.innerWidth < 900) return;
+/* ---------------- Collection: scroll-focus blur per product ---------------- */
+// Each product panel sharpens into focus as it nears the center of the
+// viewport and blurs out toward the edges — filter is driven directly by
+// scroll position (scrub: true), the same idea as Framer Motion's
+// useTransform(scrollYProgress, [0, 1], ["blur(0px)", "blur(10px)"]),
+// just read off GSAP ScrollTrigger's own progress instead of a React hook.
+// It's a filter on an element already in normal flow: nothing is pinned,
+// scrolling stays fully native.
+function initProductFocusBlur() {
+  const panels = gsap.utils.toArray(".product-feature");
+  if (!panels.length) return;
 
-  cards.forEach((card, i) => {
-    const col = i % 3;
-    const offset = col === 0 ? -36 : col === 2 ? 36 : -12;
-
-    gsap.to(card, {
-      y: offset,
-      ease: "none",
-      scrollTrigger: {
-        trigger: card,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true,
+  panels.forEach((panel) => {
+    ScrollTrigger.create({
+      trigger: panel,
+      start: "top bottom",
+      end: "bottom top",
+      scrub: true,
+      onUpdate: (self) => {
+        const distanceFromCenter = Math.abs(self.progress - 0.5) * 2; // 0 centered -> 1 at edges
+        panel.style.filter = `blur(${(distanceFromCenter * 10).toFixed(1)}px)`;
       },
     });
   });
