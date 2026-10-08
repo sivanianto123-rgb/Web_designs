@@ -31,8 +31,9 @@ in the story as you scroll.
 - [Lenis](https://github.com/darkroomengineering/lenis) for buttery smooth
   scrolling.
 - GSAP, ScrollTrigger and Lenis are vendored locally under `js/vendor/` (no
-  CDN dependency), and all product "photography" is inline SVG + CSS
-  gradients, so the whole site works fully offline.
+  CDN dependency). Product photography lives under `images/products/` and
+  is committed into the repo (no external image host), so the whole site
+  works fully offline.
 
 ## Run locally
 
@@ -46,16 +47,19 @@ python3 -m http.server 8000
 
 ```
 stride/
-├── index.html       # markup + content (hero, 6 chapters, CTA)
-├── css/style.css     # design system: colors, type scale, layout, chapter styles
-└── js/main.js        # preloader, cursor, smooth scroll, chapter HUD, scroll-scrubbed story logic
+├── index.html              # markup + content (hero, 6 chapters, CTA)
+├── css/style.css            # design system: colors, type scale, layout, chapter styles
+├── js/main.js               # preloader, cursor, smooth scroll, chapter HUD, scroll-scrubbed story logic
+└── images/products/         # product photography (6 pieces), used in both the
+                              # Collection grid and the Drop carousel
 ```
 
 ## Customizing
 
-- Swap the six placeholder products in the `.grid` section of `index.html`
-  — each `.card` just needs an SVG icon, title, category and a `card__visual--0N`
-  gradient class in `css/style.css`.
+- Swap the six products in the `.grid` section of `index.html` — each
+  `.card` needs an `<img class="card__icon">` pointing at a photo under
+  `images/products/`, plus a title/category, and picks up a blue or orange
+  backdrop automatically from its `card__visual--0N` class in `css/style.css`.
 - The horizontal carousel panels live in `#dropTrack` — add/remove
   `.chapter-drop__panel` articles and `initDropCarousel()` in `js/main.js`
   adapts automatically.
