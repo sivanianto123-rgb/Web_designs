@@ -4,12 +4,12 @@ A small multi-page logistics/freight marketing site, "Freightline."
 The homepage opens on a full-viewport pixel-exact hero (an aerial
 freight-train video, headline copy and two feature blocks mirrored
 across the train's center axis, with a single ~1.8s entrance
-animation), then **scrolls into a GSAP/Lenis-driven "story"**: a
-scroll progress bar, staggered phrase reveals, scroll-scrubbed stat
-counters, a pinned horizontal-scroll services gallery, a scrubbed
-video zoom, an infinite marquee ticker, and hover-tilt/magnetic
-micro-interactions — before handing off to a handful of supporting
-pages and two working front-end flows.
+animation), then **scrolls into a GSAP-driven "story"**: a scroll
+progress bar, staggered phrase reveals, scroll-scrubbed stat counters,
+a pinned horizontal-scroll services gallery, a scrubbed video zoom, an
+infinite marquee ticker, a custom cursor, a chapter progress HUD, and
+hover-tilt/magnetic micro-interactions — before handing off to a
+handful of supporting pages and two working front-end flows.
 
 ## Pages
 
@@ -57,13 +57,20 @@ Two layers, split by page:
   the given speed, via an `requestAnimationFrame`-throttled scroll
   listener.
 
-**The homepage** (`index.html`) loads GSAP + ScrollTrigger + Lenis
-(vendored locally under `assets/vendor/`, same files the sibling
-`stride/` project uses — no CDN) and a dedicated `assets/motion.js`
-that replaces the vanilla engine with a richer set of effects:
+**The homepage** (`index.html`) loads GSAP + ScrollTrigger (vendored
+locally under `assets/vendor/`, same files the sibling `stride/`
+project uses — no CDN) and a dedicated `assets/motion.js` that
+replaces the vanilla engine with a richer set of effects, on **native
+scroll** — no Lenis. It was there originally; removed after a real,
+confirmed bug: Lenis drives scroll via its own continuously-animated,
+eased position, which fights native CSS scroll-snap (used below) for
+control of where scroll comes to rest. The sibling `stride/` project
+hit the identical combination (Lenis + scroll-snap) independently,
+confirmed it as resistance/stutter and, with `mandatory` snapping, a
+gesture that could get stuck short of the next boundary — and removed
+Lenis for the same reason. GSAP ScrollTrigger needs no scroll library
+to function, so nothing else changed.
 
-- **Lenis smooth scroll** — the whole page scrolls with inertia
-  instead of the browser's native jump-scroll.
 - **Scroll progress bar** (`.scroll-progress`, fixed top) — a 4-color
   gradient bar that fills left-to-right as you scroll the page,
   driven by `scrollTrigger: { start:'top top', end:'max', scrub:true }`.
@@ -113,15 +120,53 @@ that replaces the vanilla engine with a richer set of effects:
   steps, a tracking result of unpredictable length) are exactly the
   kind of "information-dense, varied content height" case where
   mandatory-style snapping hurts more than it helps.
+- **Custom cursor** (`.cursor`/`.cursor__label`, `pointer:fine` only)
+  — a small dot that lerps toward the real cursor position each frame
+  (`curX += (mouseX - curX) * 0.2`, not GSAP-driven — matching the
+  sibling `stride/` project's implementation, adapted to this site's
+  orange/lavender palette) and grows into a filled circle with a text
+  label (`data-cursor="…"`) over cards and buttons. The system cursor
+  is hidden only once the JS actually runs (`body.has-custom-cursor`),
+  so a reduced-motion visitor or a failed script load never ends up
+  with no cursor at all.
+- **Chapter HUD** (`.chapter-hud`, bottom-left, hidden below 620px) —
+  a small "02 · The Fix"-style indicator tracking which of the
+  homepage's 6 story chapters (`data-chapter-index`/`-name` on each
+  top-level section) is in view, via `IntersectionObserver`. Only
+  visible while a chapter section is actually on screen, so it never
+  sits on top of the hero or the closing CTA/footer.
 
 Every one of these is skipped under `prefers-reduced-motion: reduce`:
 `motion.js` short-circuits into a block that sets every element to its
 final, fully-visible state (words shown, counters at their target
-value, track untransformed, hero fully visible) with no Lenis
-smoothing, no scroll-snap, and no scrub/pin/tilt/magnetic behavior at
-all. `site.js` carries a second, independent fallback for the rare
-case the GSAP vendor script itself fails to load (so counters and
-revealed text never get stuck at their initial "0"/hidden state).
+value, track untransformed, hero fully visible) with no scroll-snap,
+no cursor/HUD, and no scrub/pin/tilt/magnetic behavior at all.
+`site.js` carries a second, independent fallback for the rare case the
+GSAP vendor script itself fails to load (so counters and revealed text
+never get stuck at their initial "0"/hidden state).
+
+### Performance
+
+Three real, measured fixes worth knowing about if the page ever feels
+sluggish again:
+
+- **No Lenis** (see above) — removing it also removes one more
+  continuously-running `requestAnimationFrame` loop fighting for the
+  same frame budget as everything else below.
+- **Throttled nav scroll handler** (`assets/site.js`) — the
+  transparent→solid nav toggle used to run on every native `scroll`
+  event, which fires far more often than the screen repaints; toggling
+  a class (and the style recalc that goes with it) that often is a
+  real, measurable source of jank. Now `requestAnimationFrame`-gated,
+  like the rest of this site's scroll handlers already were.
+- **Videos pause when off-screen** (`assets/site.js`, all pages) — a
+  playing `<video>` decodes every frame whether visible or not. With
+  up to two full-bleed background clips on the homepage alone (plus
+  whatever GSAP is scrubbing on top during scroll), that's real,
+  ongoing decode cost for video nobody can see. An `IntersectionObserver`
+  (`200px` root margin) now pauses each background video the moment it
+  leaves the viewport and resumes it on return; `autoplay` still
+  starts them normally on first load.
 
 **Deliberately not used**: infinite scroll and multi-directional
 (2D) scrolling. Both are poor fits for this site by the same kind of
@@ -225,12 +270,13 @@ logistics-freight-hero/
 ├── quote.html                # get-a-quote wizard flow
 └── assets/
     ├── site.css              # shared design system + motion utilities
-    ├── site.js                # shared nav/footer + vanilla reveal/parallax fallback
-    ├── motion.js                # homepage-only: Lenis + ScrollTrigger orchestration
+    ├── site.js                # shared nav/footer, reveal/parallax fallback,
+    │                          #   nav-scroll throttle, off-screen video pause
+    ├── motion.js                # homepage-only: ScrollTrigger orchestration,
+    │                            #   custom cursor, chapter HUD
     └── vendor/
         ├── gsap.min.js             # vendored locally, no CDN
-        ├── ScrollTrigger.min.js
-        └── lenis.min.js
+        └── ScrollTrigger.min.js
 ```
 
 ## Layout (hero, first viewport)

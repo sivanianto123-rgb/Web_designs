@@ -27,13 +27,23 @@
   });
 
   // Nav gains a solid background once the page has scrolled a little.
+  // rAF-throttled: a bare scroll listener fires far more often than the
+  // screen repaints, and toggling a class (style recalc) on every one of
+  // those events is a real, measurable source of scroll jank.
   var nav = document.querySelector('.nav');
   if (nav) {
+    var navTicking = false;
     var setNavState = function(){
       nav.classList.toggle('is-scrolled', window.scrollY > 24);
+      navTicking = false;
     };
     setNavState();
-    window.addEventListener('scroll', setNavState, { passive: true });
+    window.addEventListener('scroll', function(){
+      if (!navTicking) {
+        window.requestAnimationFrame(setNavState);
+        navTicking = true;
+      }
+    }, { passive: true });
   }
 
   // Scroll-triggered reveals and parallax: skipped here when the GSAP/
@@ -101,5 +111,28 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     updateParallax();
+  }
+
+  // Pause background <video> elements while off-screen. A playing video
+  // decodes every frame whether or not it's visible; with up to two of
+  // these full-bleed background clips on a page (plus whatever GSAP is
+  // scrubbing on top during scroll), that decode work is real, ongoing
+  // GPU/CPU cost — a direct contributor to scroll jank. autoplay still
+  // starts them normally on load; this only pauses/resumes around that.
+  if ('IntersectionObserver' in window) {
+    var bgVideos = document.querySelectorAll('video.bg, video.page-hero__video, video.video-band__media');
+    if (bgVideos.length) {
+      var videoIo = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          var v = entry.target;
+          if (entry.isIntersecting) {
+            v.play().catch(function(){});
+          } else {
+            v.pause();
+          }
+        });
+      }, { threshold: 0, rootMargin: '200px 0px' });
+      bgVideos.forEach(function(v){ videoIo.observe(v); });
+    }
   }
 })();

@@ -1,8 +1,17 @@
-// Homepage-only motion layer: Lenis smooth scroll + GSAP/ScrollTrigger-driven
-// scroll progress, reveals, counters, horizontal-pin gallery, video zoom,
-// plus small vanilla-JS tilt/magnetic hover details.
+// Homepage-only motion layer: GSAP/ScrollTrigger-driven scroll progress,
+// reveals, counters, horizontal-pin gallery, video zoom, plus small
+// vanilla-JS tilt/magnetic hover details — all on native scroll.
 // Everything here degrades to a static, fully-visible page under
 // prefers-reduced-motion, and the whole file no-ops if GSAP failed to load.
+//
+// Deliberately NOT using Lenis smooth-scroll here: it drives scroll via
+// its own continuously-animated, eased position, which actively fights
+// native CSS scroll-snap (used below) for control of where scroll comes
+// to rest — confirmed as a real bug (scroll resistance/stutter, and with
+// snap-type:mandatory a gesture that never reaches the next boundary) in
+// this repo's sibling stride/ project, which hit the identical
+// Lenis+scroll-snap combination and removed Lenis for the same reason.
+// GSAP ScrollTrigger needs no scroll library to function.
 (function(){
   if (typeof gsap === 'undefined') return;
 
@@ -17,15 +26,6 @@
   }
 
   gsap.registerPlugin(ScrollTrigger);
-
-  // ---------- Lenis smooth scroll ----------
-  var lenis = null;
-  if (!reduceMotion && typeof Lenis !== 'undefined') {
-    lenis = new Lenis({ duration: 1.05, smoothWheel: true });
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
-    gsap.ticker.lagSmoothing(0);
-  }
 
   // ---------- Scroll progress bar ----------
   var progress = document.querySelector('.scroll-progress');
@@ -176,7 +176,69 @@
         gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.4)' });
       });
     });
+
+    // ---------- Custom cursor ----------
+    var cursor = document.getElementById('cursor');
+    var cursorLabel = document.getElementById('cursorLabel');
+    if (cursor && cursorLabel) {
+      document.body.classList.add('has-custom-cursor');
+      var mouseX = 0, mouseY = 0, curX = 0, curY = 0;
+      window.addEventListener('mousemove', function(e){
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+      (function renderCursor(){
+        curX += (mouseX - curX) * 0.2;
+        curY += (mouseY - curY) * 0.2;
+        cursor.style.transform = 'translate(' + curX.toFixed(1) + 'px,' + curY.toFixed(1) + 'px) translate(-50%,-50%)';
+        requestAnimationFrame(renderCursor);
+      })();
+      document.querySelectorAll('[data-cursor], .card, a, button').forEach(function(el){
+        el.addEventListener('mouseenter', function(){
+          cursorLabel.textContent = el.getAttribute('data-cursor') || '';
+          cursor.classList.add('is-hovering');
+        });
+        el.addEventListener('mouseleave', function(){
+          cursorLabel.textContent = '';
+          cursor.classList.remove('is-hovering');
+        });
+      });
+    }
   }
+
+  // ---------- Chapter HUD ----------
+  (function(){
+    var hud = document.getElementById('chapterHud');
+    var indexEl = document.getElementById('chapterHudIndex');
+    var nameEl = document.getElementById('chapterHudName');
+    var chapters = document.querySelectorAll('[data-chapter-index]');
+    if (!hud || !chapters.length) return;
+
+    var first = chapters[0];
+    var last = chapters[chapters.length - 1];
+
+    // Only show the HUD while a chapter is actually on screen, so it
+    // never sits on top of the hero or the closing CTA/footer.
+    var toggleVisible = function(){
+      var firstTop = first.getBoundingClientRect().top + window.scrollY;
+      var lastBottom = last.getBoundingClientRect().bottom + window.scrollY;
+      var probe = window.scrollY + window.innerHeight * 0.5;
+      hud.classList.toggle('is-visible', probe > firstTop && probe < lastBottom);
+    };
+    toggleVisible();
+    window.addEventListener('scroll', toggleVisible, { passive: true });
+    window.addEventListener('resize', toggleVisible);
+
+    var chapterIo = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          indexEl.textContent = entry.target.getAttribute('data-chapter-index');
+          nameEl.textContent = entry.target.getAttribute('data-chapter-name');
+        }
+      });
+    }, { threshold: 0.5 });
+    chapters.forEach(function(c){ chapterIo.observe(c); });
+  })();
 
   ScrollTrigger.addEventListener('refreshInit', function(){
     document.querySelectorAll('.hcards-track').forEach(function(t){ t.style.transform = ''; });
