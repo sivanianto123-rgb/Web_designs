@@ -36,8 +36,30 @@
     window.addEventListener('scroll', setNavState, { passive: true });
   }
 
-  // Scroll-triggered reveals.
-  var revealEls = document.querySelectorAll('[data-reveal]');
+  // Scroll-triggered reveals and parallax: skipped here when the GSAP/
+  // ScrollTrigger motion layer (assets/motion.js) is loaded on the page —
+  // it drives [data-reveal]/[data-parallax] itself with richer control.
+  // This block is the fallback for pages that only load site.js, and for
+  // the rare case the GSAP vendor script itself failed to load.
+  var gsapDriven = typeof window.gsap !== 'undefined';
+
+  if (!gsapDriven) {
+    document.querySelectorAll('.stat__num[data-count-to]').forEach(function(el){
+      var target = parseFloat(el.getAttribute('data-count-to'));
+      var prefix = el.getAttribute('data-count-prefix') || '';
+      var suffix = el.getAttribute('data-count-suffix') || '';
+      var decimals = el.getAttribute('data-count-decimals') ? parseInt(el.getAttribute('data-count-decimals'), 10) : 0;
+      el.textContent = prefix + target.toFixed(decimals) + suffix;
+    });
+    document.querySelectorAll('.reveal-word__inner').forEach(function(el){
+      el.style.transform = 'none';
+      el.style.opacity = 1;
+    });
+    var track = document.querySelector('.hcards-track');
+    if (track) track.style.transform = 'none';
+  }
+
+  var revealEls = gsapDriven ? [] : document.querySelectorAll('[data-reveal]');
   if (revealEls.length) {
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function(entries){
@@ -55,7 +77,7 @@
   }
 
   // Lightweight scroll-linked parallax (skipped under reduced motion).
-  var parallaxEls = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
+  var parallaxEls = gsapDriven ? [] : Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (parallaxEls.length && !reduceMotion) {
     var ticking = false;

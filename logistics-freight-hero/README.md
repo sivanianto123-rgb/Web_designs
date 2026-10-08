@@ -4,19 +4,19 @@ A small multi-page logistics/freight marketing site, "Freightline."
 The homepage opens on a full-viewport pixel-exact hero (an aerial
 freight-train video, headline copy and two feature blocks mirrored
 across the train's center axis, with a single ~1.8s entrance
-animation), then **scrolls into a narrative "story"**: parallax,
-scroll-triggered reveals, a second full-bleed video section, service
-highlights and stats, before handing off to a handful of supporting
+animation), then **scrolls into a GSAP/Lenis-driven "story"**: a
+scroll progress bar, staggered phrase reveals, scroll-scrubbed stat
+counters, a pinned horizontal-scroll services gallery, a scrubbed
+video zoom, an infinite marquee ticker, and hover-tilt/magnetic
+micro-interactions — before handing off to a handful of supporting
 pages and two working front-end flows.
 
 ## Pages
 
 - **`index.html`** — the hero (first viewport, pixel-exact, unchanged
-  geometry) followed by a scrollable story: a statement section, two
-  alternating feature spreads, a full-bleed video band with a
-  parallax-scrolled video layer, a services preview, a stats band and
-  a closing CTA. A standard transparent-until-scrolled nav now sits on
-  top of all of it (replacing the earlier corner menu) so the hero
+  geometry) followed by a scrollable, GSAP-driven story (see "Motion"
+  below for the full list of effects). A standard
+  transparent-until-scrolled nav sits on top of all of it so the hero
   stays reachable mid-scroll.
 - **`services.html`** — the six service lines (ocean, air, rail,
   trucking, customs, warehousing) as cards, each in a different accent
@@ -41,21 +41,68 @@ Both flows are entirely client-side — nothing is transmitted or
 stored; they exist to demonstrate the interaction, not to back a real
 quoting/tracking system.
 
-## Motion: parallax + scroll reveals
+## Motion
 
-A small shared engine in `assets/site.js` (also used inline on the
-homepage) powers two attributes used across every page:
+Two layers, split by page:
+
+**Interior pages** (`services.html`, `about.html`, `contact.html`,
+`track.html`, `quote.html`) use a small vanilla engine in
+`assets/site.js`:
 
 - **`data-reveal`** (optionally `="fade"`, `="left"` or `="right"`) —
   fades/slides an element in the first time it scrolls into view, via
   `IntersectionObserver`. Add `data-reveal-group` to a parent to
   stagger its direct `data-reveal` children.
 - **`data-parallax="0.15"`** — scroll-linked `translate3d` drift at
-  the given speed, updated on an `requestAnimationFrame`-throttled
-  scroll listener. Used on the homepage's mid-page video layer.
+  the given speed, via an `requestAnimationFrame`-throttled scroll
+  listener.
 
-Both are skipped entirely under `prefers-reduced-motion: reduce`
-(reveals render already-visible, parallax elements get no transform).
+**The homepage** (`index.html`) loads GSAP + ScrollTrigger + Lenis
+(vendored locally under `assets/vendor/`, same files the sibling
+`stride/` project uses — no CDN) and a dedicated `assets/motion.js`
+that replaces the vanilla engine with a richer set of effects:
+
+- **Lenis smooth scroll** — the whole page scrolls with inertia
+  instead of the browser's native jump-scroll.
+- **Scroll progress bar** (`.scroll-progress`, fixed top) — a 4-color
+  gradient bar that fills left-to-right as you scroll the page,
+  driven by `scrollTrigger: { start:'top top', end:'max', scrub:true }`.
+- **Staggered phrase reveal** — the homepage statement is split into
+  `.reveal-word` phrase spans (masked via `overflow:hidden`) that
+  slide up with a stagger as the section enters view.
+- **Scroll-scrubbed stat counters** — `.stat__num[data-count-to]`
+  elements count up from 0 to their target (with configurable
+  `data-count-prefix` / `-suffix` / `-decimals`) the first time they
+  scroll into view.
+- **Pinned horizontal-scroll services gallery** (`.hcards-pin` /
+  `.hcards-viewport` / `.hcards-track`, desktop only via
+  `gsap.matchMedia('(min-width: 861px)')`) — the section pins for
+  extra scroll distance while all 6 service cards slide horizontally
+  underneath the (non-scrolling) heading. Falls back to the normal
+  stacked/2-col grid below 861px — horizontal pin-scroll is a poor fit
+  for touch scrolling.
+- **Scrubbed video zoom** — the mid-page video band's `<video>` scales
+  from 1.18× down to 1× as the section scrolls through (`scrub:true`),
+  a cinematic "settle" effect replacing the earlier linear parallax.
+- **Infinite marquee ticker** (`.marquee`) — a looping CSS animation
+  (not GSAP) listing all 6 service lines between sections, for motion
+  even when the user isn't actively scrolling.
+- **Card tilt-on-hover** (`.tilt` wrapping `.tilt-el`, `pointer:fine`
+  only) — a subtle 3D rotate following the cursor position, reset on
+  mouse-leave. Note `perspective` must live on the wrapper, not the
+  rotated element itself — hence the two-element pattern.
+- **Magnetic buttons** (`.magnetic`, `pointer:fine` only) — the final
+  CTA buttons nudge toward the cursor within their own bounds, via
+  GSAP's `elastic.out` ease on release.
+
+Every one of these is skipped under `prefers-reduced-motion: reduce`:
+`motion.js` short-circuits into a block that sets every element to its
+final, fully-visible state (words shown, counters at their target
+value, track untransformed) with no Lenis smoothing and no
+scrub/pin/tilt/magnetic behavior at all. `site.js` carries a second,
+independent fallback for the rare case the GSAP vendor script itself
+fails to load (so counters and revealed text never get stuck at their
+initial "0"/hidden state).
 
 ## Real video, reused across the site
 
@@ -132,15 +179,20 @@ work fine opened directly via `file://`).
 
 ```
 logistics-freight-hero/
-├── index.html        # hero (first viewport) + scrollable story sections
+├── index.html        # hero (first viewport) + GSAP-driven story sections
 ├── services.html      # service lines
 ├── about.html           # company story, stats, timeline
 ├── contact.html          # contact form flow
 ├── track.html              # shipment tracking flow
 ├── quote.html                # get-a-quote wizard flow
 └── assets/
-    ├── site.css              # shared design system + parallax/reveal utilities
-    └── site.js               # shared nav/footer/scroll-reveal/parallax behavior
+    ├── site.css              # shared design system + motion utilities
+    ├── site.js                # shared nav/footer + vanilla reveal/parallax fallback
+    ├── motion.js                # homepage-only: Lenis + ScrollTrigger orchestration
+    └── vendor/
+        ├── gsap.min.js             # vendored locally, no CDN
+        ├── ScrollTrigger.min.js
+        └── lenis.min.js
 ```
 
 ## Layout (hero, first viewport)
