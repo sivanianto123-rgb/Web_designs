@@ -31,15 +31,25 @@
   <span class="cursor__label" id="cursorLabel"></span>
 </div>
 
-<!-- Chapter HUD -->
-<div class="chapter-hud" id="chapterHud">
-  <span class="chapter-hud__index" id="chapterHudIndex">00</span>
-  <span class="chapter-hud__name" id="chapterHudName">Intro</span>
-</div>
+<!-- Side rails -->
+<div class="rail rail--left" aria-hidden="true"></div>
+<div class="rail rail--right" aria-hidden="true"></div>
 
 <!-- Nav -->
 <header class="nav">
-  <a href="#top" class="nav__logo">STRIDE</a>
+  <div class="nav__brand">
+    <a href="#top" class="nav__logo">
+      <svg class="nav__mark" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="11" cy="11" r="6"/>
+        <circle cx="21" cy="21" r="6"/>
+      </svg>
+      STRIDE
+    </a>
+    <span class="nav__chapter" id="chapterHud">
+      <span class="nav__chapter-index" id="chapterHudIndex">00</span>
+      <span class="nav__chapter-name" id="chapterHudName">Intro</span>
+    </span>
+  </div>
   <nav class="nav__links">
     <a href="#origin" data-cursor="01">Origin</a>
     <a href="#drop" data-cursor="02">The Drop</a>
@@ -113,7 +123,10 @@
       <path id="pulsePath" d="M0 100 L250 100 L300 30 L350 170 L400 60 L450 140 L500 100 L1000 100"/>
     </svg>
     <div class="chapter-origin__inner">
-      <span class="eyebrow">Chapter 01 — Origin</span>
+      <div class="chapter-head">
+        <span class="chapter-num">01</span>
+        <span class="eyebrow">Origin</span>
+      </div>
       <p class="manifesto">
         <span class="word">Every</span> <span class="word">city</span> <span class="word">has</span>
         <span class="word">a</span> <span class="word">pulse.</span>
@@ -132,7 +145,10 @@
     <div class="chapter-drop__track" id="dropTrack">
 
       <article class="chapter-drop__panel">
-        <span class="eyebrow">Chapter 02 — The Drop</span>
+        <div class="chapter-head">
+          <span class="chapter-num">02</span>
+          <span class="eyebrow">The Drop</span>
+        </div>
         <img class="chapter-drop__icon" src="images/products/01_pulse_runner.jpg" alt="Pulse Runner sneaker">
         <h3 class="chapter-drop__title">Pulse&nbsp;Runner</h3>
         <p class="chapter-drop__copy">Engineered for the street, tuned for the sprint.</p>
@@ -165,7 +181,10 @@
 
   <!-- Chapter 03 — By the numbers -->
   <section class="chapter chapter-numbers" id="numbers" data-chapter-index="03" data-chapter-name="By The Numbers">
-    <span class="eyebrow">Chapter 03 — By The Numbers</span>
+    <div class="chapter-head">
+      <span class="chapter-num">03</span>
+      <span class="eyebrow">By The Numbers</span>
+    </div>
     <div class="numbers-grid">
       <div class="num-block">
         <span class="num-block__num" data-target="0.3" data-decimals="1">0</span>
@@ -189,7 +208,10 @@
   <!-- Chapter 04 — The Collection -->
   <section class="products" id="collection" data-chapter-index="04" data-chapter-name="The Collection">
     <div class="section-head">
-      <span class="eyebrow reveal-up">Chapter 04 — The Collection</span>
+      <div class="chapter-head reveal-up">
+        <span class="chapter-num">04</span>
+        <span class="eyebrow">The Collection</span>
+      </div>
       <h2 class="section-head__title reveal-up">Gear for<br>the Move</h2>
       <p class="section-head__sub reveal-up">
         Six pieces, one mindset. Designed in-house for people who notice
@@ -270,7 +292,10 @@
 
   <!-- Chapter 05 — Worn by the city -->
   <section class="chapter chapter-city" id="city" data-chapter-index="05" data-chapter-name="Worn By The City">
-    <span class="eyebrow reveal-up">Chapter 05 — Worn By The City</span>
+    <div class="chapter-head reveal-up">
+      <span class="chapter-num">05</span>
+      <span class="eyebrow">Worn By The City</span>
+    </div>
 
     <div class="city-marquee" aria-hidden="true">
       <div class="city-marquee__track">

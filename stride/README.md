@@ -19,14 +19,20 @@ entirely through motion.
    quote cards.
 7. **Join the Movement** — closing CTA.
 
-A fixed chapter HUD (bottom-left) and a top progress bar track where you are
-in the story as you scroll. Each chapter uses CSS Scroll Snap
-(`scroll-snap-type: y proximity`) to settle into place like a full-screen
-slide — chosen over `mandatory` because `mandatory` can trap a gentle scroll
-gesture before it reaches the next section (tested: small wheel ticks got
-stuck oscillating short of the boundary). The Drop carousel is deliberately
-excluded from snapping since it's already its own pinned, scroll-jacked
-interaction.
+Each numbered chapter opens with a big ghost numeral + eyebrow label
+("01 Origin", "02 The Drop"...), set against a solid, saturated color-block
+background — no two adjacent chapters share a color. A pair of fixed
+film-strip tick-mark rails run down the left/right edges of the viewport,
+and the nav shows a live pill (current chapter number + name) that fades in
+once you've scrolled into the story. A top progress bar tracks overall
+scroll position.
+
+Each chapter uses CSS Scroll Snap (`scroll-snap-type: y proximity`) to
+settle into place like a full-screen slide — chosen over `mandatory` because
+`mandatory` can trap a gentle scroll gesture before it reaches the next
+section (tested: small wheel ticks got stuck oscillating short of the
+boundary). The Drop carousel is deliberately excluded from snapping since
+it's already its own pinned, scroll-jacked interaction.
 
 ## Stack
 
