@@ -18,9 +18,11 @@ handful of supporting pages and two working front-end flows.
   below for the full list of effects). A standard
   transparent-until-scrolled nav sits on top of all of it so the hero
   stays reachable mid-scroll.
-- **`services.html`** — the six service lines (ocean, air, rail,
-  trucking, customs, warehousing) as cards, each in a different accent
-  color; each links into the quote flow with its mode pre-selected.
+- **`services.html`** — five service lines (ocean, air, rail,
+  trucking, warehousing) as full-bleed photo cards, each links into
+  the quote flow with its mode pre-selected. Customs brokerage isn't
+  a card here (no matching photo), but still shows up as a reason to
+  get in touch on `contact.html`.
 - **`about.html`** — company story, values, stats, and a milestone
   timeline.
 - **`contact.html`** — a contact form with client-side validation and
@@ -84,7 +86,7 @@ to function, so nothing else changed.
 - **Pinned horizontal-scroll services gallery** (`.hcards-pin` /
   `.hcards-viewport` / `.hcards-track`, desktop only via
   `gsap.matchMedia('(min-width: 861px)')`) — the section pins for
-  extra scroll distance while all 6 service cards slide horizontally
+  extra scroll distance while the 5 service cards slide horizontally
   underneath the (non-scrolling) heading. Falls back to the normal
   stacked/2-col grid below 861px — horizontal pin-scroll is a poor fit
   for touch scrolling.
@@ -92,8 +94,10 @@ to function, so nothing else changed.
   from 1.18× down to 1× as the section scrolls through (`scrub:true`),
   a cinematic "settle" effect replacing the earlier linear parallax.
 - **Infinite marquee ticker** (`.marquee`) — a looping CSS animation
-  (not GSAP) listing all 6 service lines between sections, for motion
-  even when the user isn't actively scrolling.
+  (not GSAP) listing all 6 freight modes between sections (including
+  customs brokerage, which isn't a card anywhere but is still
+  something Freightline handles), for motion even when the user isn't
+  actively scrolling.
 - **Card tilt-on-hover** (`.tilt` wrapping `.tilt-el`, `pointer:fine`
   only) — a subtle 3D rotate following the cursor position, reset on
   mouse-leave. Note `perspective` must live on the wrapper, not the
@@ -154,30 +158,27 @@ to function, so nothing else changed.
   the Chapter HUD already reads. It carries its own
   `padding-top:calc(var(--nav-h) + …)` so it clears the fixed nav even
   in sections (`story-statement`, `hcards-pin`) that otherwise have no
-  top padding of their own. `.example-card__frame` restyles each
-  service card's icon area into a short device-frame preview window —
-  negative margins bleed it to the card's edges, a 3px colored top
-  border plus tinted background identify it, and it cycles through all
-  4 accent tones via `nth-child(4n+2/3/4)` across the 6-card horizontal
-  gallery, same as the existing `.card__link` color-cycling it sits
-  above. This was originally applied to all 6 services as standalone
-  SVG icon files under `assets/icons/`, network-loaded rather than
-  inlined, after real photography turned out to be unavailable (the
-  sandbox blocks the usual stock-photo CDNs, and neither connected
-  image-generation provider had enough credit). The user then supplied
-  5 real photos directly; `.example-card__frame` now survives only for
-  **Customs Brokerage**, the one service with no matching photo among
-  the 5 supplied — everything else moved to `.card--photo` below.
+  top padding of their own.
 
 - **`.card--photo`** — full-bleed background photo with a bottom
   gradient scrim and the title/description/link overlaid on top,
   matching a reference layout the user supplied. Used for Ocean
   Freight, Air Freight, Rail Freight, Trucking & Drayage and
   Warehousing & Distribution on both the homepage gallery and
-  `services.html`'s 3-column grid; `assets/photos/*.jpg` are the
+  `services.html`'s now-5-card grid; `assets/photos/*.jpg` are the
   user's own supplied images (not stock photography pulled from the
-  web — the sandbox can't reach external image hosts anyway). One
-  real bug surfaced building this: `.card__link` normally carries
+  web — the sandbox can't reach external image hosts anyway).
+  Customs Brokerage was dropped from both pages entirely rather than
+  carry a device-frame icon card alone among five photo cards — it had
+  no matching photo among the 5 supplied, and the short-lived
+  `.example-card__frame` icon treatment that briefly covered that gap
+  (device-frame preview window, colored top border, network-loaded SVG
+  icon) has been removed along with it; `assets/icons/` is gone and
+  the contact page's "Customs & compliance" dropdown option and the
+  tracking flow's "Customs Cleared" status are untouched, since
+  neither is the removed card.
+
+  One real bug surfaced building the photo cards: `.card__link` normally carries
   `margin-top:auto` to push itself to the bottom of a tall icon card,
   but that fights `.card--photo`'s own `justify-content:flex-end` —
   the auto margin eats all the free space before `justify-content`
@@ -327,7 +328,7 @@ A two-hue theme — **orange** and **lavender** — all defined in
 `--accent-2` (`#A78BFA`, lavender) are the two dominant colors;
 `--accent-3` (`#FDBA74`, a lighter orange tint) and `--accent-4`
 (`#C4B5FD`, a lighter lavender tint) round out a 4-step cycle so
-repeated elements (6 service-card icons, 4 stat underlines) alternate
+repeated elements (5 service-card photo captions, 4 stat underlines) alternate
 shades within the same two hue families instead of repeating one color
 or reintroducing unrelated ones.
 
