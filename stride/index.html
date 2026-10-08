@@ -95,17 +95,53 @@
     </div>
   </section>
 
-  <!-- Origin -->
-  <section class="chapter chapter-origin" id="origin">
-    <svg class="chapter-origin__pulse" viewBox="0 0 1000 200" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M0 100 L250 100 L300 30 L350 170 L400 60 L450 140 L500 100 L1000 100"/>
-    </svg>
-    <div class="chapter-origin__inner reveal-up">
-      <span class="eyebrow">Origin</span>
-      <p class="manifesto">
-        Every city has a pulse. We build for the ones who move to it.
-        No finish line — <span class="manifesto__accent">just the next stride.</span>
-      </p>
+  <!-- Origin: told as a pinned, crossfading scene-by-scene story -->
+  <section class="story" id="origin">
+    <div class="story__viewport">
+
+      <div class="story__scene story__scene--01 is-active">
+        <div class="story__scene-bg story__scene-bg--dark"></div>
+        <div class="story__scene-content">
+          <span class="story__eyebrow">Where It Starts</span>
+          <h2 class="story__headline">Every city has <span class="story__accent">a pulse.</span></h2>
+        </div>
+      </div>
+
+      <div class="story__scene story__scene--02">
+        <div class="story__scene-bg">
+          <img class="story__scene-img" src="images/products/01_pulse_runner.jpg" alt="Pulse Runner sneaker">
+        </div>
+        <div class="story__scene-content">
+          <span class="story__eyebrow">The Philosophy</span>
+          <h2 class="story__headline">We build for <span class="story__accent">the ones who move.</span></h2>
+        </div>
+      </div>
+
+      <div class="story__scene story__scene--03">
+        <div class="story__scene-bg">
+          <img class="story__scene-img" src="images/products/03_flux_pack.jpg" alt="Flux Pack backpack">
+        </div>
+        <div class="story__scene-content">
+          <span class="story__eyebrow">The Standard</span>
+          <h2 class="story__headline"><span class="story__accent">0.3 seconds.</span> That's all it takes.</h2>
+        </div>
+      </div>
+
+      <div class="story__scene story__scene--04">
+        <div class="story__scene-bg story__scene-bg--solid"></div>
+        <div class="story__scene-content">
+          <span class="story__eyebrow">The Promise</span>
+          <h2 class="story__headline">No finish line — <span class="story__accent">just the next stride.</span></h2>
+        </div>
+      </div>
+
+      <div class="story__progress" aria-hidden="true">
+        <span class="story__progress-dot is-active"></span>
+        <span class="story__progress-dot"></span>
+        <span class="story__progress-dot"></span>
+        <span class="story__progress-dot"></span>
+      </div>
+
     </div>
   </section>
 

@@ -6,6 +6,9 @@
 // The Collection shows one product at a time (not a grid): each panel
 // sharpens into focus near the center of the viewport and blurs out
 // toward the edges as you scroll past it.
+// The Origin section is the one deliberate exception to "no pinning":
+// it's a pinned, crossfading scene-by-scene story (desktop + motion only
+// — see initStory), matching a reference the user asked to be matched.
 
 document.addEventListener("DOMContentLoaded", () => {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -20,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
       gsap.registerPlugin(ScrollTrigger);
       initRevealAnimations();
       initNumbersCount();
+      initStory(reduceMotion);
       if (!reduceMotion) initProductFocusBlur();
     } else {
       // Fallback: just show everything if GSAP failed to load.
@@ -27,6 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
         el.style.opacity = 1;
         el.style.transform = "none";
       });
+      const story = document.querySelector(".story");
+      if (story) story.classList.add("story--static");
     }
   });
 });
@@ -192,6 +198,41 @@ function initFilterTabs() {
       // measurements refreshed.
       if (window.ScrollTrigger) ScrollTrigger.refresh();
     });
+  });
+}
+
+/* ---------------- Origin: pinned, crossfading story ---------------- */
+// The section is 4x viewport height. A single ScrollTrigger pins
+// .story__viewport for that entire range; as the user scrolls through it,
+// onUpdate works out which quarter of the range they're in and toggles
+// .is-active on the matching scene (CSS opacity transition does the
+// crossfade). This is the one section on the site that pins — skipped
+// entirely on narrow viewports or reduced-motion, where CSS instead lays
+// the scenes out as normal stacked blocks (see .story--static).
+function initStory(reduceMotion) {
+  const section = document.querySelector(".story");
+  if (!section) return;
+
+  const isWideEnough = window.matchMedia("(min-width: 861px)").matches;
+  if (!isWideEnough || reduceMotion) {
+    section.classList.add("story--static");
+    return;
+  }
+
+  const scenes = gsap.utils.toArray(".story__scene");
+  const dots = gsap.utils.toArray(".story__progress-dot");
+  if (!scenes.length) return;
+
+  ScrollTrigger.create({
+    trigger: section,
+    start: "top top",
+    end: "bottom bottom",
+    pin: ".story__viewport",
+    onUpdate: (self) => {
+      const index = Math.min(scenes.length - 1, Math.floor(self.progress * scenes.length));
+      scenes.forEach((scene, i) => scene.classList.toggle("is-active", i === index));
+      dots.forEach((dot, i) => dot.classList.toggle("is-active", i === index));
+    },
   });
 }
 

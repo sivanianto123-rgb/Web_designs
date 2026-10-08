@@ -353,48 +353,118 @@ blockquote { border: none; }
   to { transform: translateX(-50%); }
 }
 
-/* ---------- Chapter 01 — Origin (manifesto) ---------- */
-.chapter-origin {
+/* ---------- Origin: pinned, crossfading story ----------
+   Desktop: the section is 4x viewport height; a ScrollTrigger pins
+   .story__viewport for that whole range and swaps an "is-active" class
+   between scenes as you scroll, crossfading via opacity. This is a
+   deliberate, scoped exception to "no scroll-jacking" elsewhere on the
+   site — explicitly requested to match a reference's scene-to-scene
+   background crossfade, which that effect requires.
+   Reduced motion / narrow viewports: JS adds .story--static and the
+   section falls back to normal stacked scenes, no pin, no crossfade. */
+.story {
   position: relative;
-  padding: 7rem 0;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
+  height: 400vh;
   border-top: 1px solid var(--line);
-  background: var(--bg-soft);
 }
-.chapter-origin__pulse {
+.story__viewport {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+.story__scene {
   position: absolute;
-  top: 50%;
-  left: 0;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.story__scene.is-active { opacity: 1; }
+
+.story__scene-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, #2a1206, #0d0502);
+}
+.story__scene-bg--dark { background: linear-gradient(160deg, #2a1206, #0d0502); }
+.story__scene-bg--solid { background: var(--accent); }
+.story__scene-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2) 55%, transparent 85%);
+}
+.story__scene-bg--dark::after,
+.story__scene-bg--solid::after { content: none; }
+.story__scene-img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: 160px;
-  transform: translateY(-50%);
-  color: var(--line);
-  opacity: 0.6;
+  height: 100%;
+  object-fit: cover;
 }
-.chapter-origin__pulse path {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.5;
-}
-.chapter-origin__inner {
+
+.story__scene-content {
   position: relative;
   z-index: 1;
-  padding: 0 clamp(1.5rem, 5vw, 3.5rem);
-  max-width: 1100px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 920px;
+  padding: 0 clamp(1.5rem, 5vw, 4rem);
 }
-.manifesto {
+.story__eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--fg-on-dark-dim);
+  margin-bottom: 1.25rem;
+}
+.story__headline {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(1.8rem, 5vw, 3.6rem);
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-  color: var(--fg);
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--fg-on-dark);
 }
-.manifesto__accent {
-  color: var(--accent);
+.story__accent { color: var(--accent); }
+
+.story__scene--04 .story__eyebrow { color: rgba(23, 19, 16, 0.6); }
+.story__scene--04 .story__headline { color: var(--fg); }
+.story__scene--04 .story__accent { color: var(--bg); }
+
+.story__progress {
+  position: absolute;
+  z-index: 2;
+  bottom: 2.5rem;
+  left: clamp(1.5rem, 5vw, 4rem);
+  display: flex;
+  gap: 0.5rem;
 }
+.story__progress-dot {
+  width: 24px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.35);
+  transition: background 0.4s ease;
+}
+.story__progress-dot.is-active { background: #fff; }
+
+/* Fallback: no pin, no crossfade — scenes stack as normal full-height blocks. */
+.story.story--static {
+  height: auto;
+}
+.story.story--static .story__viewport {
+  height: auto;
+  overflow: visible;
+}
+.story.story--static .story__scene {
+  position: relative;
+  opacity: 1;
+  height: 75vh;
+  min-height: 460px;
+}
+.story.story--static .story__progress { display: none; }
 
 /* ---------- By the numbers ---------- */
 .chapter-numbers {
@@ -717,14 +787,5 @@ blockquote { border: none; }
   }
   .hero__marquee-track {
     font-size: clamp(3rem, 16vw, 5rem);
-  }
-  .chapter-origin__pulse {
-    top: 6.5rem;
-    height: 90px;
-    transform: none;
-    opacity: 0.4;
-  }
-  .chapter-origin__inner {
-    padding-top: 7rem;
   }
 }
