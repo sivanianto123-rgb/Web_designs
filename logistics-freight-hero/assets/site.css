@@ -372,14 +372,9 @@ h1.h-display,h2.h-display,h3.h-display{
   transition:border-color .15s ease, transform .15s ease, background .15s ease;
 }
 .card:hover{border-color:rgba(249,115,22,.5);transform:translateY(-2px);background:rgba(255,255,255,.06)}
-.card__icon{
-  width:44px;height:44px;border-radius:9px;
-  display:flex;align-items:center;justify-content:center;
-  background:var(--accent-dim);color:var(--accent);
-}
-.cards .card:nth-child(4n+2) .card__icon{background:var(--accent-2-dim);color:var(--accent-2)}
-.cards .card:nth-child(4n+3) .card__icon{background:var(--accent-3-dim);color:var(--accent-3)}
-.cards .card:nth-child(4n+4) .card__icon{background:var(--accent-4-dim);color:var(--accent-4)}
+.cards .card:nth-child(4n+2) .example-card__frame{border-top-color:var(--accent-2);background:var(--accent-2-dim);color:var(--accent-2)}
+.cards .card:nth-child(4n+3) .example-card__frame{border-top-color:var(--accent-3);background:var(--accent-3-dim);color:var(--accent-3)}
+.cards .card:nth-child(4n+4) .example-card__frame{border-top-color:var(--accent-4);background:var(--accent-4-dim);color:var(--accent-4)}
 .cards .card:nth-child(4n+2) .card__link{color:var(--accent-2)}
 .cards .card:nth-child(4n+3) .card__link{color:var(--accent-3)}
 .cards .card:nth-child(4n+4) .card__link{color:var(--accent-4)}

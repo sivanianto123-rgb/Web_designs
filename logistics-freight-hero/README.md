@@ -178,7 +178,12 @@ to function, so nothing else changed.
   even one image (OpenArt's cheapest model is 10 credits against a
   4-credit balance; Higgsfield has 1 credit). These SVGs are the
   honest version of that ask given those constraints — genuinely
-  network-loaded, not inlined, just not photographic.
+  network-loaded, not inlined, just not photographic. Applied to both
+  places these icons appear: the homepage's horizontal gallery and
+  `services.html`'s own 3-column card grid, which previously still had
+  the old inline `.card__icon` treatment after the homepage was
+  updated — now both use the same `.example-card__frame` markup and
+  the same 6 icon files.
 
 Every one of these is skipped under `prefers-reduced-motion: reduce`:
 `motion.js` short-circuits into a block that sets every element to its
