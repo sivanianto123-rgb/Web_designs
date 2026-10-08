@@ -20,31 +20,26 @@
   <div class="preloader__label">STRIDE</div>
 </div>
 
-<!-- Grain overlay -->
-<div class="grain"></div>
-
-<!-- Scroll progress -->
-<div class="progress-bar" id="progressBar"></div>
-
 <!-- Custom cursor -->
 <div class="cursor" id="cursor">
   <span class="cursor__label" id="cursorLabel"></span>
 </div>
 
-<!-- Chapter HUD -->
-<div class="chapter-hud" id="chapterHud">
-  <span class="chapter-hud__index" id="chapterHudIndex">00</span>
-  <span class="chapter-hud__name" id="chapterHudName">Intro</span>
-</div>
-
 <!-- Nav -->
 <header class="nav">
-  <a href="#top" class="nav__logo">STRIDE</a>
+  <div class="nav__brand">
+    <a href="#top" class="nav__logo">
+      <svg class="nav__mark" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="11" cy="11" r="6"/>
+        <circle cx="21" cy="21" r="6"/>
+      </svg>
+      STRIDE
+    </a>
+  </div>
   <nav class="nav__links">
     <a href="#origin" data-cursor="01">Origin</a>
-    <a href="#drop" data-cursor="02">The Drop</a>
-    <a href="#collection" data-cursor="04">Collection</a>
-    <a href="#city" data-cursor="05">City</a>
+    <a href="#collection" data-cursor="02">Collection</a>
+    <a href="#city" data-cursor="03">City</a>
   </nav>
   <a href="#contact" class="nav__cta" data-cursor="GO">Join In</a>
   <button class="nav__burger" id="burger" aria-label="Toggle menu">
@@ -55,9 +50,8 @@
 <!-- Mobile menu -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#origin">Origin</a>
-  <a href="#drop">The Drop</a>
-  <a href="#numbers">Numbers</a>
   <a href="#collection">Collection</a>
+  <a href="#numbers">Numbers</a>
   <a href="#city">City</a>
   <a href="#contact">Join In</a>
 </div>
@@ -80,16 +74,15 @@
 
     <p class="hero__sub reveal-up">
       STRIDE fuses performance engineering with street attitude — gear
-      for people who don't do standing still. Six chapters. One pace: forward.
+      for people who don't do standing still.
     </p>
 
-    <div class="hero__scroll reveal-up">
-      <span>Scroll the story</span>
-      <div class="hero__scroll-line"></div>
-    </div>
-
-    <div class="hero__index">
-      <span>00</span><span>/</span><span>06</span>
+    <div class="hero__cta-row reveal-up">
+      <a href="#collection" class="hero__cta" data-cursor="GO">Shop the collection</a>
+      <div class="hero__scroll">
+        <span>Scroll to explore</span>
+        <div class="hero__scroll-line"></div>
+      </div>
     </div>
   </section>
 
@@ -107,65 +100,23 @@
     </div>
   </section>
 
-  <!-- Chapter 01 — Origin -->
-  <section class="chapter chapter-origin" id="origin" data-chapter-index="01" data-chapter-name="Origin">
+  <!-- Origin -->
+  <section class="chapter chapter-origin" id="origin">
     <svg class="chapter-origin__pulse" viewBox="0 0 1000 200" preserveAspectRatio="none" aria-hidden="true">
-      <path id="pulsePath" d="M0 100 L250 100 L300 30 L350 170 L400 60 L450 140 L500 100 L1000 100"/>
+      <path d="M0 100 L250 100 L300 30 L350 170 L400 60 L450 140 L500 100 L1000 100"/>
     </svg>
-    <div class="chapter-origin__inner">
-      <span class="eyebrow">Chapter 01 — Origin</span>
+    <div class="chapter-origin__inner reveal-up">
+      <span class="eyebrow">Origin</span>
       <p class="manifesto">
-        <span class="word">Every</span> <span class="word">city</span> <span class="word">has</span>
-        <span class="word">a</span> <span class="word">pulse.</span>
-        <span class="word">We</span> <span class="word">build</span> <span class="word">for</span>
-        <span class="word">the</span> <span class="word">ones</span> <span class="word">who</span>
-        <span class="word">move</span> <span class="word">to</span> <span class="word">it.</span>
-        <span class="word">No</span> <span class="word">finish</span> <span class="word">line</span> —
-        <span class="word word--accent">just</span> <span class="word word--accent">the</span>
-        <span class="word word--accent">next</span> <span class="word word--accent">stride.</span>
+        Every city has a pulse. We build for the ones who move to it.
+        No finish line — <span class="manifesto__accent">just the next stride.</span>
       </p>
     </div>
   </section>
 
-  <!-- Chapter 02 — The Drop (horizontal scroll-jacked carousel) -->
-  <section class="chapter-drop" id="drop" data-chapter-index="02" data-chapter-name="The Drop">
-    <div class="chapter-drop__track" id="dropTrack">
-
-      <article class="chapter-drop__panel">
-        <span class="eyebrow">Chapter 02 — The Drop</span>
-        <img class="chapter-drop__icon" src="images/products/01_pulse_runner.jpg" alt="Pulse Runner sneaker">
-        <h3 class="chapter-drop__title">Pulse&nbsp;Runner</h3>
-        <p class="chapter-drop__copy">Engineered for the street, tuned for the sprint.</p>
-        <span class="chapter-drop__num">01 / 04</span>
-      </article>
-
-      <article class="chapter-drop__panel">
-        <img class="chapter-drop__icon" src="images/products/02_volt_chrono.jpg" alt="Volt Chrono smartwatch">
-        <h3 class="chapter-drop__title">Volt&nbsp;Chrono</h3>
-        <p class="chapter-drop__copy">Every second, worn loud.</p>
-        <span class="chapter-drop__num">02 / 04</span>
-      </article>
-
-      <article class="chapter-drop__panel">
-        <img class="chapter-drop__icon" src="images/products/03_flux_pack.jpg" alt="Flux Pack backpack">
-        <h3 class="chapter-drop__title">Flux&nbsp;Pack</h3>
-        <p class="chapter-drop__copy">Carry the whole day. Feel none of the weight.</p>
-        <span class="chapter-drop__num">03 / 04</span>
-      </article>
-
-      <article class="chapter-drop__panel">
-        <img class="chapter-drop__icon" src="images/products/06_street_shades.jpg" alt="Street Shades sunglasses">
-        <h3 class="chapter-drop__title">Street&nbsp;Shades</h3>
-        <p class="chapter-drop__copy">Shell for the city, built like armor.</p>
-        <span class="chapter-drop__num">04 / 04</span>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- Chapter 03 — By the numbers -->
-  <section class="chapter chapter-numbers" id="numbers" data-chapter-index="03" data-chapter-name="By The Numbers">
-    <span class="eyebrow">Chapter 03 — By The Numbers</span>
+  <!-- By the numbers -->
+  <section class="chapter chapter-numbers" id="numbers">
+    <span class="eyebrow reveal-up">By The Numbers</span>
     <div class="numbers-grid">
       <div class="num-block">
         <span class="num-block__num" data-target="0.3" data-decimals="1">0</span>
@@ -186,10 +137,10 @@
     </div>
   </section>
 
-  <!-- Chapter 04 — The Collection -->
-  <section class="products" id="collection" data-chapter-index="04" data-chapter-name="The Collection">
+  <!-- The Collection -->
+  <section class="products" id="collection">
     <div class="section-head">
-      <span class="eyebrow reveal-up">Chapter 04 — The Collection</span>
+      <span class="eyebrow reveal-up">The Collection</span>
       <h2 class="section-head__title reveal-up">Gear for<br>the Move</h2>
       <p class="section-head__sub reveal-up">
         Six pieces, one mindset. Designed in-house for people who notice
@@ -197,12 +148,29 @@
       </p>
     </div>
 
+    <div class="filter-tabs">
+      <button class="filter-tab is-active" data-filter="all">All Gear</button>
+      <button class="filter-tab" data-filter="footwear">Footwear</button>
+      <button class="filter-tab" data-filter="wearables">Wearables</button>
+      <button class="filter-tab" data-filter="accessories">Accessories</button>
+    </div>
+
     <div class="grid">
 
-      <article class="card" data-tilt>
+      <article class="card" data-category="footwear" data-tilt>
+        <span class="card__badge">Footwear</span>
         <div class="card__visual card__visual--01">
           <img class="card__icon" src="images/products/01_pulse_runner.jpg" alt="Pulse Runner sneaker">
         </div>
+        <div class="card__overlay">
+          <span class="card__overlay-label">
+            View Product
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </span>
+        </div>
+        <button class="card__arrow" aria-label="View Pulse Runner">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </button>
         <div class="card__info">
           <span class="card__index">01</span>
           <h3 class="card__title">Pulse&nbsp;Runner</h3>
@@ -210,10 +178,20 @@
         </div>
       </article>
 
-      <article class="card" data-tilt>
+      <article class="card" data-category="wearables" data-tilt>
+        <span class="card__badge">Wearables</span>
         <div class="card__visual card__visual--02">
           <img class="card__icon" src="images/products/02_volt_chrono.jpg" alt="Volt Chrono smartwatch">
         </div>
+        <div class="card__overlay">
+          <span class="card__overlay-label">
+            View Product
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </span>
+        </div>
+        <button class="card__arrow" aria-label="View Volt Chrono">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </button>
         <div class="card__info">
           <span class="card__index">02</span>
           <h3 class="card__title">Volt&nbsp;Chrono</h3>
@@ -221,10 +199,20 @@
         </div>
       </article>
 
-      <article class="card" data-tilt>
+      <article class="card" data-category="accessories" data-tilt>
+        <span class="card__badge">Carry</span>
         <div class="card__visual card__visual--03">
           <img class="card__icon" src="images/products/03_flux_pack.jpg" alt="Flux Pack backpack">
         </div>
+        <div class="card__overlay">
+          <span class="card__overlay-label">
+            View Product
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </span>
+        </div>
+        <button class="card__arrow" aria-label="View Flux Pack">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </button>
         <div class="card__info">
           <span class="card__index">03</span>
           <h3 class="card__title">Flux&nbsp;Pack</h3>
@@ -232,10 +220,20 @@
         </div>
       </article>
 
-      <article class="card" data-tilt>
+      <article class="card" data-category="accessories" data-tilt>
+        <span class="card__badge">Hydration</span>
         <div class="card__visual card__visual--04">
           <img class="card__icon" src="images/products/04_pulse_bottle.jpg" alt="Pulse Bottle water bottle">
         </div>
+        <div class="card__overlay">
+          <span class="card__overlay-label">
+            View Product
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </span>
+        </div>
+        <button class="card__arrow" aria-label="View Pulse Bottle">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </button>
         <div class="card__info">
           <span class="card__index">04</span>
           <h3 class="card__title">Pulse&nbsp;Bottle</h3>
@@ -243,10 +241,20 @@
         </div>
       </article>
 
-      <article class="card" data-tilt>
+      <article class="card" data-category="accessories" data-tilt>
+        <span class="card__badge">Headwear</span>
         <div class="card__visual card__visual--05">
           <img class="card__icon" src="images/products/05_day_cap.jpg" alt="Day Cap">
         </div>
+        <div class="card__overlay">
+          <span class="card__overlay-label">
+            View Product
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </span>
+        </div>
+        <button class="card__arrow" aria-label="View Day Cap">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </button>
         <div class="card__info">
           <span class="card__index">05</span>
           <h3 class="card__title">Day&nbsp;Cap</h3>
@@ -254,10 +262,20 @@
         </div>
       </article>
 
-      <article class="card" data-tilt>
+      <article class="card" data-category="accessories" data-tilt>
+        <span class="card__badge">Eyewear</span>
         <div class="card__visual card__visual--06">
           <img class="card__icon" src="images/products/06_street_shades.jpg" alt="Street Shades sunglasses">
         </div>
+        <div class="card__overlay">
+          <span class="card__overlay-label">
+            View Product
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </span>
+        </div>
+        <button class="card__arrow" aria-label="View Street Shades">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </button>
         <div class="card__info">
           <span class="card__index">06</span>
           <h3 class="card__title">Street&nbsp;Shades</h3>
@@ -268,9 +286,9 @@
     </div>
   </section>
 
-  <!-- Chapter 05 — Worn by the city -->
-  <section class="chapter chapter-city" id="city" data-chapter-index="05" data-chapter-name="Worn By The City">
-    <span class="eyebrow reveal-up">Chapter 05 — Worn By The City</span>
+  <!-- Worn by the city -->
+  <section class="chapter chapter-city" id="city">
+    <span class="eyebrow eyebrow--block reveal-up">Worn By The City</span>
 
     <div class="city-marquee" aria-hidden="true">
       <div class="city-marquee__track">
