@@ -1,11 +1,11 @@
-name: Deploy aura-product-showcase to GitHub Pages
+name: Deploy stride to GitHub Pages
 
 on:
   push:
     branches:
       - main
     paths:
-      - "aura-product-showcase/**"
+      - "stride/**"
       - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
 
@@ -36,7 +36,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: aura-product-showcase
+          path: stride
 
       - name: Deploy to GitHub Pages
         id: deployment

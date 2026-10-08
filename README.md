@@ -5,7 +5,7 @@ own top-level folder with its own README.
 
 ## Projects
 
-- [`aura-product-showcase/`](./aura-product-showcase) — AURA, a motion-driven
-  product studio showcase inspired by [motion.zajno.com](https://motion.zajno.com/):
-  dark theme, kinetic typography, custom cursor, scroll-triggered reveals
-  and parallax. Plain HTML/CSS/JS, no build step.
+- [`stride/`](./stride) — STRIDE, a fictional brand concept blending Nike's
+  athletic performance energy with Fastrack's street-youth attitude. Built
+  as a scroll-driven story (motion.zajno.com-style scrubbed, pinned
+  animations) rather than a static showcase. Plain HTML/CSS/JS, no build step.

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STRIDE — Never Stand Still</title>
+<meta name="description" content="STRIDE fuses performance engineering with street attitude. Gear for people who don't do standing still.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Preloader -->
+<div class="preloader" id="preloader">
+  <div class="preloader__count"><span id="preloaderCount">0</span>%</div>
+  <div class="preloader__label">STRIDE</div>
+</div>
+
+<!-- Grain overlay -->
+<div class="grain"></div>
+
+<!-- Scroll progress -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor">
+  <span class="cursor__label" id="cursorLabel"></span>
+</div>
+
+<!-- Chapter HUD -->
+<div class="chapter-hud" id="chapterHud">
+  <span class="chapter-hud__index" id="chapterHudIndex">00</span>
+  <span class="chapter-hud__name" id="chapterHudName">Intro</span>
+</div>
+
+<!-- Nav -->
+<header class="nav">
+  <a href="#top" class="nav__logo">STRIDE</a>
+  <nav class="nav__links">
+    <a href="#origin" data-cursor="01">Origin</a>
+    <a href="#drop" data-cursor="02">The Drop</a>
+    <a href="#collection" data-cursor="04">Collection</a>
+    <a href="#city" data-cursor="05">City</a>
+  </nav>
+  <a href="#contact" class="nav__cta" data-cursor="GO">Join In</a>
+  <button class="nav__burger" id="burger" aria-label="Toggle menu">
+    <span></span><span></span>
+  </button>
+</header>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#origin">Origin</a>
+  <a href="#drop">The Drop</a>
+  <a href="#numbers">Numbers</a>
+  <a href="#collection">Collection</a>
+  <a href="#city">City</a>
+  <a href="#contact">Join In</a>
+</div>
+
+<main id="top">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero__marquee" aria-hidden="true">
+      <div class="hero__marquee-track">
+        <span>NEVER&nbsp;STAND&nbsp;STILL&nbsp;</span><span>—&nbsp;</span>
+        <span>NEVER&nbsp;STAND&nbsp;STILL&nbsp;</span><span>—&nbsp;</span>
+      </div>
+    </div>
+
+    <h1 class="hero__title">
+      <span class="line"><span class="word">Built</span></span>
+      <span class="line"><span class="word">to</span> <span class="word word--accent">move.</span></span>
+    </h1>
+
+    <p class="hero__sub reveal-up">
+      STRIDE fuses performance engineering with street attitude — gear
+      for people who don't do standing still. Six chapters. One pace: forward.
+    </p>
+
+    <div class="hero__scroll reveal-up">
+      <span>Scroll the story</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+
+    <div class="hero__index">
+      <span>00</span><span>/</span><span>06</span>
+    </div>
+  </section>
+
+  <!-- Marquee strip -->
+  <section class="strip">
+    <div class="strip__track">
+      <span>MOVE&nbsp;ON</span><span class="dot">●</span>
+      <span>NEVER&nbsp;SETTLE</span><span class="dot">●</span>
+      <span>BUILT&nbsp;TO&nbsp;MOVE</span><span class="dot">●</span>
+      <span>STREET&nbsp;TUNED</span><span class="dot">●</span>
+      <span>MOVE&nbsp;ON</span><span class="dot">●</span>
+      <span>NEVER&nbsp;SETTLE</span><span class="dot">●</span>
+      <span>BUILT&nbsp;TO&nbsp;MOVE</span><span class="dot">●</span>
+      <span>STREET&nbsp;TUNED</span><span class="dot">●</span>
+    </div>
+  </section>
+
+  <!-- Chapter 01 — Origin -->
+  <section class="chapter chapter-origin" id="origin" data-chapter-index="01" data-chapter-name="Origin">
+    <svg class="chapter-origin__pulse" viewBox="0 0 1000 200" preserveAspectRatio="none" aria-hidden="true">
+      <path id="pulsePath" d="M0 100 L250 100 L300 30 L350 170 L400 60 L450 140 L500 100 L1000 100"/>
+    </svg>
+    <div class="chapter-origin__inner">
+      <span class="eyebrow">Chapter 01 — Origin</span>
+      <p class="manifesto">
+        <span class="word">Every</span> <span class="word">city</span> <span class="word">has</span>
+        <span class="word">a</span> <span class="word">pulse.</span>
+        <span class="word">We</span> <span class="word">build</span> <span class="word">for</span>
+        <span class="word">the</span> <span class="word">ones</span> <span class="word">who</span>
+        <span class="word">move</span> <span class="word">to</span> <span class="word">it.</span>
+        <span class="word">No</span> <span class="word">finish</span> <span class="word">line</span> —
+        <span class="word word--accent">just</span> <span class="word word--accent">the</span>
+        <span class="word word--accent">next</span> <span class="word word--accent">stride.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- Chapter 02 — The Drop (horizontal scroll-jacked carousel) -->
+  <section class="chapter-drop" id="drop" data-chapter-index="02" data-chapter-name="The Drop">
+    <div class="chapter-drop__track" id="dropTrack">
+
+      <article class="chapter-drop__panel">
+        <span class="eyebrow">Chapter 02 — The Drop</span>
+        <svg class="chapter-drop__icon" viewBox="0 0 220 160" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 120 L55 98 L95 78 L140 74 L178 86 L202 104 L202 120 Z"/>
+          <path d="M100 76 L118 98"/>
+          <path d="M115 72 L133 94"/>
+          <path d="M130 70 L148 92"/>
+          <path d="M20 120 L202 120"/>
+        </svg>
+        <h3 class="chapter-drop__title">Pulse&nbsp;Runner</h3>
+        <p class="chapter-drop__copy">Engineered for the street, tuned for the sprint.</p>
+        <span class="chapter-drop__num">01 / 04</span>
+      </article>
+
+      <article class="chapter-drop__panel">
+        <svg class="chapter-drop__icon" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2.4">
+          <circle cx="100" cy="100" r="58"/>
+          <circle cx="100" cy="100" r="3" fill="currentColor"/>
+          <path d="M100 66v34l22 14"/>
+          <path d="M100 26v14M100 160v14M26 100h14M160 100h14"/>
+        </svg>
+        <h3 class="chapter-drop__title">Volt&nbsp;Chrono</h3>
+        <p class="chapter-drop__copy">Every second, worn loud.</p>
+        <span class="chapter-drop__num">02 / 04</span>
+      </article>
+
+      <article class="chapter-drop__panel">
+        <svg class="chapter-drop__icon" viewBox="0 0 160 200" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="35" y="60" width="90" height="110" rx="20"/>
+          <path d="M55 60 V40 Q55 25 80 25 Q105 25 105 40 V60"/>
+          <rect x="55" y="90" width="50" height="40" rx="8"/>
+          <path d="M35 90 Q20 95 20 110 V140"/>
+          <path d="M125 90 Q140 95 140 110 V140"/>
+        </svg>
+        <h3 class="chapter-drop__title">Flux&nbsp;Pack</h3>
+        <p class="chapter-drop__copy">Carry the whole day. Feel none of the weight.</p>
+        <span class="chapter-drop__num">03 / 04</span>
+      </article>
+
+      <article class="chapter-drop__panel">
+        <svg class="chapter-drop__icon" viewBox="0 0 200 120" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+          <circle cx="60" cy="60" r="34"/>
+          <circle cx="140" cy="60" r="34"/>
+          <path d="M94 55 Q100 48 106 55"/>
+          <path d="M26 55 L5 48"/>
+          <path d="M174 55 L195 48"/>
+        </svg>
+        <h3 class="chapter-drop__title">Street&nbsp;Shades</h3>
+        <p class="chapter-drop__copy">Shell for the city, built like armor.</p>
+        <span class="chapter-drop__num">04 / 04</span>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Chapter 03 — By the numbers -->
+  <section class="chapter chapter-numbers" id="numbers" data-chapter-index="03" data-chapter-name="By The Numbers">
+    <span class="eyebrow">Chapter 03 — By The Numbers</span>
+    <div class="numbers-grid">
+      <div class="num-block">
+        <span class="num-block__num" data-target="0.3" data-decimals="1">0</span>
+        <span class="num-block__label">Sec reaction time</span>
+      </div>
+      <div class="num-block">
+        <span class="num-block__num" data-target="180" data-decimals="0">0</span>
+        <span class="num-block__label">G featherweight build</span>
+      </div>
+      <div class="num-block">
+        <span class="num-block__num" data-target="42" data-decimals="0">0</span>
+        <span class="num-block__label">Cities repping Stride</span>
+      </div>
+      <div class="num-block">
+        <span class="num-block__num" data-target="1" data-decimals="0">0</span>
+        <span class="num-block__label">Attitude. Non-negotiable.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chapter 04 — The Collection -->
+  <section class="products" id="collection" data-chapter-index="04" data-chapter-name="The Collection">
+    <div class="section-head">
+      <span class="eyebrow reveal-up">Chapter 04 — The Collection</span>
+      <h2 class="section-head__title reveal-up">Gear for<br>the Move</h2>
+      <p class="section-head__sub reveal-up">
+        Six pieces, one mindset. Designed in-house for people who notice
+        the difference between good and considered.
+      </p>
+    </div>
+
+    <div class="grid">
+
+      <article class="card" data-tilt>
+        <div class="card__visual card__visual--01">
+          <svg class="card__icon" viewBox="0 0 220 160" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 120 L55 98 L95 78 L140 74 L178 86 L202 104 L202 120 Z"/>
+            <path d="M100 76 L118 98"/>
+            <path d="M115 72 L133 94"/>
+            <path d="M130 70 L148 92"/>
+            <path d="M20 120 L202 120"/>
+          </svg>
+        </div>
+        <div class="card__info">
+          <span class="card__index">01</span>
+          <h3 class="card__title">Pulse&nbsp;Runner</h3>
+          <span class="card__cat">Footwear — 2026</span>
+        </div>
+      </article>
+
+      <article class="card" data-tilt>
+        <div class="card__visual card__visual--02">
+          <svg class="card__icon" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2.2">
+            <circle cx="100" cy="100" r="54"/>
+            <circle cx="100" cy="100" r="3" fill="currentColor"/>
+            <path d="M100 68v32l20 14"/>
+            <path d="M100 30v12M100 158v12M30 100h12M158 100h12"/>
+          </svg>
+        </div>
+        <div class="card__info">
+          <span class="card__index">02</span>
+          <h3 class="card__title">Volt&nbsp;Chrono</h3>
+          <span class="card__cat">Wearables — 2026</span>
+        </div>
+      </article>
+
+      <article class="card" data-tilt>
+        <div class="card__visual card__visual--03">
+          <svg class="card__icon" viewBox="0 0 160 200" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="35" y="60" width="90" height="110" rx="20"/>
+            <path d="M55 60 V40 Q55 25 80 25 Q105 25 105 40 V60"/>
+            <rect x="55" y="90" width="50" height="40" rx="8"/>
+            <path d="M35 90 Q20 95 20 110 V140"/>
+            <path d="M125 90 Q140 95 140 110 V140"/>
+          </svg>
+        </div>
+        <div class="card__info">
+          <span class="card__index">03</span>
+          <h3 class="card__title">Flux&nbsp;Pack</h3>
+          <span class="card__cat">Carry — 2026</span>
+        </div>
+      </article>
+
+      <article class="card" data-tilt>
+        <div class="card__visual card__visual--04">
+          <svg class="card__icon" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M80 36h40l8 24-10 10v70a18 18 0 0 1-36 0V70l-10-10z"/>
+            <path d="M80 70h40"/>
+          </svg>
+        </div>
+        <div class="card__info">
+          <span class="card__index">04</span>
+          <h3 class="card__title">Pulse&nbsp;Bottle</h3>
+          <span class="card__cat">Hydration — 2025</span>
+        </div>
+      </article>
+
+      <article class="card" data-tilt>
+        <div class="card__visual card__visual--05">
+          <svg class="card__icon" viewBox="0 0 200 160" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M40 90 A60 55 0 0 1 160 90"/>
+            <path d="M30 90 L170 90 Q190 92 192 100 Q194 108 170 110 L30 110 Q20 108 20 99 Q20 92 30 90 Z"/>
+            <path d="M100 35 L100 50"/>
+          </svg>
+        </div>
+        <div class="card__info">
+          <span class="card__index">05</span>
+          <h3 class="card__title">Day&nbsp;Cap</h3>
+          <span class="card__cat">Headwear — 2025</span>
+        </div>
+      </article>
+
+      <article class="card" data-tilt>
+        <div class="card__visual card__visual--06">
+          <svg class="card__icon" viewBox="0 0 200 120" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+            <circle cx="60" cy="60" r="34"/>
+            <circle cx="140" cy="60" r="34"/>
+            <path d="M94 55 Q100 48 106 55"/>
+            <path d="M26 55 L5 48"/>
+            <path d="M174 55 L195 48"/>
+          </svg>
+        </div>
+        <div class="card__info">
+          <span class="card__index">06</span>
+          <h3 class="card__title">Street&nbsp;Shades</h3>
+          <span class="card__cat">Eyewear — 2026</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Chapter 05 — Worn by the city -->
+  <section class="chapter chapter-city" id="city" data-chapter-index="05" data-chapter-name="Worn By The City">
+    <span class="eyebrow reveal-up">Chapter 05 — Worn By The City</span>
+
+    <div class="city-marquee" aria-hidden="true">
+      <div class="city-marquee__track">
+        <span>MUMBAI</span><span class="dot">●</span>
+        <span>DELHI</span><span class="dot">●</span>
+        <span>BENGALURU</span><span class="dot">●</span>
+        <span>NEW&nbsp;YORK</span><span class="dot">●</span>
+        <span>LONDON</span><span class="dot">●</span>
+        <span>TOKYO</span><span class="dot">●</span>
+        <span>MUMBAI</span><span class="dot">●</span>
+        <span>DELHI</span><span class="dot">●</span>
+        <span>BENGALURU</span><span class="dot">●</span>
+        <span>NEW&nbsp;YORK</span><span class="dot">●</span>
+        <span>LONDON</span><span class="dot">●</span>
+        <span>TOKYO</span><span class="dot">●</span>
+      </div>
+    </div>
+
+    <div class="quote-row">
+      <blockquote class="quote-card reveal-up">
+        <p>"Stride doesn't follow trends. It sets the pace."</p>
+        <cite>— Runner's Culture Mag</cite>
+      </blockquote>
+      <blockquote class="quote-card reveal-up">
+        <p>"Finally, gear that moves as fast as the city does."</p>
+        <cite>— The Daily Sprint</cite>
+      </blockquote>
+      <blockquote class="quote-card reveal-up">
+        <p>"Performance tech with actual street cred."</p>
+        <cite>— Concrete &amp; Co.</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="contact">
+    <h2 class="cta__title">
+      <span class="line"><span class="word">Join&nbsp;the</span></span>
+      <span class="line"><span class="word word--accent">movement.</span></span>
+    </h2>
+    <p class="cta__sub reveal-up">Never settle. Never stand still.</p>
+    <a href="mailto:hello@stride.world" class="magnetic-btn" data-cursor="GO">
+      <span>hello@stride.world</span>
+    </a>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span>© 2026 STRIDE</span>
+  <div class="footer__social">
+    <a href="#" data-cursor="↗">Instagram</a>
+    <a href="#" data-cursor="↗">TikTok</a>
+    <a href="#" data-cursor="↗">Strava</a>
+  </div>
+  <a href="#top" class="footer__top" data-cursor="UP">Back to top</a>
+</footer>
+
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/ScrollTrigger.min.js"></script>
+<script src="js/vendor/lenis.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
