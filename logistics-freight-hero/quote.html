@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Get a Quote — Freightline</title>
+<meta name="description" content="Request a freight quote in four short steps — shipment, cargo, contact, review.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="has-fixed-nav">
+
+<header class="nav">
+  <div class="container nav__inner">
+    <a class="nav__brand" href="index.html">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="#D6523A" stroke-width="1.6"/><circle cx="12" cy="12" r="2" fill="#D6523A"/></svg>
+      Freightline
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="services.html">Services</a>
+      <a href="track.html">Track Shipment</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav__right">
+      <a class="btn btn--ghost btn--sm" href="quote.html">Get a Quote</a>
+      <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navMobile" aria-label="Open menu"><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="nav__mobile" id="navMobile">
+  <a href="services.html">Services</a>
+  <a href="track.html">Track Shipment</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a class="btn btn--accent btn--block" href="quote.html">Get a Quote</a>
+</div>
+
+<main>
+  <section class="page-hero" style="padding-bottom:0">
+    <div class="container">
+      <p class="eyebrow-label">Get a quote</p>
+      <h1 class="h-display h1" style="font-size:clamp(34px,5vw,56px)">Four steps.<br>One quote.</h1>
+      <p class="lede" style="margin-top:16px">No account needed — tell us the shipment and we'll follow up directly.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" style="max-width:780px">
+
+      <div class="stepper" id="stepper">
+        <div class="stepper__step is-active" data-step="1">
+          <div class="stepper__dot">1</div>
+          <div class="stepper__label">Shipment</div>
+        </div>
+        <div class="stepper__bar"></div>
+        <div class="stepper__step" data-step="2">
+          <div class="stepper__dot">2</div>
+          <div class="stepper__label">Cargo</div>
+        </div>
+        <div class="stepper__bar"></div>
+        <div class="stepper__step" data-step="3">
+          <div class="stepper__dot">3</div>
+          <div class="stepper__label">Contact</div>
+        </div>
+        <div class="stepper__bar"></div>
+        <div class="stepper__step" data-step="4">
+          <div class="stepper__dot">4</div>
+          <div class="stepper__label">Review</div>
+        </div>
+      </div>
+
+      <form id="quoteForm" novalidate>
+
+        <!-- Step 1 — Shipment basics -->
+        <div class="flow-panel is-active" data-panel="1">
+          <h2 class="h3" style="color:var(--cream);text-transform:uppercase;letter-spacing:.03em;margin-bottom:18px">Shipment basics</h2>
+
+          <div class="field" style="margin-bottom:20px">
+            <label>Mode</label>
+            <div class="segmented">
+              <input type="radio" name="mode" id="modeOcean" value="Ocean Freight" checked>
+              <label for="modeOcean"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 10h12l-1.5 5a5.2 5.2 0 0 1-9 0L6 10Z"/></svg>Ocean</label>
+
+              <input type="radio" name="mode" id="modeAir" value="Air Freight">
+              <label for="modeAir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10.5 13.5 3 15.8v-2l7.5-4.3V5.3C10.5 4 11.2 3 12 3s1.5 1 1.5 2.3v4.2L21 13.8v2l-7.5-2.3-.9 4.3 2.2 1.5v1.6L12 20l-2.8 1.1v-1.6l2.2-1.5-.9-4.3Z"/></svg>Air</label>
+
+              <input type="radio" name="mode" id="modeRail" value="Rail Freight">
+              <label for="modeRail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="3.5" width="14" height="13" rx="2"/><path d="M5 12h14M9 16l-1.5 4M15 16l1.5 4"/></svg>Rail</label>
+
+              <input type="radio" name="mode" id="modeTruck" value="Trucking">
+              <label for="modeTruck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h10v8H3z"/><path d="M13 11h4l3 3v1h-7z"/></svg>Truck</label>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="field" data-field="origin">
+              <label for="qOrigin">Origin (city, country)</label>
+              <input id="qOrigin" name="origin" type="text" placeholder="Shanghai, CN" required>
+              <span class="field-error">Please enter an origin.</span>
+            </div>
+            <div class="field" data-field="destination">
+              <label for="qDestination">Destination (city, country)</label>
+              <input id="qDestination" name="destination" type="text" placeholder="Los Angeles, US" required>
+              <span class="field-error">Please enter a destination.</span>
+            </div>
+          </div>
+
+          <div class="flow-actions" style="justify-content:flex-end">
+            <button type="button" class="btn btn--accent" data-next>Continue</button>
+          </div>
+        </div>
+
+        <!-- Step 2 — Cargo details -->
+        <div class="flow-panel" data-panel="2">
+          <h2 class="h3" style="color:var(--cream);text-transform:uppercase;letter-spacing:.03em;margin-bottom:18px">Cargo details</h2>
+
+          <div class="form-grid">
+            <div class="field" data-field="commodity">
+              <label for="qCommodity">Commodity type</label>
+              <select id="qCommodity" name="commodity" required>
+                <option value="">Select one</option>
+                <option>General / palletized goods</option>
+                <option>Machinery &amp; equipment</option>
+                <option>Electronics</option>
+                <option>Apparel &amp; textiles</option>
+                <option>Food &amp; beverage</option>
+                <option>Automotive parts</option>
+                <option>Raw materials / bulk</option>
+                <option>Other</option>
+              </select>
+              <span class="field-error">Please select a commodity type.</span>
+            </div>
+            <div class="field" data-field="weight">
+              <label for="qWeight">Total weight (kg)</label>
+              <input id="qWeight" name="weight" type="number" min="1" placeholder="2500" required>
+              <span class="field-error">Please enter a weight.</span>
+            </div>
+            <div class="field" data-field="volume">
+              <label for="qVolume">Volume / container count</label>
+              <input id="qVolume" name="volume" type="text" placeholder="e.g. 1 × 40ft HC, or 12 CBM" required>
+              <span class="field-error">Please enter a volume or container count.</span>
+            </div>
+            <div class="field">
+              <label for="qReadyDate">Cargo ready date</label>
+              <input id="qReadyDate" name="readyDate" type="date">
+            </div>
+            <div class="field field--full">
+              <label>Special handling</label>
+              <div class="checklist">
+                <label><input type="checkbox" name="handling" value="Hazardous / DG"> Hazardous / dangerous goods</label>
+                <label><input type="checkbox" name="handling" value="Temperature controlled"> Temperature controlled</label>
+                <label><input type="checkbox" name="handling" value="Oversized / overweight"> Oversized / overweight</label>
+                <label><input type="checkbox" name="handling" value="High value"> High value — extra insurance</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-actions">
+            <button type="button" class="btn btn--ghost" data-prev>Back</button>
+            <button type="button" class="btn btn--accent" data-next>Continue</button>
+          </div>
+        </div>
+
+        <!-- Step 3 — Timing & contact -->
+        <div class="flow-panel" data-panel="3">
+          <h2 class="h3" style="color:var(--cream);text-transform:uppercase;letter-spacing:.03em;margin-bottom:18px">Your contact details</h2>
+
+          <div class="form-grid">
+            <div class="field" data-field="name">
+              <label for="qName">Full name</label>
+              <input id="qName" name="name" type="text" placeholder="Jordan Reyes" required>
+              <span class="field-error">Please enter your name.</span>
+            </div>
+            <div class="field" data-field="company">
+              <label for="qCompany">Company</label>
+              <input id="qCompany" name="company" type="text" placeholder="Company name" required>
+              <span class="field-error">Please enter your company.</span>
+            </div>
+            <div class="field" data-field="email">
+              <label for="qEmail">Email</label>
+              <input id="qEmail" name="email" type="email" placeholder="you@company.com" required>
+              <span class="field-error">Please enter a valid email.</span>
+            </div>
+            <div class="field" data-field="phone">
+              <label for="qPhone">Phone</label>
+              <input id="qPhone" name="phone" type="tel" placeholder="+1 555 123 4567" required>
+              <span class="field-error">Please enter a phone number.</span>
+            </div>
+            <div class="field field--full">
+              <label>Preferred contact method</label>
+              <div class="checklist" style="flex-direction:row;gap:24px">
+                <label><input type="radio" name="contactPref" value="Email" checked> Email</label>
+                <label><input type="radio" name="contactPref" value="Phone"> Phone</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-actions">
+            <button type="button" class="btn btn--ghost" data-prev>Back</button>
+            <button type="button" class="btn btn--accent" data-next>Review Quote</button>
+          </div>
+        </div>
+
+        <!-- Step 4 — Review & submit -->
+        <div class="flow-panel" data-panel="4">
+          <h2 class="h3" style="color:var(--cream);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px">Review your request</h2>
+          <p class="field-hint">Double-check the details below before sending.</p>
+
+          <dl class="review-grid" id="reviewGrid"></dl>
+
+          <div class="flow-actions">
+            <button type="button" class="btn btn--ghost" data-prev>Back</button>
+            <button type="submit" class="btn btn--accent">Submit Request</button>
+          </div>
+        </div>
+
+        <!-- Success state -->
+        <div class="flow-panel" data-panel="success">
+          <div class="success">
+            <div class="success__icon">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            </div>
+            <h2 class="h-display h3">Request sent</h2>
+            <p class="lede" style="margin:10px auto 0">
+              A Freightline specialist will review your shipment and reply
+              with pricing within one business day.
+            </p>
+            <div class="success__ref" id="successRef">Q-000000</div>
+            <div style="margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+              <a class="btn btn--ghost" href="track.html">Track a shipment</a>
+              <a class="btn btn--accent" href="index.html">Back to home</a>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a class="nav__brand" href="index.html">Freightline</a>
+      <p>Logistics that works as hard as you do. One point of contact, full visibility, origin to destination.</p>
+    </div>
+    <div class="footer__col">
+      <h3>Company</h3>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer__col">
+      <h3>Tools</h3>
+      <a href="track.html">Track a Shipment</a>
+      <a href="quote.html">Get a Quote</a>
+    </div>
+    <div class="footer__col">
+      <h3>Contact</h3>
+      <a href="mailto:hello@freightline.example">hello@freightline.example</a>
+      <a href="tel:+18005551234">+1 (800) 555-1234</a>
+    </div>
+  </div>
+  <div class="container footer__bottom">
+    <span>© <span data-year></span> Freightline. All rights reserved.</span>
+    <span>Demo site — no data is transmitted or stored.</span>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+<script>
+(function(){
+  var form = document.getElementById('quoteForm');
+  var panels = form.querySelectorAll('.flow-panel');
+  var stepperSteps = document.querySelectorAll('#stepper .stepper__step');
+  var current = 1;
+
+  var REQUIRED_BY_STEP = {
+    1: ['origin','destination'],
+    2: ['commodity','weight','volume'],
+    3: ['name','company','email','phone']
+  };
+
+  function showStep(n){
+    panels.forEach(function(p){
+      p.classList.toggle('is-active', p.getAttribute('data-panel') === String(n));
+    });
+    stepperSteps.forEach(function(s){
+      var step = Number(s.getAttribute('data-step'));
+      s.classList.toggle('is-active', step === n);
+      s.classList.toggle('is-done', step < n);
+    });
+    current = n;
+    window.scrollTo({ top: form.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth' });
+  }
+
+  function validateStep(n){
+    var names = REQUIRED_BY_STEP[n];
+    if (!names) return true;
+    var valid = true;
+    names.forEach(function(name){
+      var field = form.querySelector('[data-field="' + name + '"]');
+      var input = field.querySelector('input, select, textarea');
+      var ok = input.value.trim().length > 0;
+      if (name === 'email' && ok) ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim());
+      field.classList.toggle('is-invalid', !ok);
+      if (!ok) valid = false;
+    });
+    return valid;
+  }
+
+  function buildReview(){
+    var data = new FormData(form);
+    var mode = data.get('mode');
+    var handling = data.getAll('handling');
+    var rows = [
+      ['Mode', mode],
+      ['Route', data.get('origin') + ' → ' + data.get('destination')],
+      ['Commodity', data.get('commodity')],
+      ['Weight', data.get('weight') + ' kg'],
+      ['Volume', data.get('volume')],
+      ['Ready date', data.get('readyDate') || 'Flexible'],
+      ['Special handling', handling.length ? handling.join(', ') : 'None'],
+      ['Contact', data.get('name') + ' — ' + data.get('company')],
+      ['Email', data.get('email')],
+      ['Phone', data.get('phone')],
+      ['Preferred contact', data.get('contactPref')]
+    ];
+    var grid = document.getElementById('reviewGrid');
+    grid.innerHTML = rows.map(function(r){
+      return '<div><dt>' + r[0] + '</dt><dd>' + (r[1] || '—') + '</dd></div>';
+    }).join('');
+  }
+
+  form.addEventListener('click', function(e){
+    if (e.target.matches('[data-next]')) {
+      if (!validateStep(current)) return;
+      if (current === 3) buildReview();
+      showStep(current + 1);
+    }
+    if (e.target.matches('[data-prev]')) {
+      showStep(current - 1);
+    }
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var ref = 'Q-' + Math.floor(100000 + Math.random() * 900000);
+    document.getElementById('successRef').textContent = ref;
+    panels.forEach(function(p){ p.classList.remove('is-active'); });
+    form.querySelector('[data-panel="success"]').classList.add('is-active');
+    document.getElementById('stepper').style.display = 'none';
+    window.scrollTo({ top: form.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth' });
+  });
+
+  // Pre-select mode from ?mode=ocean|air|rail|trucking coming from services.html
+  var params = new URLSearchParams(location.search);
+  var modeParam = (params.get('mode') || '').toLowerCase();
+  var map = { ocean: 'modeOcean', air: 'modeAir', rail: 'modeRail', trucking: 'modeTruck' };
+  if (map[modeParam]) {
+    var el = document.getElementById(map[modeParam]);
+    if (el) el.checked = true;
+  }
+})();
+</script>
+</body>
+</html>

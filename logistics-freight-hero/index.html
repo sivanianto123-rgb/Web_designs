@@ -384,12 +384,71 @@ body{
   .f-right p{margin-right:auto}
 }
 
+/* ---------- site menu (overlay, independent of .stage) ---------- */
+
+.site-menu-btn{
+  position:absolute;top:22px;right:22px;z-index:10;
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(10,11,12,.35);
+  border:1px solid rgba(255,255,255,.28);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  cursor:pointer;
+}
+.site-menu-btn span{
+  display:block;width:16px;height:2px;background:var(--cream);position:relative;
+  transition:background .15s ease;
+}
+.site-menu-btn span::before,.site-menu-btn span::after{
+  content:"";position:absolute;left:0;width:16px;height:2px;background:var(--cream);
+  transition:transform .2s ease,opacity .2s ease;
+}
+.site-menu-btn span::before{top:-5px}
+.site-menu-btn span::after{top:5px}
+.site-menu.is-open .site-menu-btn span{background:transparent}
+.site-menu.is-open .site-menu-btn span::before{transform:translateY(5px) rotate(45deg)}
+.site-menu.is-open .site-menu-btn span::after{transform:translateY(-5px) rotate(-45deg)}
+
+.site-menu-panel{
+  position:absolute;inset:0;z-index:9;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;
+  background:rgba(8,9,10,.92);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .25s ease;
+}
+.site-menu.is-open .site-menu-panel{opacity:1;visibility:visible;pointer-events:auto}
+.site-menu-panel a{
+  font:700 15px/1 UI,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink);text-decoration:none;transition:color .15s ease;
+}
+.site-menu-panel a:hover{color:var(--accent)}
+.site-menu-panel .btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  margin-top:8px;padding:14px 28px;border-radius:999px;
+  background:var(--accent);color:var(--white);
+  font:700 12px/1 UI,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;
+}
+
 </style>
 </head>
 <body>
 <div class="frame">
   <video class="bg" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261005_115944_095d91d4-030f-4e82-b42b-a388c0816d24.mp4" autoplay muted loop playsinline disablepictureinpicture aria-label="Aerial view of a container freight train crossing black coal terrain"></video>
   <div class="tint"></div>
+
+  <div class="site-menu" id="siteMenu">
+    <button class="site-menu-btn" id="siteMenuBtn" aria-expanded="false" aria-controls="siteMenuPanel" aria-label="Open menu">
+      <span></span>
+    </button>
+    <nav class="site-menu-panel" id="siteMenuPanel" aria-label="Site">
+      <a href="services.html">Services</a>
+      <a href="track.html">Track Shipment</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn" href="quote.html">Get a Quote</a>
+    </nav>
+  </div>
+
   <main class="stage">
 
     <p class="eyebrow"><span>WHY US</span></p>
@@ -481,5 +540,22 @@ body{
 
   </main>
 </div>
+<script>
+(function(){
+  var menu = document.getElementById('siteMenu');
+  var btn = document.getElementById('siteMenuBtn');
+  if (!menu || !btn) return;
+  btn.addEventListener('click', function(){
+    var open = menu.classList.toggle('is-open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && menu.classList.contains('is-open')) {
+      menu.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();
+</script>
 </body>
 </html>

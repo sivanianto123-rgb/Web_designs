@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Track a Shipment — Freightline</title>
+<meta name="description" content="Enter a tracking number to see live shipment status and checkpoint history.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="has-fixed-nav">
+
+<header class="nav">
+  <div class="container nav__inner">
+    <a class="nav__brand" href="index.html">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="#D6523A" stroke-width="1.6"/><circle cx="12" cy="12" r="2" fill="#D6523A"/></svg>
+      Freightline
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="services.html">Services</a>
+      <a href="track.html">Track Shipment</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav__right">
+      <a class="btn btn--ghost btn--sm" href="quote.html">Get a Quote</a>
+      <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navMobile" aria-label="Open menu"><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="nav__mobile" id="navMobile">
+  <a href="services.html">Services</a>
+  <a href="track.html">Track Shipment</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a class="btn btn--accent btn--block" href="quote.html">Get a Quote</a>
+</div>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow-label">Shipment tracking</p>
+      <h1 class="h-display h1">Where's my<br>freight?</h1>
+      <p class="lede" style="margin-top:18px">
+        Enter any tracking number to see its current status and full
+        checkpoint history — the same view our ops desk sees.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <form class="track-form" id="trackForm" novalidate>
+        <input type="text" id="trackInput" placeholder="e.g. FR-48213-RL" autocomplete="off" aria-label="Tracking number">
+        <button class="btn btn--accent" type="submit">Track Shipment</button>
+      </form>
+      <div class="track-examples">
+        <span class="field-hint" style="align-self:center">Try:</span>
+        <button type="button" data-example="FR-48213-RL">FR-48213-RL</button>
+        <button type="button" data-example="FR-77042-OC">FR-77042-OC</button>
+        <button type="button" data-example="FR-19085-AR">FR-19085-AR</button>
+      </div>
+      <div class="alert alert--error" id="trackAlert">Enter a tracking number to look up a shipment.</div>
+
+      <div id="trackResult" style="display:none">
+
+        <div class="shipment-summary">
+          <div>
+            <div class="field-hint" style="margin-bottom:6px">MODE</div>
+            <div style="color:var(--cream);font-weight:700" id="sumMode">—</div>
+          </div>
+          <div>
+            <div class="field-hint" style="margin-bottom:6px">ORIGIN → DESTINATION</div>
+            <div style="color:var(--cream);font-weight:700" id="sumRoute">—</div>
+          </div>
+          <div>
+            <div class="field-hint" style="margin-bottom:6px">WEIGHT</div>
+            <div style="color:var(--cream);font-weight:700" id="sumWeight">—</div>
+          </div>
+          <div>
+            <div class="field-hint" style="margin-bottom:6px" id="sumEtaLabel">ETA</div>
+            <div style="color:var(--cream);font-weight:700" id="sumEta">—</div>
+          </div>
+        </div>
+
+        <div class="kicker-row" style="margin-bottom:0">
+          <h2 class="h-display h2" style="font-size:clamp(20px,2.6vw,26px)">Checkpoint history</h2>
+        </div>
+        <ol class="timeline" id="timeline"></ol>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a class="nav__brand" href="index.html">Freightline</a>
+      <p>Logistics that works as hard as you do. One point of contact, full visibility, origin to destination.</p>
+    </div>
+    <div class="footer__col">
+      <h3>Company</h3>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer__col">
+      <h3>Tools</h3>
+      <a href="track.html">Track a Shipment</a>
+      <a href="quote.html">Get a Quote</a>
+    </div>
+    <div class="footer__col">
+      <h3>Contact</h3>
+      <a href="mailto:hello@freightline.example">hello@freightline.example</a>
+      <a href="tel:+18005551234">+1 (800) 555-1234</a>
+    </div>
+  </div>
+  <div class="container footer__bottom">
+    <span>© <span data-year></span> Freightline. All rights reserved.</span>
+    <span>Demo site — tracking results are simulated locally.</span>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+<script>
+(function(){
+  var form = document.getElementById('trackForm');
+  var input = document.getElementById('trackInput');
+  var alertBox = document.getElementById('trackAlert');
+  var result = document.getElementById('trackResult');
+
+  var MODES = ['Ocean Freight','Air Freight','Rail Freight','Trucking'];
+  var CITIES = [
+    'Shanghai, CN','Los Angeles, US','Rotterdam, NL','Hamburg, DE','Singapore, SG',
+    'Dallas, US','Mumbai, IN','Santos, BR','Busan, KR','Chicago, US','Antwerp, BE','Tokyo, JP'
+  ];
+  var STEPS = [
+    { title: 'Order Booked', meta: 'Booking confirmed and documentation issued.' },
+    { title: 'Picked Up at Origin', meta: 'Cargo collected and consolidated for departure.' },
+    { title: 'In Transit', meta: 'Moving on the planned routing.' },
+    { title: 'Customs Cleared', meta: 'Import documentation processed and released.' },
+    { title: 'Out for Delivery', meta: 'On the final leg to the consignee address.' },
+    { title: 'Delivered', meta: 'Proof of delivery captured.' }
+  ];
+
+  function hash(str){
+    var h = 5381;
+    for (var i = 0; i < str.length; i++) h = ((h << 5) + h + str.charCodeAt(i)) | 0;
+    return Math.abs(h);
+  }
+
+  function fmtDate(d){
+    return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  function track(code){
+    code = (code || '').trim();
+    if (!code) {
+      alertBox.textContent = 'Enter a tracking number to look up a shipment.';
+      alertBox.classList.add('is-visible');
+      result.style.display = 'none';
+      return;
+    }
+    alertBox.classList.remove('is-visible');
+
+    var h = hash(code.toUpperCase());
+    var mode = MODES[h % MODES.length];
+    var origin = CITIES[h % CITIES.length];
+    var dest = CITIES[(h >> 3) % CITIES.length];
+    if (dest === origin) dest = CITIES[(h >> 3 + 1) % CITIES.length];
+    var currentIdx = h % STEPS.length;
+    var weight = 400 + (h % 18000);
+    var totalSpanDays = 6 + (h % 11);
+    var bookedDaysAgo = totalSpanDays - Math.round((currentIdx / (STEPS.length - 1)) * totalSpanDays);
+
+    document.getElementById('sumMode').textContent = mode;
+    document.getElementById('sumRoute').textContent = origin.split(',')[0] + ' → ' + dest.split(',')[0];
+    document.getElementById('sumWeight').textContent = weight.toLocaleString() + ' kg';
+
+    var today = new Date();
+    var etaLabel = document.getElementById('sumEtaLabel');
+    var etaVal = document.getElementById('sumEta');
+    if (currentIdx === STEPS.length - 1) {
+      etaLabel.textContent = 'DELIVERED';
+      etaVal.textContent = fmtDate(today);
+    } else {
+      etaLabel.textContent = 'ESTIMATED ARRIVAL';
+      var eta = new Date(today.getTime() + (STEPS.length - 1 - currentIdx) * 36e5 * 24 * (1 + (h % 2)));
+      etaVal.textContent = fmtDate(eta);
+    }
+
+    var timeline = document.getElementById('timeline');
+    timeline.innerHTML = '';
+    STEPS.forEach(function(step, i){
+      var li = document.createElement('li');
+      li.className = 'timeline__item' + (i < currentIdx ? ' is-done' : i === currentIdx ? ' is-current' : '');
+      var stepDate = new Date(today.getTime() - (bookedDaysAgo - i * (bookedDaysAgo / Math.max(currentIdx,1))) * 864e5);
+      var meta = step.meta;
+      if (i <= currentIdx) {
+        meta = fmtDate(i === 0 ? new Date(today.getTime() - bookedDaysAgo * 864e5) : stepDate) + ' — ' + step.meta;
+      } else {
+        meta = 'Pending — ' + step.meta;
+      }
+      li.innerHTML = '<span class="timeline__dot"></span>' +
+        '<div class="timeline__title">' + step.title + (step.title === 'In Transit' ? ' — ' + mode : '') + '</div>' +
+        '<div class="timeline__meta">' + meta + '</div>';
+      timeline.appendChild(li);
+    });
+
+    result.style.display = 'block';
+    result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    track(input.value);
+  });
+
+  document.querySelectorAll('[data-example]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      input.value = btn.getAttribute('data-example');
+      track(input.value);
+    });
+  });
+})();
+</script>
+</body>
+</html>

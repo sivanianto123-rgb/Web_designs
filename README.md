@@ -9,8 +9,8 @@ own top-level folder with its own README.
   product studio showcase inspired by [motion.zajno.com](https://motion.zajno.com/):
   dark theme, kinetic typography, custom cursor, scroll-triggered reveals
   and parallax. Plain HTML/CSS/JS, no build step.
-- [`logistics-freight-hero/`](./logistics-freight-hero) — a full-viewport
-  logistics/freight hero: aerial freight-train background video, pixel-precise
-  overlay type mirrored across the train's center axis, a single entrance
-  animation, and responsive layouts for landscape, tablet portrait and phone.
-  Single standalone HTML file, no build step.
+- [`logistics-freight-hero/`](./logistics-freight-hero) — Freightline, a small
+  logistics/freight site. A full-viewport hero homepage (aerial freight-train
+  video, pixel-precise mirrored overlay type, one entrance animation) plus
+  services, about and contact pages, a shipment-tracking flow and a 4-step
+  get-a-quote wizard. Plain HTML/CSS/JS, no build step.
