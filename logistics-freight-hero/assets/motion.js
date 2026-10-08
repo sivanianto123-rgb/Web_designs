@@ -93,6 +93,29 @@
     });
   });
 
+  // ---------- Hero exit: depth transition into the story ----------
+  // The hero's own background video pushes in (scale, GPU-accelerated
+  // transform only) while its content fades, as the user scrolls from
+  // the hero into the statement section — a layered-depth parallax
+  // moment bridging the pixel-exact hero and the scrollable story below.
+  // Targets .bg / .stage opacity rather than .stage's transform, since
+  // .stage already carries a static CSS transform:scale(var(--s)) for
+  // its pixel-exact layout that a GSAP-driven inline transform would
+  // otherwise silently overwrite.
+  var heroFrame = document.querySelector('.frame');
+  var heroBg = document.querySelector('.frame .bg');
+  var heroStage = document.querySelector('.stage');
+  if (heroFrame && heroBg && heroStage) {
+    gsap.to(heroBg, {
+      scale: 1.12, ease: 'none',
+      scrollTrigger: { trigger: heroFrame, start: 'top top', end: 'bottom top', scrub: true }
+    });
+    gsap.to(heroStage, {
+      opacity: 0, ease: 'none',
+      scrollTrigger: { trigger: heroFrame, start: 'top top', end: 'bottom top', scrub: true }
+    });
+  }
+
   // ---------- Video band: scrubbed zoom-settle ----------
   var bandVideo = document.querySelector('.video-band__media');
   var band = document.querySelector('.video-band');

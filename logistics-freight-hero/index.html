@@ -41,7 +41,7 @@
   --cream:#F7F5EF;
   --white:#F9F9F9;
   --ink:rgba(255,255,255,.88);
-  --accent:#D6523A;
+  --accent:#F97316;
   --s: min(100vh / 800, 100vw / 716);
   --cover: max(100vw / 1280, 100vh / 800);
 }
@@ -49,8 +49,7 @@
 *{box-sizing:border-box}
 body{
   margin:0;
-  background:var(--mesh), #0a0b0c;
-  background-attachment:fixed;
+  background:#180f1e;
   font-kerning:none;
   font-variant-ligatures:none;
   font-feature-settings:normal;
@@ -65,14 +64,14 @@ body::before{display:none}
   position:relative;
   height:100vh;height:100dvh;
   overflow:hidden;
-  background:var(--mesh), #0a0b0c;
+  background:var(--mesh), #180f1e;
 }
 
 .bg{
   position:absolute;inset:0;
   width:100%;height:100%;
   object-fit:cover;object-position:center;
-  background:var(--mesh), #0a0b0c;
+  background:var(--mesh), #180f1e;
 }
 
 .tint{
@@ -412,18 +411,34 @@ body::before{display:none}
 .story-statement em.accent{font-style:normal;color:var(--accent)}
 .story-statement em.teal{font-style:normal;color:var(--accent-2)}
 
+/* ---------- scroll-snap (homepage only) ----------
+   Proximity, not mandatory: settles on a section boundary only when
+   already close to one, so it reads as "the page has structure"
+   without fighting Lenis's momentum or forcing a snap on every stop.
+   The pinned horizontal-scroll gallery is deliberately excluded —
+   snapping into a section GSAP is also pinning/scrubbing would fight
+   it. Scoped to this page only: the interior utility pages (forms,
+   the quote wizard, variable-height content) are a poor fit for
+   section snapping. */
+html{scroll-snap-type:y proximity}
+.frame,
+.story-section:not(.hcards-pin),
+.footer{scroll-snap-align:start}
+@media (prefers-reduced-motion:reduce){html{scroll-snap-type:none}}
+
 </style>
 </head>
 <body>
+<div class="bg-mesh-fixed" aria-hidden="true"></div>
 <div class="scroll-progress" aria-hidden="true"></div>
 <div class="frame">
-  <video class="bg" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261005_115944_095d91d4-030f-4e82-b42b-a388c0816d24.mp4" poster="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22960%22%20height%3D%22600%22%20viewBox%3D%220%200%20960%20600%22%3E%20%3Cdefs%3E%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2212%25%22%20cy%3D%220%25%22%20r%3D%2265%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23D6523A%22%20stop-opacity%3D%220.55%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23D6523A%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3CradialGradient%20id%3D%22b%22%20cx%3D%2295%25%22%20cy%3D%2215%25%22%20r%3D%2260%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%234C8DBF%22%20stop-opacity%3D%220.5%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%234C8DBF%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3CradialGradient%20id%3D%22t%22%20cx%3D%2290%25%22%20cy%3D%22100%25%22%20r%3D%2265%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%232BB3A3%22%20stop-opacity%3D%220.55%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%232BB3A3%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3CradialGradient%20id%3D%22a%22%20cx%3D%225%25%22%20cy%3D%22100%25%22%20r%3D%2255%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23E3A53B%22%20stop-opacity%3D%220.4%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E3A53B%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3C%2Fdefs%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22%230a0b0c%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23r%29%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23b%29%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23t%29%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23a%29%22%2F%3E%20%3C%2Fsvg%3E" autoplay muted loop playsinline disablepictureinpicture aria-label="Aerial view of a container freight train crossing black coal terrain"></video>
+  <video class="bg" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261005_115944_095d91d4-030f-4e82-b42b-a388c0816d24.mp4" poster="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22960%22%20height%3D%22600%22%20viewBox%3D%220%200%20960%20600%22%3E%20%3Cdefs%3E%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2212%25%22%20cy%3D%220%25%22%20r%3D%2265%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23F97316%22%20stop-opacity%3D%220.55%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23F97316%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3CradialGradient%20id%3D%22b%22%20cx%3D%2295%25%22%20cy%3D%2215%25%22%20r%3D%2260%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23C4B5FD%22%20stop-opacity%3D%220.5%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23C4B5FD%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3CradialGradient%20id%3D%22t%22%20cx%3D%2290%25%22%20cy%3D%22100%25%22%20r%3D%2265%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23A78BFA%22%20stop-opacity%3D%220.55%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23A78BFA%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3CradialGradient%20id%3D%22a%22%20cx%3D%225%25%22%20cy%3D%22100%25%22%20r%3D%2255%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FDBA74%22%20stop-opacity%3D%220.4%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FDBA74%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3C%2Fdefs%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22%23180f1e%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23r%29%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23b%29%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23t%29%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23a%29%22%2F%3E%20%3C%2Fsvg%3E" autoplay muted loop playsinline disablepictureinpicture aria-label="Aerial view of a container freight train crossing black coal terrain"></video>
   <div class="tint"></div>
 
   <header class="nav">
     <div class="container nav__inner">
       <a class="nav__brand" href="index.html">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="#D6523A" stroke-width="1.6"/><circle cx="12" cy="12" r="2" fill="#D6523A"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="#F97316" stroke-width="1.6"/><circle cx="12" cy="12" r="2" fill="#F97316"/></svg>
         Freightline
       </a>
       <nav class="nav__links" aria-label="Primary">
@@ -458,8 +473,8 @@ body::before{display:none}
     </h1>
 
     <svg class="mark" viewBox="0 0 52 52" fill="none" aria-hidden="true">
-      <circle cx="26" cy="26" r="23" stroke="#D6523A" stroke-width="1.6" stroke-dasharray="98.3 46.3" transform="rotate(2.5 26 26)"/>
-      <g stroke="#D6523A" stroke-width="1.6" stroke-linecap="round">
+      <circle cx="26" cy="26" r="23" stroke="#F97316" stroke-width="1.6" stroke-dasharray="98.3 46.3" transform="rotate(2.5 26 26)"/>
+      <g stroke="#F97316" stroke-width="1.6" stroke-linecap="round">
         <circle cx="26.5" cy="26.1" r="2.3"/>
         <path d="M28.9 27.6C31.6 29 32.9 31.2 31.8 33.3 30.7 35.4 27.2 36.1 24.2 35.1"/>
       </g>
@@ -567,7 +582,7 @@ body::before{display:none}
     <div class="split-feature" data-reveal="left">
       <div>
         <div class="split-feature__icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5 12 4l8 5.5V19a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1Z"/><path d="m9 13 2 2 4-4" stroke="#D6523A"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5 12 4l8 5.5V19a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1Z"/><path d="m9 13 2 2 4-4" stroke="#F97316"/></svg>
         </div>
         <p class="eyebrow-label">One point of contact</p>
         <h2 class="h-display h2">A single team owns your shipment, every mode.</h2>
@@ -615,7 +630,7 @@ body::before{display:none}
 </div>
 
 <section class="story-section video-band">
-  <video class="video-band__media" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261005_115944_095d91d4-030f-4e82-b42b-a388c0816d24.mp4" poster="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22960%22%20height%3D%22600%22%20viewBox%3D%220%200%20960%20600%22%3E%20%3Cdefs%3E%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2212%25%22%20cy%3D%220%25%22%20r%3D%2265%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23D6523A%22%20stop-opacity%3D%220.55%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23D6523A%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3CradialGradient%20id%3D%22b%22%20cx%3D%2295%25%22%20cy%3D%2215%25%22%20r%3D%2260%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%234C8DBF%22%20stop-opacity%3D%220.5%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%234C8DBF%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3CradialGradient%20id%3D%22t%22%20cx%3D%2290%25%22%20cy%3D%22100%25%22%20r%3D%2265%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%232BB3A3%22%20stop-opacity%3D%220.55%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%232BB3A3%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3CradialGradient%20id%3D%22a%22%20cx%3D%225%25%22%20cy%3D%22100%25%22%20r%3D%2255%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23E3A53B%22%20stop-opacity%3D%220.4%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E3A53B%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3C%2Fdefs%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22%230a0b0c%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23r%29%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23b%29%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23t%29%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23a%29%22%2F%3E%20%3C%2Fsvg%3E" autoplay muted loop playsinline disablepictureinpicture aria-hidden="true"></video>
+  <video class="video-band__media" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261005_115944_095d91d4-030f-4e82-b42b-a388c0816d24.mp4" poster="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22960%22%20height%3D%22600%22%20viewBox%3D%220%200%20960%20600%22%3E%20%3Cdefs%3E%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2212%25%22%20cy%3D%220%25%22%20r%3D%2265%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23F97316%22%20stop-opacity%3D%220.55%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23F97316%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3CradialGradient%20id%3D%22b%22%20cx%3D%2295%25%22%20cy%3D%2215%25%22%20r%3D%2260%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23C4B5FD%22%20stop-opacity%3D%220.5%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23C4B5FD%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3CradialGradient%20id%3D%22t%22%20cx%3D%2290%25%22%20cy%3D%22100%25%22%20r%3D%2265%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23A78BFA%22%20stop-opacity%3D%220.55%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23A78BFA%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3CradialGradient%20id%3D%22a%22%20cx%3D%225%25%22%20cy%3D%22100%25%22%20r%3D%2255%25%22%3E%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FDBA74%22%20stop-opacity%3D%220.4%22%2F%3E%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FDBA74%22%20stop-opacity%3D%220%22%2F%3E%20%3C%2FradialGradient%3E%20%3C%2Fdefs%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22%23180f1e%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23r%29%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23b%29%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23t%29%22%2F%3E%20%3Crect%20width%3D%22960%22%20height%3D%22600%22%20fill%3D%22url%28%23a%29%22%2F%3E%20%3C%2Fsvg%3E" autoplay muted loop playsinline disablepictureinpicture aria-hidden="true"></video>
   <div class="video-band__tint"></div>
   <div class="video-band__content" data-reveal="fade">
     <p class="video-band__eyebrow">In motion, right now</p>
@@ -677,7 +692,7 @@ body::before{display:none}
 
         <div class="tilt"><article class="card tilt-el">
           <div class="card__icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5 12 4l8 5.5V19a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1Z"/><path d="m9 13 2 2 4-4" stroke="#D6523A"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5 12 4l8 5.5V19a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1Z"/><path d="m9 13 2 2 4-4" stroke="#F97316"/></svg>
           </div>
           <h2 class="card__title">Customs Brokerage</h2>
           <p class="card__desc">Licensed brokerage that keeps freight moving at the border.</p>

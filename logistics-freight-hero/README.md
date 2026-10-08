@@ -94,15 +94,46 @@ that replaces the vanilla engine with a richer set of effects:
 - **Magnetic buttons** (`.magnetic`, `pointer:fine` only) — the final
   CTA buttons nudge toward the cursor within their own bounds, via
   GSAP's `elastic.out` ease on release.
+- **Hero-exit depth transition** — as the user scrolls from the hero
+  into the story, the hero's own background video scales to 1.12×
+  (`.bg`, GPU-accelerated `transform` only) while `.stage` fades to 0
+  opacity, both scrubbed to the scroll position over the hero's own
+  height. `.stage` is faded via opacity rather than scaled, since it
+  already carries a static CSS `transform:scale(var(--s))` for its
+  pixel-exact layout that a GSAP-driven inline transform would
+  otherwise silently overwrite.
+- **Scroll-snap** (homepage only, `html{scroll-snap-type:y proximity}`
+  + `scroll-snap-align:start` on the hero and each top-level section)
+  — proximity, not mandatory, so it settles on a section boundary only
+  when the scroll was already coming to rest near one, rather than
+  forcing every scroll to stop at a boundary. Deliberately excludes
+  `.hcards-pin`: snapping into a section GSAP is also pinning/scrubbing
+  would fight it. Also deliberately scoped to this page only — the
+  interior pages (a contact form, the quote wizard's variable-height
+  steps, a tracking result of unpredictable length) are exactly the
+  kind of "information-dense, varied content height" case where
+  mandatory-style snapping hurts more than it helps.
 
 Every one of these is skipped under `prefers-reduced-motion: reduce`:
 `motion.js` short-circuits into a block that sets every element to its
 final, fully-visible state (words shown, counters at their target
-value, track untransformed) with no Lenis smoothing and no
-scrub/pin/tilt/magnetic behavior at all. `site.js` carries a second,
-independent fallback for the rare case the GSAP vendor script itself
-fails to load (so counters and revealed text never get stuck at their
-initial "0"/hidden state).
+value, track untransformed, hero fully visible) with no Lenis
+smoothing, no scroll-snap, and no scrub/pin/tilt/magnetic behavior at
+all. `site.js` carries a second, independent fallback for the rare
+case the GSAP vendor script itself fails to load (so counters and
+revealed text never get stuck at their initial "0"/hidden state).
+
+**Deliberately not used**: infinite scroll and multi-directional
+(2D) scrolling. Both are poor fits for this site by the same kind of
+evidence this motion system otherwise leans on — infinite scroll
+(per Nielsen Norman Group) suits homogeneous discovery feeds, not the
+goal-directed flows here (getting a quote, tracking a shipment, in a
+forms-and-results-based site where losing your scroll position and
+footer access is a real cost); multi-directional scrolling fights
+WCAG 2.1's requirement that content stay usable without 2D scrolling
+at 400% zoom, and fits "portfolio/showcase" content better than a
+forms-and-flows logistics site. Both patterns remain a reasonable fit
+for other projects — just not this one.
 
 ## Real video, reused across the site
 
@@ -119,34 +150,41 @@ pointing the relevant `<video src>` at them — see Customizing below.
 
 ## Color palette
 
-Beyond the near-black base and cream/white type, the site uses three
-secondary accents next to the original rust (`--accent`):
-teal (`--accent-2`), amber (`--accent-3`) and steel-blue
-(`--accent-4`) — all defined in `assets/site.css`. They cycle across
-service-card icons and stat underlines, tint the ambient gradients
-behind page-hero bands and the video band, and give "done" states
-(timeline, stepper) a distinct color from "active" states.
+A two-hue theme — **orange** and **lavender** — all defined in
+`assets/site.css`: `--accent` (`#F97316`, primary orange) and
+`--accent-2` (`#A78BFA`, lavender) are the two dominant colors;
+`--accent-3` (`#FDBA74`, a lighter orange tint) and `--accent-4`
+(`#C4B5FD`, a lighter lavender tint) round out a 4-step cycle so
+repeated elements (6 service-card icons, 4 stat underlines) alternate
+shades within the same two hue families instead of repeating one color
+or reintroducing unrelated ones.
 
-Critically, the color isn't only skin-deep on top of video: a shared
-`--mesh` custom property (four corner-anchored radial gradients, one
-per accent) is layered into `body`'s background with
-`background-attachment:fixed`, and into every section that paints its
-own opaque fill (`.page-hero`, `.video-band`, `.story-section--dark`,
-`.story-section--alt`, `.footer`). So even with **no video loaded at
-all**, every page still reads as a colorful gradient wash, never flat
-black — this was verified by testing with the video network request
-blocked entirely. Each `<video>` also carries an inline SVG `poster`
-(a small data URI, no network request) built from the same four
-colors, so the video's own box never paints black before a frame
-arrives or if it fails to load.
+The base itself is deliberately **not** neutral black/gray: `--bg`
+(`#180f1e`) is a deep plum, and `--bg-alt` (`#20150e`, used for
+alternating section backgrounds) is a deep warm umber — a cool/warm
+pair in the same two hue families as the accents, so even the areas
+between gradient highlights carry color identity instead of reading
+as flat black with colored confetti on top. The ambient `--mesh`
+gradient (four corner-anchored radial blobs, one per accent) sits
+behind every section via `.bg-mesh-fixed`.
 
-Known cascade gotcha, worth remembering when editing: `index.html`'s
-hero keeps its own inline `<style>` (loaded after `assets/site.css`
-for the shared tokens), so its `body{...}` rule must re-specify
-`background:var(--mesh), #0a0b0c; background-attachment:fixed;`
-itself — the `background` shorthand resets attachment too, so a bare
-`background:#0a0b0c` there silently wipes out the linked stylesheet's
-mesh for the whole homepage.
+The color isn't only skin-deep on top of video, and it isn't done with
+`background-attachment:fixed` either — that property is well known to
+fail outright on iOS Safari and to cause scroll jank on desktop (see
+CSS-Tricks' writeup on the subject). Instead, `.bg-mesh-fixed` is a
+real `position:fixed; inset:0; z-index:-1` element (added once near
+the top of every page's `<body>`) painting the `--mesh` gradient
+behind all scrollable content — the technique those sources recommend
+in its place. `body` itself only needs a plain `background:var(--bg)`
+now. Every section that also paints its own opaque fill
+(`.page-hero`, `.video-band`, `.story-section--dark`,
+`.story-section--alt`, `.footer`) layers `--mesh` again on top of its
+own base color, so even with **no video loaded at all**, every page
+still reads as a colorful gradient wash, never flat black — verified
+by testing with the video network request blocked entirely. Each
+`<video>` also carries an inline SVG `poster` (a small data URI, no
+network request) built from the same four colors, so the video's own
+box never paints black before a frame arrives or if it fails to load.
 
 ## Stack
 

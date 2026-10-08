@@ -29,31 +29,31 @@
 }
 
 :root{
-  --bg:#0a0b0c;
+  --bg:#180f1e;
   --bg-raise:#121316;
   --cream:#F7F5EF;
   --white:#F9F9F9;
   --ink:rgba(255,255,255,.88);
   --ink-dim:rgba(255,255,255,.58);
   --ink-faint:rgba(255,255,255,.38);
-  --accent:#D6523A;
-  --accent-dim:rgba(214,82,58,.16);
-  --accent-2:#2BB3A3;
-  --accent-2-dim:rgba(43,179,163,.16);
-  --accent-3:#E3A53B;
-  --accent-3-dim:rgba(227,165,59,.16);
-  --accent-4:#4C8DBF;
-  --accent-4-dim:rgba(76,141,191,.16);
+  --accent:#F97316;
+  --accent-dim:rgba(249,115,22,.16);
+  --accent-2:#A78BFA;
+  --accent-2-dim:rgba(167,139,250,.16);
+  --accent-3:#FDBA74;
+  --accent-3-dim:rgba(253,186,116,.16);
+  --accent-4:#C4B5FD;
+  --accent-4-dim:rgba(196,181,253,.16);
   --line:rgba(255,255,255,.12);
   --card:rgba(255,255,255,.04);
-  --bg-alt:#0d1b1f;
+  --bg-alt:#20150e;
   --nav-h:76px;
   --radius:10px;
   --mesh:
-    radial-gradient(ellipse 60% 50% at 12% -5%, rgba(214,82,58,.24), transparent 60%),
-    radial-gradient(ellipse 55% 55% at 100% 15%, rgba(76,141,191,.20), transparent 60%),
-    radial-gradient(ellipse 60% 55% at 92% 100%, rgba(43,179,163,.22), transparent 60%),
-    radial-gradient(ellipse 50% 45% at 0% 100%, rgba(227,165,59,.16), transparent 60%);
+    radial-gradient(ellipse 60% 50% at 12% -5%, rgba(249,115,22,.24), transparent 60%),
+    radial-gradient(ellipse 55% 55% at 100% 15%, rgba(196,181,253,.20), transparent 60%),
+    radial-gradient(ellipse 60% 55% at 92% 100%, rgba(167,139,250,.22), transparent 60%),
+    radial-gradient(ellipse 50% 45% at 0% 100%, rgba(253,186,116,.16), transparent 60%);
   color-scheme:dark;
 }
 
@@ -62,8 +62,7 @@ html,body{height:100%}
 html{-webkit-text-size-adjust:100%}
 body{
   margin:0;
-  background:var(--mesh), var(--bg);
-  background-attachment:fixed;
+  background:var(--bg);
   color:var(--ink);
   font:400 16px/1.5 UI,system-ui,sans-serif;
   font-kerning:none;
@@ -73,6 +72,15 @@ body{
   text-rendering:geometricPrecision;
 }
 body.has-fixed-nav{padding-top:var(--nav-h)}
+
+/* A real fixed-position element behind the scrollable content, not
+   background-attachment:fixed (which fails outright on iOS Safari and
+   causes scroll jank on desktop — see CSS-Tricks' writeup on the topic). */
+.bg-mesh-fixed{
+  position:fixed;inset:0;z-index:-1;
+  background:var(--mesh), var(--bg);
+  pointer-events:none;
+}
 body::before{
   content:"";position:fixed;top:0;left:0;right:0;z-index:50;height:3px;
   background:linear-gradient(90deg, var(--accent), var(--accent-3), var(--accent-2), var(--accent-4));
@@ -199,10 +207,10 @@ h1.h-display,h2.h-display,h3.h-display{
   position:relative;
   padding:clamp(72px,11vw,128px) 0 clamp(48px,7vw,80px);
   background:
-    radial-gradient(ellipse 55% 65% at 88% 0%, rgba(214,82,58,.30), transparent 62%),
-    radial-gradient(ellipse 50% 55% at 6% 100%, rgba(43,179,163,.26), transparent 62%),
-    radial-gradient(ellipse 45% 55% at 95% 95%, rgba(76,141,191,.20), transparent 60%),
-    radial-gradient(ellipse 40% 50% at 10% 10%, rgba(227,165,59,.16), transparent 60%),
+    radial-gradient(ellipse 55% 65% at 88% 0%, rgba(249,115,22,.30), transparent 62%),
+    radial-gradient(ellipse 50% 55% at 6% 100%, rgba(167,139,250,.26), transparent 62%),
+    radial-gradient(ellipse 45% 55% at 95% 95%, rgba(196,181,253,.20), transparent 60%),
+    radial-gradient(ellipse 40% 50% at 10% 10%, rgba(253,186,116,.16), transparent 60%),
     var(--bg);
   border-bottom:1px solid var(--line);
   overflow:hidden;
@@ -224,7 +232,7 @@ h1.h-display,h2.h-display,h3.h-display{
   position:absolute;inset:0;z-index:1;
   background:
     linear-gradient(180deg, rgba(10,11,12,.55) 0%, rgba(10,11,12,.72) 65%, var(--bg) 100%),
-    radial-gradient(ellipse 60% 70% at 85% 0%, rgba(214,82,58,.18), transparent 60%);
+    radial-gradient(ellipse 60% 70% at 85% 0%, rgba(249,115,22,.18), transparent 60%);
 }
 .page-hero > .container{position:relative;z-index:2}
 
@@ -298,8 +306,8 @@ h1.h-display,h2.h-display,h3.h-display{
   position:absolute;inset:0;
   background:
     linear-gradient(180deg, rgba(10,16,16,.4) 0%, rgba(10,11,12,.12) 30%, rgba(9,13,14,.6) 100%),
-    radial-gradient(ellipse 60% 55% at 85% 100%, rgba(43,179,163,.16), transparent 60%),
-    radial-gradient(ellipse 55% 50% at 10% 0%, rgba(214,82,58,.14), transparent 60%);
+    radial-gradient(ellipse 60% 55% at 85% 100%, rgba(167,139,250,.16), transparent 60%),
+    radial-gradient(ellipse 55% 50% at 10% 0%, rgba(249,115,22,.14), transparent 60%);
 }
 .video-band__content{
   position:relative;z-index:2;
@@ -360,7 +368,7 @@ h1.h-display,h2.h-display,h3.h-display{
   display:flex;flex-direction:column;gap:14px;
   transition:border-color .15s ease, transform .15s ease, background .15s ease;
 }
-.card:hover{border-color:rgba(214,82,58,.5);transform:translateY(-2px);background:rgba(255,255,255,.06)}
+.card:hover{border-color:rgba(249,115,22,.5);transform:translateY(-2px);background:rgba(255,255,255,.06)}
 .card__icon{
   width:44px;height:44px;border-radius:9px;
   display:flex;align-items:center;justify-content:center;
