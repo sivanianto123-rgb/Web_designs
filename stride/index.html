@@ -148,13 +148,29 @@
       </p>
     </div>
 
+    <div class="filter-tabs">
+      <button class="filter-tab is-active" data-filter="all">All Gear</button>
+      <button class="filter-tab" data-filter="footwear">Footwear</button>
+      <button class="filter-tab" data-filter="wearables">Wearables</button>
+      <button class="filter-tab" data-filter="accessories">Accessories</button>
+    </div>
+
     <div class="grid">
 
-      <article class="card" data-tilt>
-        <span class="card__badge">New Drop</span>
+      <article class="card" data-category="footwear" data-tilt>
+        <span class="card__badge">Footwear</span>
         <div class="card__visual card__visual--01">
           <img class="card__icon" src="images/products/01_pulse_runner.jpg" alt="Pulse Runner sneaker">
         </div>
+        <div class="card__overlay">
+          <span class="card__overlay-label">
+            View Product
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </span>
+        </div>
+        <button class="card__arrow" aria-label="View Pulse Runner">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </button>
         <div class="card__info">
           <span class="card__index">01</span>
           <h3 class="card__title">Pulse&nbsp;Runner</h3>
@@ -162,10 +178,20 @@
         </div>
       </article>
 
-      <article class="card" data-tilt>
+      <article class="card" data-category="wearables" data-tilt>
+        <span class="card__badge">Wearables</span>
         <div class="card__visual card__visual--02">
           <img class="card__icon" src="images/products/02_volt_chrono.jpg" alt="Volt Chrono smartwatch">
         </div>
+        <div class="card__overlay">
+          <span class="card__overlay-label">
+            View Product
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </span>
+        </div>
+        <button class="card__arrow" aria-label="View Volt Chrono">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </button>
         <div class="card__info">
           <span class="card__index">02</span>
           <h3 class="card__title">Volt&nbsp;Chrono</h3>
@@ -173,10 +199,20 @@
         </div>
       </article>
 
-      <article class="card" data-tilt>
+      <article class="card" data-category="accessories" data-tilt>
+        <span class="card__badge">Carry</span>
         <div class="card__visual card__visual--03">
           <img class="card__icon" src="images/products/03_flux_pack.jpg" alt="Flux Pack backpack">
         </div>
+        <div class="card__overlay">
+          <span class="card__overlay-label">
+            View Product
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </span>
+        </div>
+        <button class="card__arrow" aria-label="View Flux Pack">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </button>
         <div class="card__info">
           <span class="card__index">03</span>
           <h3 class="card__title">Flux&nbsp;Pack</h3>
@@ -184,10 +220,20 @@
         </div>
       </article>
 
-      <article class="card" data-tilt>
+      <article class="card" data-category="accessories" data-tilt>
+        <span class="card__badge">Hydration</span>
         <div class="card__visual card__visual--04">
           <img class="card__icon" src="images/products/04_pulse_bottle.jpg" alt="Pulse Bottle water bottle">
         </div>
+        <div class="card__overlay">
+          <span class="card__overlay-label">
+            View Product
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </span>
+        </div>
+        <button class="card__arrow" aria-label="View Pulse Bottle">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </button>
         <div class="card__info">
           <span class="card__index">04</span>
           <h3 class="card__title">Pulse&nbsp;Bottle</h3>
@@ -195,10 +241,20 @@
         </div>
       </article>
 
-      <article class="card" data-tilt>
+      <article class="card" data-category="accessories" data-tilt>
+        <span class="card__badge">Headwear</span>
         <div class="card__visual card__visual--05">
           <img class="card__icon" src="images/products/05_day_cap.jpg" alt="Day Cap">
         </div>
+        <div class="card__overlay">
+          <span class="card__overlay-label">
+            View Product
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </span>
+        </div>
+        <button class="card__arrow" aria-label="View Day Cap">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </button>
         <div class="card__info">
           <span class="card__index">05</span>
           <h3 class="card__title">Day&nbsp;Cap</h3>
@@ -206,10 +262,20 @@
         </div>
       </article>
 
-      <article class="card" data-tilt>
+      <article class="card" data-category="accessories" data-tilt>
+        <span class="card__badge">Eyewear</span>
         <div class="card__visual card__visual--06">
           <img class="card__icon" src="images/products/06_street_shades.jpg" alt="Street Shades sunglasses">
         </div>
+        <div class="card__overlay">
+          <span class="card__overlay-label">
+            View Product
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </span>
+        </div>
+        <button class="card__arrow" aria-label="View Street Shades">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </button>
         <div class="card__info">
           <span class="card__index">06</span>
           <h3 class="card__title">Street&nbsp;Shades</h3>

@@ -2,6 +2,9 @@
 // Preloader, custom cursor, and simple scroll-triggered reveals.
 // Normal native scrolling throughout — no pinning, no scroll-jacking,
 // no scroll-snap. Sections just fade/slide in once as they enter view.
+// The product grid additionally gets an asynchronous scroll parallax
+// (each card drifts at its own rate, scrubbed to scroll position but
+// never hijacking the scroll itself) and a hover overlay per card.
 
 document.addEventListener("DOMContentLoaded", () => {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -12,11 +15,13 @@ document.addEventListener("DOMContentLoaded", () => {
     initNav();
     initMarquees();
     initMagneticButton();
+    initFilterTabs();
 
     if (window.gsap && window.ScrollTrigger) {
       gsap.registerPlugin(ScrollTrigger);
       initRevealAnimations();
       initNumbersCount();
+      if (!reduceMotion) initAsyncCardParallax();
     } else {
       // Fallback: just show everything if GSAP failed to load.
       document.querySelectorAll(".reveal-up, .hero__title .word, .cta__title .word").forEach((el) => {
@@ -199,5 +204,55 @@ function initNumbersCount() {
         );
       });
     },
+  });
+}
+
+/* ---------------- Collection: filter tabs ---------------- */
+function initFilterTabs() {
+  const tabs = document.querySelectorAll(".filter-tab");
+  const cards = document.querySelectorAll(".card");
+  if (!tabs.length || !cards.length) return;
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      tabs.forEach((t) => t.classList.remove("is-active"));
+      tab.classList.add("is-active");
+
+      const filter = tab.getAttribute("data-filter");
+      cards.forEach((card) => {
+        const match = filter === "all" || card.getAttribute("data-category") === filter;
+        card.classList.toggle("is-filtered-out", !match);
+      });
+
+      // Card positions changed, so scroll-tied triggers need their
+      // measurements refreshed.
+      if (window.ScrollTrigger) ScrollTrigger.refresh();
+    });
+  });
+}
+
+/* ---------------- Collection: asynchronous scroll parallax ---------------- */
+// Each card drifts vertically at its own rate as the grid scrolls past —
+// scrubbed to scroll position (so it tracks scroll exactly, no easing lag),
+// but it's a transform on elements already in normal flow: nothing is
+// pinned and the page scrolls completely natively.
+function initAsyncCardParallax() {
+  const cards = gsap.utils.toArray(".card");
+  if (!cards.length || window.innerWidth < 900) return;
+
+  cards.forEach((card, i) => {
+    const col = i % 3;
+    const offset = col === 0 ? -36 : col === 2 ? 36 : -12;
+
+    gsap.to(card, {
+      y: offset,
+      ease: "none",
+      scrollTrigger: {
+        trigger: card,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+      },
+    });
   });
 }
