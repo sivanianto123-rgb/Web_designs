@@ -1,4 +1,4 @@
-name: Deploy aura-product-showcase to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - "aura-product-showcase/**"
+      - "logistics-freight-hero/**"
+      - "index.html"
       - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
 
@@ -33,10 +35,17 @@ jobs:
         with:
           enablement: true
 
+      - name: Assemble site
+        run: |
+          mkdir -p _site
+          cp index.html _site/
+          cp -r aura-product-showcase _site/
+          cp -r logistics-freight-hero _site/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: aura-product-showcase
+          path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment
