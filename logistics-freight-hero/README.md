@@ -120,15 +120,20 @@ to function, so nothing else changed.
   steps, a tracking result of unpredictable length) are exactly the
   kind of "information-dense, varied content height" case where
   mandatory-style snapping hurts more than it helps.
-- **Custom cursor** (`.cursor`/`.cursor__label`, `pointer:fine` only)
-  — a small dot that lerps toward the real cursor position each frame
-  (`curX += (mouseX - curX) * 0.2`, not GSAP-driven — matching the
-  sibling `stride/` project's implementation, adapted to this site's
-  orange/lavender palette) and grows into a filled circle with a text
-  label (`data-cursor="…"`) over cards and buttons. The system cursor
-  is hidden only once the JS actually runs (`body.has-custom-cursor`),
-  so a reduced-motion visitor or a failed script load never ends up
-  with no cursor at all.
+- **Custom cursor** (`.cursor`, `pointer:fine` only) — a small, fixed
+  10px orange dot that lerps toward the real cursor position each
+  frame (`curX += (mouseX - curX) * 0.2`, not GSAP-driven). It used to
+  grow into an 84px filled circle with a text label on hover, matching
+  the sibling `stride/` project's implementation — removed per
+  feedback: that hover state attached mouseenter/mouseleave to every
+  `.card`/`a`/`button` on the page, and those fired during scroll
+  itself (the horizontal gallery's cards translate underneath a
+  stationary mouse, so the browser re-hit-tests and dispatches
+  enter/leave for whatever's now under that point), making the circle
+  pop in and out purely from scrolling. Now it's just the dot, always.
+  The system cursor is hidden only once the JS actually runs
+  (`body.has-custom-cursor`), so a reduced-motion visitor or a failed
+  script load never ends up with no cursor at all.
 - **Chapter HUD** (`.chapter-hud`, bottom-left, hidden below 620px) —
   a small "02 · The Fix"-style indicator tracking which of the
   homepage's 6 story chapters (`data-chapter-index`/`-name` on each
@@ -155,7 +160,25 @@ to function, so nothing else changed.
   border plus tinted background identify it, and it cycles through all
   4 accent tones via `nth-child(4n+2/3/4)` across the 6-card horizontal
   gallery, same as the existing `.card__link` color-cycling it sits
-  above.
+  above. Each card's icon is a standalone file under `assets/icons/`
+  (`<img src="assets/icons/ocean-freight.svg" …>`), loaded over the
+  network rather than inlined in the page's HTML, each preloaded via
+  `<link rel="preload" as="image">` in `<head>` so all 6 are ready
+  before the user scrolls into the gallery. They're richer than a bare
+  line icon — a soft radial-gradient glow behind the glyph, in the same
+  fixed accent color as that card's frame (inline SVGs can inherit
+  `currentColor` from the page's CSS for their color-cycling; a
+  separate `<img>`-loaded file can't reach back into the host page's
+  styles, so each file's color is baked in to match). This started as
+  a request for real photography sourced from a network URL; neither
+  is actually available right now — the sandbox's network policy
+  blocks the usual stock-photo CDNs (Unsplash, Pixabay, Wikimedia) the
+  same way it blocks the video sources used elsewhere on this site, and
+  neither connected image-generation provider has enough credit for
+  even one image (OpenArt's cheapest model is 10 credits against a
+  4-credit balance; Higgsfield has 1 credit). These SVGs are the
+  honest version of that ask given those constraints — genuinely
+  network-loaded, not inlined, just not photographic.
 
 Every one of these is skipped under `prefers-reduced-motion: reduce`:
 `motion.js` short-circuits into a block that sets every element to its

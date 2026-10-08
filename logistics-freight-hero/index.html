@@ -6,6 +6,12 @@
 <title>Logistics that works as hard as you do.</title>
 <meta name="description" content="One point of contact and full supply-chain visibility, origin to destination.">
 <link rel="preload" as="video" type="video/mp4" href="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261005_115944_095d91d4-030f-4e82-b42b-a388c0816d24.mp4">
+<link rel="preload" as="image" type="image/svg+xml" href="assets/icons/ocean-freight.svg">
+<link rel="preload" as="image" type="image/svg+xml" href="assets/icons/air-freight.svg">
+<link rel="preload" as="image" type="image/svg+xml" href="assets/icons/rail-freight.svg">
+<link rel="preload" as="image" type="image/svg+xml" href="assets/icons/trucking-drayage.svg">
+<link rel="preload" as="image" type="image/svg+xml" href="assets/icons/customs-brokerage.svg">
+<link rel="preload" as="image" type="image/svg+xml" href="assets/icons/warehousing.svg">
 <link rel="stylesheet" href="assets/site.css">
 <style>
 
@@ -431,7 +437,7 @@ html{scroll-snap-type:y proximity}
 <body>
 <div class="bg-mesh-fixed" aria-hidden="true"></div>
 <div class="scroll-progress" aria-hidden="true"></div>
-<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__label" id="cursorLabel"></span></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
 <div class="chapter-hud" id="chapterHud" aria-hidden="true">
   <span class="chapter-hud__index" id="chapterHudIndex">01</span>
   <span class="chapter-hud__name" id="chapterHudName">The Problem</span>
@@ -680,7 +686,7 @@ html{scroll-snap-type:y proximity}
 
         <div class="tilt"><article class="card tilt-el" data-cursor="View">
           <div class="example-card__frame">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v9"/><circle cx="12" cy="5" r="1.6"/><path d="M6 10h12l-1.5 5a5.2 5.2 0 0 1-9 0L6 10Z"/></svg>
+            <img src="assets/icons/ocean-freight.svg" width="64" height="64" alt="" loading="eager" decoding="async">
           </div>
           <h2 class="card__title">Ocean Freight</h2>
           <p class="card__desc">FCL and LCL across every major trade lane.</p>
@@ -689,7 +695,7 @@ html{scroll-snap-type:y proximity}
 
         <div class="tilt"><article class="card tilt-el" data-cursor="View">
           <div class="example-card__frame">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 13.5 3 15.8v-2l7.5-4.3V5.3C10.5 4 11.2 3 12 3s1.5 1 1.5 2.3v4.2L21 13.8v2l-7.5-2.3-.9 4.3 2.2 1.5v1.6L12 20l-2.8 1.1v-1.6l2.2-1.5-.9-4.3Z"/></svg>
+            <img src="assets/icons/air-freight.svg" width="64" height="64" alt="" loading="eager" decoding="async">
           </div>
           <h2 class="card__title">Air Freight</h2>
           <p class="card__desc">Time-critical cargo, door-to-door.</p>
@@ -698,7 +704,7 @@ html{scroll-snap-type:y proximity}
 
         <div class="tilt"><article class="card tilt-el" data-cursor="View">
           <div class="example-card__frame">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.5" width="14" height="13" rx="2"/><path d="M5 12h14M9 16l-1.5 4M15 16l1.5 4"/></svg>
+            <img src="assets/icons/rail-freight.svg" width="64" height="64" alt="" loading="eager" decoding="async">
           </div>
           <h2 class="card__title">Rail Freight</h2>
           <p class="card__desc">Cost-efficient long-haul for heavy freight.</p>
@@ -707,7 +713,7 @@ html{scroll-snap-type:y proximity}
 
         <div class="tilt"><article class="card tilt-el" data-cursor="View">
           <div class="example-card__frame">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h10v8H3z"/><path d="M13 11h4l3 3v1h-7z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
+            <img src="assets/icons/trucking-drayage.svg" width="64" height="64" alt="" loading="eager" decoding="async">
           </div>
           <h2 class="card__title">Trucking &amp; Drayage</h2>
           <p class="card__desc">First- and last-mile, port to door.</p>
@@ -716,7 +722,7 @@ html{scroll-snap-type:y proximity}
 
         <div class="tilt"><article class="card tilt-el" data-cursor="View">
           <div class="example-card__frame">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5 12 4l8 5.5V19a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1Z"/><path d="m9 13 2 2 4-4" stroke="#F97316"/></svg>
+            <img src="assets/icons/customs-brokerage.svg" width="64" height="64" alt="" loading="eager" decoding="async">
           </div>
           <h2 class="card__title">Customs Brokerage</h2>
           <p class="card__desc">Licensed brokerage that keeps freight moving at the border.</p>
@@ -725,7 +731,7 @@ html{scroll-snap-type:y proximity}
 
         <div class="tilt"><article class="card tilt-el" data-cursor="View">
           <div class="example-card__frame">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="7" height="7"/><rect x="13" y="10" width="7" height="7"/><rect x="8.5" y="4" width="7" height="6"/></svg>
+            <img src="assets/icons/warehousing.svg" width="64" height="64" alt="" loading="eager" decoding="async">
           </div>
           <h2 class="card__title">Warehousing &amp; Distribution</h2>
           <p class="card__desc">Cross-dock and storage, pick-pack-ship on demand.</p>

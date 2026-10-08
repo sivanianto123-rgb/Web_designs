@@ -204,9 +204,17 @@
     });
 
     // ---------- Custom cursor ----------
+    // Just the small dot, always — no hover-grow state. That state used
+    // to attach mouseenter/mouseleave to every .card/a/button on the
+    // page (dozens of elements) to toggle a "big black circle". Those
+    // listeners also fired during scroll itself: as the horizontal
+    // gallery's cards translate underneath a stationary mouse, the
+    // browser re-hit-tests and dispatches enter/leave for the new
+    // element under that point, so the circle was popping in and out
+    // purely from scrolling, not from the mouse actually moving — the
+    // "scroll sensitive" cursor behavior. Removed entirely.
     var cursor = document.getElementById('cursor');
-    var cursorLabel = document.getElementById('cursorLabel');
-    if (cursor && cursorLabel) {
+    if (cursor) {
       document.body.classList.add('has-custom-cursor');
       var mouseX = 0, mouseY = 0, curX = 0, curY = 0;
       window.addEventListener('mousemove', function(e){
@@ -226,16 +234,6 @@
         }
         requestAnimationFrame(renderCursor);
       })();
-      document.querySelectorAll('[data-cursor], .card, a, button').forEach(function(el){
-        el.addEventListener('mouseenter', function(){
-          cursorLabel.textContent = el.getAttribute('data-cursor') || '';
-          cursor.classList.add('is-hovering');
-        });
-        el.addEventListener('mouseleave', function(){
-          cursorLabel.textContent = '';
-          cursor.classList.remove('is-hovering');
-        });
-      });
     }
   }
 
