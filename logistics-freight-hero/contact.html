@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Contact — Freightline</title>
+<meta name="description" content="Talk to Freightline about a shipment, a quote, or a partnership.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="has-fixed-nav">
+
+<header class="nav">
+  <div class="container nav__inner">
+    <a class="nav__brand" href="index.html">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="#D6523A" stroke-width="1.6"/><circle cx="12" cy="12" r="2" fill="#D6523A"/></svg>
+      Freightline
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="services.html">Services</a>
+      <a href="track.html">Track Shipment</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav__right">
+      <a class="btn btn--ghost btn--sm" href="quote.html">Get a Quote</a>
+      <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navMobile" aria-label="Open menu"><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="nav__mobile" id="navMobile">
+  <a href="services.html">Services</a>
+  <a href="track.html">Track Shipment</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a class="btn btn--accent btn--block" href="quote.html">Get a Quote</a>
+</div>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow-label">Get in touch</p>
+      <h1 class="h-display h1">Talk to a<br>real person.</h1>
+      <p class="lede" style="margin-top:18px">
+        Shipment question, quote follow-up, or a partnership idea —
+        send it over and the right person on our team replies directly.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" style="display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:start">
+
+      <form id="contactForm" novalidate>
+        <div class="form-grid">
+          <div class="field" data-field="name">
+            <label for="cName">Full name</label>
+            <input id="cName" name="name" type="text" placeholder="Jordan Reyes" required>
+            <span class="field-error">Please enter your name.</span>
+          </div>
+          <div class="field" data-field="email">
+            <label for="cEmail">Email</label>
+            <input id="cEmail" name="email" type="email" placeholder="you@company.com" required>
+            <span class="field-error">Please enter a valid email.</span>
+          </div>
+          <div class="field" data-field="company">
+            <label for="cCompany">Company</label>
+            <input id="cCompany" name="company" type="text" placeholder="Company name">
+          </div>
+          <div class="field" data-field="subject">
+            <label for="cSubject">Subject</label>
+            <select id="cSubject" name="subject" required>
+              <option value="">Select one</option>
+              <option>Get a quote</option>
+              <option>Track a shipment</option>
+              <option>Customs &amp; compliance</option>
+              <option>Warehousing</option>
+              <option>Partnership / other</option>
+            </select>
+            <span class="field-error">Please choose a subject.</span>
+          </div>
+          <div class="field field--full" data-field="message">
+            <label for="cMessage">Message</label>
+            <textarea id="cMessage" name="message" placeholder="Tell us what you're moving and where..." required></textarea>
+            <span class="field-error">Please add a short message.</span>
+          </div>
+        </div>
+
+        <button class="btn btn--accent" style="margin-top:22px" type="submit">Send Message</button>
+        <p class="field-hint" style="margin-top:12px">This is a static demo — your message is validated locally and not transmitted anywhere.</p>
+
+        <div class="success" id="contactSuccess" style="display:none;margin-top:28px">
+          <div class="success__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          </div>
+          <h3 class="h-display h3">Message received</h3>
+          <p class="lede" style="margin:10px auto 0">Thanks — a member of the team will reply within one business day.</p>
+        </div>
+      </form>
+
+      <aside style="display:flex;flex-direction:column;gap:18px">
+        <div class="card">
+          <h3 class="card__title" style="font-size:14px;letter-spacing:.1em">Head office</h3>
+          <p class="card__desc">
+            4100 Portside Avenue, Suite 220<br>
+            Long Beach, CA 90802<br>
+            United States
+          </p>
+        </div>
+        <div class="card">
+          <h3 class="card__title" style="font-size:14px;letter-spacing:.1em">Direct lines</h3>
+          <p class="card__desc">
+            General: <a href="tel:+18005551234" style="color:var(--accent)">+1 (800) 555-1234</a><br>
+            Ops desk (24/7): <a href="tel:+18005559876" style="color:var(--accent)">+1 (800) 555-9876</a><br>
+            Email: <a href="mailto:hello@freightline.example" style="color:var(--accent)">hello@freightline.example</a>
+          </p>
+        </div>
+        <div class="card">
+          <h3 class="card__title" style="font-size:14px;letter-spacing:.1em">Hours</h3>
+          <p class="card__desc">Mon–Fri, 7am–7pm PT for quotes &amp; sales.<br>Operations desk monitors active shipments 24/7.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a class="nav__brand" href="index.html">Freightline</a>
+      <p>Logistics that works as hard as you do. One point of contact, full visibility, origin to destination.</p>
+    </div>
+    <div class="footer__col">
+      <h3>Company</h3>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer__col">
+      <h3>Tools</h3>
+      <a href="track.html">Track a Shipment</a>
+      <a href="quote.html">Get a Quote</a>
+    </div>
+    <div class="footer__col">
+      <h3>Contact</h3>
+      <a href="mailto:hello@freightline.example">hello@freightline.example</a>
+      <a href="tel:+18005551234">+1 (800) 555-1234</a>
+    </div>
+  </div>
+  <div class="container footer__bottom">
+    <span>© <span data-year></span> Freightline. All rights reserved.</span>
+    <span>Demo site — no data is transmitted or stored.</span>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+<script>
+(function(){
+  var form = document.getElementById('contactForm');
+  var success = document.getElementById('contactSuccess');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var valid = true;
+    ['name','email','subject','message'].forEach(function(name){
+      var field = form.querySelector('[data-field="' + name + '"]');
+      var input = field.querySelector('input, select, textarea');
+      var ok = input.value.trim().length > 0;
+      if (name === 'email' && ok) ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim());
+      field.classList.toggle('is-invalid', !ok);
+      if (!ok) valid = false;
+    });
+    if (!valid) return;
+    form.querySelectorAll('.form-grid, button[type="submit"], .field-hint').forEach(function(el){ el.style.display = 'none'; });
+    success.style.display = 'block';
+    success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+})();
+</script>
+</body>
+</html>
