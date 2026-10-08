@@ -20,7 +20,13 @@ entirely through motion.
 7. **Join the Movement** — closing CTA.
 
 A fixed chapter HUD (bottom-left) and a top progress bar track where you are
-in the story as you scroll.
+in the story as you scroll. Each chapter uses CSS Scroll Snap
+(`scroll-snap-type: y proximity`) to settle into place like a full-screen
+slide — chosen over `mandatory` because `mandatory` can trap a gentle scroll
+gesture before it reaches the next section (tested: small wheel ticks got
+stuck oscillating short of the boundary). The Drop carousel is deliberately
+excluded from snapping since it's already its own pinned, scroll-jacked
+interaction.
 
 ## Stack
 
@@ -28,12 +34,14 @@ in the story as you scroll.
 - [GSAP](https://gsap.com/) + ScrollTrigger for the scroll-scrubbed
   storytelling: pinned sections, the horizontal carousel, manifesto color
   reveal, pulse-line draw, and scrubbed counters.
-- [Lenis](https://github.com/darkroomengineering/lenis) for buttery smooth
-  scrolling.
-- GSAP, ScrollTrigger and Lenis are vendored locally under `js/vendor/` (no
-  CDN dependency). Product photography lives under `images/products/` and
-  is committed into the repo (no external image host), so the whole site
-  works fully offline.
+- Scrolling is native (no smooth-scroll library) — a prior Lenis integration
+  was removed because its eased, continuously-animated scroll position
+  actively fought CSS scroll-snap, preventing it from ever settling past a
+  section boundary.
+- GSAP and ScrollTrigger are vendored locally under `js/vendor/` (no CDN
+  dependency). Product photography lives under `images/products/` and is
+  committed into the repo (no external image host), so the whole site works
+  fully offline.
 
 ## Run locally
 
@@ -49,7 +57,7 @@ python3 -m http.server 8000
 stride/
 ├── index.html              # markup + content (hero, 6 chapters, CTA)
 ├── css/style.css            # design system: colors, type scale, layout, chapter styles
-├── js/main.js               # preloader, cursor, smooth scroll, chapter HUD, scroll-scrubbed story logic
+├── js/main.js               # preloader, cursor, chapter HUD, scroll-scrubbed story logic
 └── images/products/         # product photography (6 pieces), used in both the
                               # Collection grid and the Drop carousel
 ```

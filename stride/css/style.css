@@ -3,16 +3,20 @@
    --------------------------------------------------------- */
 
 :root {
-  --bg: #0f0d13;
-  --bg-soft: #181420;
-  --fg: #f3f1ec;
-  --fg-dim: #8a8a86;
-  --accent: #ff8a3d;   /* electric orange — primary */
-  --accent2: #35b4f0;  /* electric blue — secondary */
-  --accent3: #35b4f0;  /* alias of blue, kept for existing references */
-  --accent4: #ff8a3d;  /* alias of orange, kept for existing references */
-  --accent-soft: rgba(255, 138, 61, 0.12);
-  --line: rgba(243, 241, 236, 0.12);
+  --bg: #f7f4ee;
+  --bg-soft: #efeae0;
+  --fg: #17151c;
+  --fg-dim: #6b6870;
+  --fg-on-dark: #f7f4ee;
+  --fg-on-dark-dim: rgba(247, 244, 238, 0.7);
+  --accent: #e8590c;   /* deep orange — primary, used for text/thin UI on the light bg */
+  --accent2: #0b7fb0;  /* deep blue — secondary, same role */
+  --accent3: #0b7fb0;  /* alias of blue, kept for existing references */
+  --accent4: #e8590c;  /* alias of orange, kept for existing references */
+  --block-orange: #ff8a3d; /* brighter orange, used only on bold color-block panels */
+  --block-blue: #35b4f0;   /* brighter blue, used only on bold color-block panels */
+  --accent-soft: rgba(232, 89, 12, 0.1);
+  --line: rgba(23, 21, 28, 0.12);
   --font-display: "Space Grotesk", sans-serif;
   --font-body: "Inter", sans-serif;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -20,7 +24,10 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { background: var(--bg); }
+html {
+  background: var(--bg);
+  scroll-snap-type: y proximity;
+}
 
 body {
   background: var(--bg);
@@ -37,7 +44,7 @@ ul { list-style: none; }
 img, svg { display: block; max-width: 100%; }
 blockquote { border: none; }
 
-::selection { background: var(--accent); color: #0b0b0c; }
+::selection { background: var(--accent); color: var(--fg-on-dark); }
 
 @media (hover: none) {
   body { cursor: auto; }
@@ -102,7 +109,7 @@ blockquote { border: none; }
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   color: var(--fg-dim);
-  background: rgba(11, 11, 12, 0.7);
+  background: rgba(247, 244, 238, 0.85);
   backdrop-filter: blur(6px);
   padding: 0.5rem 0.9rem;
   border-radius: 999px;
@@ -132,7 +139,6 @@ blockquote { border: none; }
   pointer-events: none;
   z-index: 400;
   transform: translate(-50%, -50%);
-  mix-blend-mode: difference;
   transition: width 0.3s var(--ease), height 0.3s var(--ease), background 0.3s var(--ease);
   display: flex;
   align-items: center;
@@ -141,14 +147,14 @@ blockquote { border: none; }
 .cursor.is-hovering {
   width: 86px;
   height: 86px;
-  background: var(--fg);
+  background: rgba(23, 21, 28, 0.92);
 }
 .cursor__label {
   font-family: var(--font-display);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.05em;
-  color: var(--bg);
+  color: var(--fg-on-dark);
   opacity: 0;
   transition: opacity 0.2s var(--ease);
 }
@@ -164,8 +170,10 @@ blockquote { border: none; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.75rem clamp(1.5rem, 5vw, 3.5rem);
-  mix-blend-mode: difference;
+  padding: 1.5rem clamp(1.5rem, 5vw, 3.5rem);
+  background: rgba(247, 244, 238, 0.78);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
 }
 .nav__logo {
   font-family: var(--font-display);
@@ -280,6 +288,7 @@ blockquote { border: none; }
   justify-content: center;
   padding: 7rem clamp(1.5rem, 5vw, 3.5rem) 4rem;
   overflow: hidden;
+  scroll-snap-align: start;
   background: radial-gradient(ellipse 70% 55% at 85% 90%, rgba(255, 138, 61, 0.18), transparent 70%),
               radial-gradient(ellipse 60% 50% at 10% 10%, rgba(53, 180, 240, 0.14), transparent 70%);
 }
@@ -408,6 +417,7 @@ blockquote { border: none; }
   align-items: center;
   overflow: hidden;
   border-top: 1px solid var(--line);
+  scroll-snap-align: start;
   background: radial-gradient(ellipse 90% 70% at 15% 100%, rgba(255, 138, 61, 0.28), transparent 70%),
               radial-gradient(ellipse 80% 60% at 85% 0%, rgba(53, 180, 240, 0.26), transparent 70%);
 }
@@ -510,6 +520,7 @@ blockquote { border: none; }
 .chapter-drop__num {
   position: relative;
   z-index: 1;
+  color: var(--fg-on-dark);
 }
 .chapter-drop__title {
   font-family: var(--font-display);
@@ -519,7 +530,7 @@ blockquote { border: none; }
   margin-bottom: 1rem;
 }
 .chapter-drop__copy {
-  color: var(--fg-dim);
+  color: var(--fg-on-dark-dim);
   max-width: 440px;
   font-size: 1.05rem;
 }
@@ -528,7 +539,7 @@ blockquote { border: none; }
   bottom: 2.5rem;
   right: clamp(1.5rem, 5vw, 3.5rem);
   font-size: 0.8rem;
-  color: var(--fg-dim);
+  color: var(--fg-on-dark-dim);
 }
 
 /* ---------- Chapter 03 — By the numbers ---------- */
@@ -539,6 +550,7 @@ blockquote { border: none; }
   display: flex;
   flex-direction: column;
   justify-content: center;
+  scroll-snap-align: start;
   background: radial-gradient(ellipse 90% 80% at 20% 30%, rgba(53, 180, 240, 0.24), transparent 70%),
               radial-gradient(ellipse 70% 60% at 85% 80%, rgba(255, 138, 61, 0.18), transparent 70%);
 }
@@ -578,6 +590,7 @@ blockquote { border: none; }
 /* ---------- Products grid (Chapter 04 — The Collection) ---------- */
 .products {
   padding: 8rem 0;
+  scroll-snap-align: start;
   background: radial-gradient(ellipse 60% 50% at 90% 10%, rgba(255, 138, 61, 0.14), transparent 70%);
 }
 
@@ -650,10 +663,11 @@ blockquote { border: none; }
   justify-content: space-between;
   align-items: flex-end;
   z-index: 2;
+  color: var(--fg-on-dark);
 }
 .card__index {
   font-size: 0.75rem;
-  color: var(--fg-dim);
+  color: var(--fg-on-dark-dim);
 }
 .card__title {
   font-family: var(--font-display);
@@ -663,7 +677,7 @@ blockquote { border: none; }
 }
 .card__cat {
   font-size: 0.7rem;
-  color: var(--fg-dim);
+  color: var(--fg-on-dark-dim);
   text-align: right;
 }
 
@@ -678,6 +692,7 @@ blockquote { border: none; }
 .chapter-city {
   padding: 8rem 0;
   border-top: 1px solid var(--line);
+  scroll-snap-align: start;
   background: radial-gradient(ellipse 90% 60% at 50% 0%, rgba(53, 180, 240, 0.22), transparent 70%),
               radial-gradient(ellipse 70% 50% at 10% 100%, rgba(255, 138, 61, 0.14), transparent 70%);
 }
@@ -749,6 +764,7 @@ blockquote { border: none; }
   gap: 2rem;
   padding: 6rem 1.5rem;
   border-top: 1px solid var(--line);
+  scroll-snap-align: start;
 }
 .cta__title {
   font-family: var(--font-display);

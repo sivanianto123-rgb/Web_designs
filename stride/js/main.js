@@ -1,14 +1,14 @@
 // STRIDE — Never Stand Still
-// Preloader, smooth scroll, custom cursor, chapter HUD, and the
-// scroll-driven story: manifesto reveal, pulse line draw, horizontal
-// product carousel, and scrubbed stat counters.
+// Preloader, custom cursor, chapter HUD, and the scroll-driven story:
+// manifesto reveal, pulse line draw, horizontal product carousel, and
+// scrubbed stat counters. Scrolling is native (CSS scroll-snap locks
+// each chapter into place) so it isn't fought by a JS smooth-scroll lib.
 
 document.addEventListener("DOMContentLoaded", () => {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const hasFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
   initPreloader(() => {
-    if (!reduceMotion) initSmoothScroll();
     if (hasFinePointer && !reduceMotion) initCursor();
     initNav();
     initMarquees();
@@ -63,23 +63,6 @@ function initPreloader(done) {
     setTimeout(tick, 120);
   };
   tick();
-}
-
-/* ---------------- Smooth scroll (Lenis) ---------------- */
-function initSmoothScroll() {
-  if (typeof Lenis === "undefined") return;
-  const lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
-  function raf(time) {
-    lenis.raf(time);
-    if (window.ScrollTrigger) ScrollTrigger.update();
-    requestAnimationFrame(raf);
-  }
-  requestAnimationFrame(raf);
-  if (window.gsap && window.ScrollTrigger) {
-    lenis.on("scroll", ScrollTrigger.update);
-    gsap.ticker.add((time) => lenis.raf(time * 1000));
-    gsap.ticker.lagSmoothing(0);
-  }
 }
 
 /* ---------------- Custom cursor ---------------- */
@@ -251,7 +234,7 @@ function initManifesto() {
   if (!manifesto) return;
 
   gsap.to(".manifesto .word", {
-    color: (i, el) => (el.classList.contains("word--accent") ? "#c8ff4d" : "#f3f1ec"),
+    color: (i, el) => (el.classList.contains("word--accent") ? "#e8590c" : "#17151c"),
     stagger: 0.08,
     ease: "none",
     scrollTrigger: {
