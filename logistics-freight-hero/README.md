@@ -135,6 +135,27 @@ to function, so nothing else changed.
   top-level section) is in view, via `IntersectionObserver`. Only
   visible while a chapter section is actually on screen, so it never
   sits on top of the hero or the closing CTA/footer.
+- **Numbered chapter headers** (`.chapter-head`) and **"Implementation
+  Examples"-style service cards** (`.example-card__frame`) — adapted
+  from a reference recording of the `motion.ed` site the user shared,
+  by explicit request to adopt only these two components and keep
+  Freightline's existing dark plum/umber + orange/lavender theme
+  unchanged (not the reference site's own full color-blocked-chapter
+  theme). `.chapter-head` is a two-column grid — large accent-colored
+  number + large uppercase chapter name on the left, a short
+  explanatory paragraph on the right, collapsing to a single stacked
+  column below 760px — placed at the top of each of the homepage's 6
+  story chapters, reusing the same `data-chapter-index`/`-name` values
+  the Chapter HUD already reads. It carries its own
+  `padding-top:calc(var(--nav-h) + …)` so it clears the fixed nav even
+  in sections (`story-statement`, `hcards-pin`) that otherwise have no
+  top padding of their own. `.example-card__frame` restyles each
+  service card's icon area into a short device-frame preview window —
+  negative margins bleed it to the card's edges, a 3px colored top
+  border plus tinted background identify it, and it cycles through all
+  4 accent tones via `nth-child(4n+2/3/4)` across the 6-card horizontal
+  gallery, same as the existing `.card__link` color-cycling it sits
+  above.
 
 Every one of these is skipped under `prefers-reduced-motion: reduce`:
 `motion.js` short-circuits into a block that sets every element to its
