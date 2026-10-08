@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "aura-product-showcase/**"
+      - "stride/**"
       - "logistics-freight-hero/**"
       - "index.html"
       - ".github/workflows/deploy-pages.yml"
@@ -39,7 +39,7 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html _site/
-          cp -r aura-product-showcase _site/
+          cp -r stride _site/
           cp -r logistics-freight-hero _site/
 
       - name: Upload artifact

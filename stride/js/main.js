@@ -1,5 +1,7 @@
-// AURA — product studio showcase
-// Preloader, smooth scroll, custom cursor, and scroll-triggered reveals.
+// STRIDE — Never Stand Still
+// Preloader, smooth scroll, custom cursor, chapter HUD, and the
+// scroll-driven story: manifesto reveal, pulse line draw, horizontal
+// product carousel, and scrubbed stat counters.
 
 document.addEventListener("DOMContentLoaded", () => {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -10,16 +12,23 @@ document.addEventListener("DOMContentLoaded", () => {
     if (hasFinePointer && !reduceMotion) initCursor();
     initNav();
     initMarquees();
-    initCounters();
     initMagneticButton();
-    if (window.gsap) {
+    initProgressBar();
+    initChapterHud();
+
+    if (window.gsap && window.ScrollTrigger) {
       gsap.registerPlugin(ScrollTrigger);
       initRevealAnimations();
+      initManifesto();
+      initPulseLine();
+      initDropCarousel();
+      initNumbersScrub();
     } else {
       // Fallback: just show everything if GSAP failed to load.
-      document.querySelectorAll(".reveal-up, .word").forEach((el) => {
+      document.querySelectorAll(".reveal-up, .word, .manifesto .word").forEach((el) => {
         el.style.opacity = 1;
         el.style.transform = "none";
+        el.style.color = "";
       });
     }
   });
@@ -66,7 +75,7 @@ function initSmoothScroll() {
     requestAnimationFrame(raf);
   }
   requestAnimationFrame(raf);
-  if (window.gsap) {
+  if (window.gsap && window.ScrollTrigger) {
     lenis.on("scroll", ScrollTrigger.update);
     gsap.ticker.add((time) => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
@@ -120,42 +129,63 @@ function initNav() {
 
 /* ---------------- Marquees pause on hover ---------------- */
 function initMarquees() {
-  document.querySelectorAll(".hero__marquee-track, .strip__track").forEach((track) => {
+  document.querySelectorAll(".hero__marquee-track, .strip__track, .city-marquee__track").forEach((track) => {
     track.parentElement.addEventListener("mouseenter", () => (track.style.animationPlayState = "paused"));
     track.parentElement.addEventListener("mouseleave", () => (track.style.animationPlayState = "running"));
   });
 }
 
-/* ---------------- Count-up stats ---------------- */
-function initCounters() {
-  const counters = document.querySelectorAll(".stat__num");
-  if (!counters.length) return;
-
-  const animate = (el) => {
-    const target = parseInt(el.getAttribute("data-count"), 10) || 0;
-    const duration = 1200;
-    const start = performance.now();
-    function step(now) {
-      const progress = Math.min((now - start) / duration, 1);
-      el.textContent = Math.floor(progress * target);
-      if (progress < 1) requestAnimationFrame(step);
-      else el.textContent = target;
-    }
-    requestAnimationFrame(step);
+/* ---------------- Scroll progress bar ---------------- */
+function initProgressBar() {
+  const bar = document.getElementById("progressBar");
+  if (!bar) return;
+  const update = () => {
+    const doc = document.documentElement;
+    const scrollable = doc.scrollHeight - doc.clientHeight;
+    const pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+    bar.style.width = pct + "%";
   };
+  update();
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update);
+}
+
+/* ---------------- Chapter HUD ---------------- */
+function initChapterHud() {
+  const hud = document.getElementById("chapterHud");
+  const indexEl = document.getElementById("chapterHudIndex");
+  const nameEl = document.getElementById("chapterHudName");
+  const chapters = document.querySelectorAll("[data-chapter-index]");
+  if (!hud || !chapters.length) return;
+
+  const first = chapters[0];
+  const last = chapters[chapters.length - 1];
+
+  // Only show the HUD while a chapter is actually on screen, so it never
+  // sits on top of the hero or the closing CTA/footer.
+  const toggleVisible = () => {
+    const firstTop = first.getBoundingClientRect().top + window.scrollY;
+    const lastBottom = last.getBoundingClientRect().bottom + window.scrollY;
+    const probe = window.scrollY + window.innerHeight * 0.5;
+    if (probe > firstTop && probe < lastBottom) hud.classList.add("is-visible");
+    else hud.classList.remove("is-visible");
+  };
+  toggleVisible();
+  window.addEventListener("scroll", toggleVisible, { passive: true });
+  window.addEventListener("resize", toggleVisible);
 
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          animate(entry.target);
-          observer.unobserve(entry.target);
+          indexEl.textContent = entry.target.getAttribute("data-chapter-index");
+          nameEl.textContent = entry.target.getAttribute("data-chapter-name");
         }
       });
     },
     { threshold: 0.5 }
   );
-  counters.forEach((c) => observer.observe(c));
+  chapters.forEach((c) => observer.observe(c));
 }
 
 /* ---------------- Magnetic CTA button ---------------- */
@@ -213,15 +243,85 @@ function initRevealAnimations() {
       delay: (i % 3) * 0.08,
     });
   });
+}
 
-  // Spotlight parallax icon
-  gsap.to(".spotlight__icon", {
-    y: -40,
+/* ---------------- Chapter 01: manifesto word reveal ---------------- */
+function initManifesto() {
+  const manifesto = document.querySelector(".manifesto");
+  if (!manifesto) return;
+
+  gsap.to(".manifesto .word", {
+    color: (i, el) => (el.classList.contains("word--accent") ? "#c8ff4d" : "#f3f1ec"),
+    stagger: 0.08,
+    ease: "none",
     scrollTrigger: {
-      trigger: ".spotlight",
-      start: "top bottom",
-      end: "bottom top",
+      trigger: ".chapter-origin",
+      start: "top 70%",
+      end: "bottom 55%",
       scrub: true,
+    },
+  });
+}
+
+/* ---------------- Chapter 01: pulse line draw ---------------- */
+function initPulseLine() {
+  const path = document.getElementById("pulsePath");
+  if (!path) return;
+  const length = path.getTotalLength();
+  path.style.strokeDasharray = String(length);
+  path.style.strokeDashoffset = String(length);
+
+  gsap.to(path, {
+    strokeDashoffset: 0,
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".chapter-origin",
+      start: "top 80%",
+      end: "bottom 30%",
+      scrub: true,
+    },
+  });
+}
+
+/* ---------------- Chapter 02: horizontal scroll-jacked carousel ---------------- */
+function initDropCarousel() {
+  const section = document.querySelector(".chapter-drop");
+  const track = document.getElementById("dropTrack");
+  if (!section || !track) return;
+
+  const getScrollAmount = () => track.scrollWidth - window.innerWidth;
+
+  gsap.to(track, {
+    x: () => -getScrollAmount(),
+    ease: "none",
+    scrollTrigger: {
+      trigger: section,
+      start: "top top",
+      end: () => "+=" + getScrollAmount(),
+      scrub: 1,
+      pin: true,
+      invalidateOnRefresh: true,
+    },
+  });
+}
+
+/* ---------------- Chapter 03: scrubbed stat counters ---------------- */
+function initNumbersScrub() {
+  const section = document.querySelector(".chapter-numbers");
+  const nums = document.querySelectorAll(".num-block__num");
+  if (!section || !nums.length) return;
+
+  ScrollTrigger.create({
+    trigger: section,
+    start: "top 75%",
+    end: "top 20%",
+    scrub: true,
+    onUpdate: (self) => {
+      nums.forEach((el) => {
+        const target = parseFloat(el.getAttribute("data-target"));
+        const decimals = parseInt(el.getAttribute("data-decimals"), 10) || 0;
+        el.textContent = (target * self.progress).toFixed(decimals);
+      });
     },
   });
 }
